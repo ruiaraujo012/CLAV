@@ -6,7 +6,7 @@ const router = express.Router()
  * /:
  *   get:
  *     tags:
- *       - Index
+ *       - Index Page
  *     description: Returns index page
  *     produces:
  *       - application/json
