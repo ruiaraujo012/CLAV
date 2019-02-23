@@ -18,12 +18,19 @@ console.log('Server running on: http://localhost:3000/')
  */
 const swaggerDefinition = {
     info: {
-        title: 'Node Swagger API',
+        title: 'CLAV API',
         version: '1.0.0',
-        description: 'Demonstrating how to describe a RESTful API with Swagger',
+        description: 'Esta é a API do projeto CLAV.  Pode encontrar mais informação sobre o CLAV em [http://clav.dglab.gov.pt](http://clav.dglab.gov.pt). Por motivos de segurança, toda a informação é devolvida em JSONP. Num futuro próximo serão disponibilizados resultados noutros formatos textuais como XML e CSV.',
+        contact: {
+            name: 'CLAV',
+            email: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+        }
     },
     host: 'localhost:3000',
     basePath: '/',
+    schemes: [
+        'http'
+    ]
 }
 
 /*
@@ -41,11 +48,13 @@ const options = {
  */
 const swaggerSpec = swaggerJSDoc(options)
 
-// serve swagger 
+/*
+ * Serve swagger 
+ */
 app.get('/swagger.json', function (req, res) {
-    res.setHeader('Content-Type', 'application/json');
-    res.send(swaggerSpec);
-});
+    res.setHeader('Content-Type', 'application/json')
+    res.send(swaggerSpec)
+})
 
 app.use(logger('dev'))
 app.use(express.json())

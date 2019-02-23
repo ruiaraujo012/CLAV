@@ -6,13 +6,13 @@ const router = express.Router()
  * /:
  *   get:
  *     tags:
- *       - index
+ *       - Index
  *     description: Returns index page
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: index page
+ *         description: Index page
  */
 router.get('/', function (req, res, next) {
     res.render('index', {
