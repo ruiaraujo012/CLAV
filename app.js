@@ -9,24 +9,19 @@ const indexRouter = require('./routes/index')
 const app = express()
 
 /*
- * Inform URL
- */
-console.log('Server running on: http://localhost:3000/')
-
-/*
  * Swagger definition
  */
 const swaggerDefinition = {
     info: {
         title: 'CLAV API',
         version: '1.0.0',
-        description: 'Esta é a API do projeto CLAV.  Pode encontrar mais informação sobre o CLAV em [http://clav.dglab.gov.pt](http://clav.dglab.gov.pt). Por motivos de segurança, toda a informação é devolvida em JSONP. Num futuro próximo serão disponibilizados resultados noutros formatos textuais como XML e CSV.',
+        description: 'Esta é a API do projeto CLAV. Pode encontrar mais informação sobre o CLAV em [http://clav.dglab.gov.pt](http://clav.dglab.gov.pt). Por motivos de segurança, toda a informação é devolvida em JSONP. Num futuro próximo serão disponibilizados resultados noutros formatos textuais como XML e CSV.',
         contact: {
             name: 'CLAV',
-            email: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+            email: 'clav@dglab.gov.pt'
         }
     },
-    host: 'localhost:3000',
+    host: 'localhost:8000',
     basePath: '/',
     schemes: [
         'http'
@@ -51,7 +46,7 @@ const swaggerSpec = swaggerJSDoc(options)
 /*
  * Serve swagger 
  */
-app.get('/swagger.json', function (req, res) {
+app.get('/swagger.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json')
     res.send(swaggerSpec)
 })
