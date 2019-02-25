@@ -15,9 +15,7 @@ const router = express.Router()
  *         description: Index page
  */
 router.get('/', function (req, res, next) {
-    res.render('index', {
-        title: 'Express'
-    })
+    res.send('Index Page')
 })
 
 module.exports = router

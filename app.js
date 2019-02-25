@@ -22,7 +22,7 @@ const swaggerDefinition = {
         }
     },
     host: 'localhost:8000',
-    basePath: '/',
+    basePath: '/v1',
     schemes: [
         'http'
     ]
@@ -46,7 +46,7 @@ const swaggerSpec = swaggerJSDoc(options)
 /*
  * Serve swagger 
  */
-app.get('/swagger.json', (req, res) => {
+app.get('/v1/swagger.json', (req, res) => {
     res.setHeader('Content-Type', 'application/json')
     res.send(swaggerSpec)
 })
@@ -59,6 +59,6 @@ app.use(express.urlencoded({
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
+app.use('/v1/', indexRouter)
 
 module.exports = app
