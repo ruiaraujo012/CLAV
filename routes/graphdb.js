@@ -5,16 +5,16 @@ const Query = require('../controllers/query')
 
 /**
  * @swagger
- * /:
+ * /classes/getAllClasses:
  *   get:
  *     tags:
- *       - Index Page
+ *       - Get all classes Page
  *     description: Returns index page
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Index page
+ *         description: Get all classes page
  */
 
 router.get('/getAllClasses', (req, res) => {
