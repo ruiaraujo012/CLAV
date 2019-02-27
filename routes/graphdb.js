@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const Query = require('../controllers/query')
+
 
 /**
  * @swagger
@@ -14,8 +16,17 @@ const router = express.Router()
  *       200:
  *         description: Index page
  */
-router.get('/', function (req, res, next) {
-    res.send("Index")
+
+router.get('/getAllClasses', (req, res) => {
+
+    Query.listClasses().then(data => {
+        res.send(data)
+    }).catch(err => {
+        console.log(err)
+    })
+        
 })
+
+
 
 module.exports = router
