@@ -5,7 +5,7 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 
 const indexRouter = require('./routes/index')
-const graphdbRouter = require('./routes/graphdb')
+const classesRouter= require('./routes/classes.js')
 
 const app = express()
 
@@ -61,6 +61,6 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
-app.use('/classes', graphdbRouter)
+app.use('/classes', classesRouter)
 
 module.exports = app
