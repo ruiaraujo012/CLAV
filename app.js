@@ -63,5 +63,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter)
 app.use('/classes', classesRouter)
+app.use('/entidades', entidadesRouter)
+
 
 module.exports = app

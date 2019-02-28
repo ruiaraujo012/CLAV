@@ -5,8 +5,6 @@ const Graphdb = require('./graphdb')
 Classes.listarClasses = () => {
 
     query = `
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX clav: <http://jcr.di.uminho.pt/m51-clav#>    
         Select ?id                            
         ?codigo 
         ?titulo 
@@ -23,8 +21,6 @@ Classes.listarClasses = () => {
 Classes.listarClassesPorNivel = (nivel) => {
 
     query = `
-    PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
-    PREFIX clav: <http://jcr.di.uminho.pt/m51-clav#>    
         Select ?id                            
         ?codigo 
         ?titulo 

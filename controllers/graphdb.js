@@ -4,7 +4,24 @@ const Graphdb = module.exports
 const graphdbAdress = 'http://localhost:7200'
 const graphdbRepository = 'clav'
 
+const prefixes = { 
+    rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
+    clav: 'http://jcr.di.uminho.pt/m51-clav#',
+    owl: 'http://www.w3.org/2002/07/owl#',
+    rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+    noInferences: 'http://www.ontotext.com/explicit',
+    skos: 'http://www.w3.org/2004/02/skos/core#'
+}
+
 Graphdb.fetch = (query) => {
+
+    let prefixConcat = ""
+    for(let key in prefixes){
+        prefixConcat += "PREFIX " + key + ": <" + prefixes[key] + "> "
+    }
+
+    query = prefixConcat + query
+
     return axios.get(graphdbAdress + '/repositories/' + graphdbRepository + '?query=' + encodeURIComponent(query))
 }
 

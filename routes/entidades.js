@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const Graphdb = require('../controllers/graphdb')
+const Entidades = require('../controllers/entidades')
 
 
 /**
@@ -18,6 +18,9 @@ const Graphdb = require('../controllers/graphdb')
  */
 
 router.get('/', (req, res) => {
+
+
+    Entidades.listarEntidades().then(data => res.json(data.data)).catch(err => res.send(err))
 
 })
 
