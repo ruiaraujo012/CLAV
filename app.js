@@ -5,10 +5,17 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 
 const indexRouter = require('./routes/index')
-const classesRouter = require('./routes/classes.js')
-const entidadesRouter = require('./routes/entidades.js')
+const classesRouter = require('./routes/classes')
+const entidadesRouter = require('./routes/entidades')
+const usersRouter = require('./routes/users')
+
+const passport = require('passport')
+const mongoose = require('mongoose')
 
 const app = express()
+
+require('dotenv').config()
+require('./auth/auth')
 
 /*
  * Swagger definition
@@ -29,6 +36,23 @@ const swaggerDefinition = {
         'http'
     ]
 }
+
+/*
+ * Ligação à base de dados
+ */
+mongoose.connect(process.env.MONGO_URI, {
+    useNewUrlParser: true,
+    useCreateIndex: true
+})
+.then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
+.catch(err => console.log('Mongo: erro na conexão: ' + err))
+
+mongoose.set('useFindAndModify', false)
+
+/*
+* Inicialização do passport
+*/
+app.use(passport.initialize())
 
 /*
  * Options for the swagger docs
@@ -61,9 +85,10 @@ app.use(express.urlencoded({
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/', indexRouter)
+//app.use('/', indexRouter)
 app.use('/classes', classesRouter)
 app.use('/entidades', entidadesRouter)
+app.use('/', usersRouter)
 
 
 module.exports = app
