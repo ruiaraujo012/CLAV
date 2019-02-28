@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 
-const indexRouter = require('./routes/index')
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
 const usersRouter = require('./routes/users')
@@ -85,7 +84,6 @@ app.use(express.urlencoded({
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-//app.use('/', indexRouter)
 app.use('/classes', classesRouter)
 app.use('/entidades', entidadesRouter)
 app.use('/', usersRouter)

@@ -72,7 +72,7 @@ typings/
 .DS_Store
 
 # Yarn lock
-yarn.lock
+*.lock
 
 # Swap
 *.swp
