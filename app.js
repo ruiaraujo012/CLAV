@@ -5,7 +5,8 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 
 const indexRouter = require('./routes/index')
-const classesRouter= require('./routes/classes.js')
+const classesRouter = require('./routes/classes.js')
+const entidadesRouter = require('./routes/entidades.js')
 
 const app = express()
 
