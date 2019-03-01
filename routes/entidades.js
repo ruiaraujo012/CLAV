@@ -5,7 +5,7 @@ const Entidades = require('../controllers/entidades')
 
 /**
  * @swagger
- * /entidades/getAllEntidades:
+ * /entidades:
  *   get:
  *     tags:
  *       - Get all entidades Page
