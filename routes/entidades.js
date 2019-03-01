@@ -24,4 +24,9 @@ router.get('/', (req, res) => {
 
 })
 
+router.get('/:id',(req, res) =>{
+    
+    Entidades.listarEntidadePorId(req.params.id).then(data => res.json(data.data)).catch(err => res.send(err))
+})
+
 module.exports = router
