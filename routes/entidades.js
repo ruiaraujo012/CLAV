@@ -5,16 +5,16 @@ const Entidades = require('../controllers/entidades')
 
 /**
  * @swagger
- * /classes/getAllClasses:
+ * /entidades/getAllEntidades:
  *   get:
  *     tags:
- *       - Get all classes Page
+ *       - Get all entidades Page
  *     description: Returns index page
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Get all classes page
+ *         description: Get all entidades page
  */
 
 router.get('/', (req, res) => {
@@ -25,7 +25,7 @@ router.get('/', (req, res) => {
 })
 
 router.get('/:id',(req, res) =>{
-    
+
     Entidades.listarEntidadePorId(req.params.id).then(data => res.json(data.data)).catch(err => res.send(err))
 })
 

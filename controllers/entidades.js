@@ -18,7 +18,7 @@ Entidades.listarEntidades = () => {
 Entidades.listarEntidadePorId = (id) => {
 
     query = `
-
+    }
     `
     return Graphdb.fetch(query)
 }
