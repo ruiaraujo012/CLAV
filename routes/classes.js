@@ -6,7 +6,7 @@ const Classes = require('../controllers/classes')
 
 /**
  * @swagger
- * /classes/getAllClasses:
+ * /classes:
  *   get:
  *     tags:
  *       - Get all classes Page

@@ -24,6 +24,20 @@ router.get('/', (req, res) => {
 
 })
 
+//falta fazer-------------
+/**
+ * @swagger
+ * /entidades?id=xxxx:
+ *   get:
+ *     tags:
+ *       - Get all from entidade
+ *     description: Returns index page
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Get all from entidade
+ */
 router.get('/:id',(req, res) =>{
 
     Entidades.listarEntidadePorId(req.params.id).then(data => res.json(data.data)).catch(err => res.send(err))
