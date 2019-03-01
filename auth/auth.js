@@ -99,7 +99,7 @@ passport.use('login', new localStrategy({
  * Verifica e valida o token enviado pelo utilizador
  */
 passport.use(new JWTStrategy({
-    jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+    jwtFromRequest: ExtractJWT.fromExtractors([ExtractJWT.fromAuthHeaderAsBearerToken(), ExtractJWT.fromUrlQueryParameter('api_key')]),
     secretOrKey: process.env.JWT_SECRET_KEY,
     expiresIn: '1h'
 }, async (decodedToken, done) => {

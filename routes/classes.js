@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 const Classes = require('../controllers/classes')
 
 
@@ -17,13 +18,17 @@ const Classes = require('../controllers/classes')
  *         description: Get all classes page
  */
 
-router.get('/', (req, res) => {
+router.get('/', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
 
     Classes.listarClasses().then(data => res.json(data.data)).catch(err => res.send(err))
 
 })
 
-router.get('/:nivel', (req, res) => {
+router.get('/:nivel', passport.authenticate('jwt', {
+    session: false
+}), (req, res) => {
 
     Classes.listarClassesPorNivel(req.params.nivel).then(data => res.json(data.data)).catch(err => res.send(err))
 
