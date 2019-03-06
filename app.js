@@ -7,7 +7,7 @@ const swaggerJSDoc = require('swagger-jsdoc')
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
 const usersRouter = require('./routes/users')
-
+const tipologiasRouter = require('./routes/tipologias')
 const passport = require('passport')
 const mongoose = require('mongoose')
 
@@ -86,6 +86,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/classes', classesRouter)
 app.use('/entidades', entidadesRouter)
+app.use('/tipologias', tipologiasRouter)
 app.use('/', usersRouter)
 
 
