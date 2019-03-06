@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Entidades = require('../controllers/entidades')
+const authenticate = require('../auth/auth').authenticate
 
 
 /**
@@ -17,16 +18,27 @@ const Entidades = require('../controllers/entidades')
  *         description: Get all entidades page
  */
 
-router.get('/', (req, res) => {
+router.get('/', authenticate(), (req, res) => {
 
-
-    Entidades.listarEntidades().then(data => res.json(data.data)).catch(err => res.send(err))
+    Entidades.listarEntidades().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
 
 })
 
-router.get('/:id',(req, res) =>{
+router.get('/:id', authenticate(), async (req, res) => {
 
-    Entidades.listarEntidadePorId(req.params.id).then(data => res.json(data.data)).catch(err => res.send(err))
+    let entidade = await Entidades.listarEntidadePorId(req.params.id)
+    entidade = entidade.data.results.bindings[0]
+
+    let tipologiasPertencentes = await Entidades.tipologiasPertencentes(req.params.id)
+    tipologiasPertencentes = tipologiasPertencentes.data.results.bindings
+
+    let intervencaoComoDono = await Entidades.intervencaoComoDono(req.params.id)
+    intervencaoComoDono = intervencaoComoDono.data.results.bindings
+
+    let intervencaoComoParticipante = await Entidades.intervencaoComoParticipante(req.params.id)
+    intervencaoComoParticipante = intervencaoComoParticipante.data.results.bindings
+
+    res.json({ entidade, tipologiasPertencentes, intervencaoComoDono, intervencaoComoParticipante })
 })
 
 module.exports = router

@@ -9,6 +9,8 @@ const bcrypt = require('bcrypt')
 
 const SALT_ROUNDS = 10
 
+const AUTHENTICATION_ENABLED = false
+
 require('dotenv').config()
 
 /*
@@ -113,13 +115,25 @@ passport.use(new JWTStrategy({
 /*
  * Gerar hash da password
  */
-var createHash = password => {
+let createHash = password => {
     return bcrypt.hash(password, SALT_ROUNDS)
 }
 
 /*
  * Verifica o hash das passwords
  */
-var isValidPassword = (user, password) => {
+let isValidPassword = (user, password) => {
     return bcrypt.compare(password, user.password)
 }
+
+let authenticate = () => {
+    if (AUTHENTICATION_ENABLED) {
+        return passport.authenticate('jwt', {
+            session: false
+        })
+    } 
+
+    return (req, res, next) => next()
+}
+
+module.exports.authenticate = authenticate

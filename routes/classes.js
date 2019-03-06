@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport')
 const Classes = require('../controllers/classes')
-
+const authenticate = require('../auth/auth').authenticate
 
 /**
  * @swagger
@@ -18,19 +18,9 @@ const Classes = require('../controllers/classes')
  *         description: Get all classes page
  */
 
-router.get('/', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
+router.get('/:nivel', authenticate(), (req, res) => {
 
-    Classes.listarClasses().then(data => res.json(data.data)).catch(err => res.send(err))
-
-})
-
-router.get('/:nivel', passport.authenticate('jwt', {
-    session: false
-}), (req, res) => {
-
-    Classes.listarClassesPorNivel(req.params.nivel).then(data => res.json(data.data)).catch(err => res.send(err))
+    Classes.listarClassesPorNivel(req.params.nivel).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
 
 })
 
