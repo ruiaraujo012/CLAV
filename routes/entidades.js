@@ -6,7 +6,7 @@ const authenticate = require('../auth/auth').authenticate
 
 /**
  * @swagger
- * /entidades/getAllEntidades:
+ * /entidades:
  *   get:
  *     tags:
  *       - Get all entidades Page

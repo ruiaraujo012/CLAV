@@ -6,7 +6,7 @@ const authenticate = require('../auth/auth').authenticate
 
 /**
  * @swagger
- * /classes/getAllClasses:
+ * /classes:
  *   get:
  *     tags:
  *       - Get all classes Page
