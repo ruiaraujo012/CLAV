@@ -6,16 +6,21 @@ const authenticate = require('../auth/auth').authenticate
 
 /**
  * @swagger
- * /classes:
+ * /classes/{nivel}:
  *   get:
  *     tags:
- *       - Get all classes Page
- *     description: Returns index page
+ *       - Obter lista de classes por nível
+ *     description: Devolve um array de classes, cada um composto por código, titulo e id.
+ *     parameters:
+ *       - in: path
+ *         name: nivel
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Get all classes page
+ *         description:
+ *         examples:
+ *           application/json: [{"codigo":{"type":"literal","value":"100"},"titulo":{"type":"literal","value":"ORDENAMENTO JURÍDICO E NORMATIVO"},"id":{"type":"uri","value":"http://jcr.di.uminho.pt/m51-clav#c100"}},{"codigo":{"type":"literal","value":"150"},"titulo":{"type":"literal","value":"PLANEAMENTO E GESTÃO ESTRATÉGICA"},"id":{"type":"uri","value":"http://jcr.di.uminho.pt/m51-clav#c150"}}]
  */
 
 router.get('/:nivel', authenticate(), (req, res) => {

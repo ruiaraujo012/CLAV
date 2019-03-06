@@ -12,9 +12,26 @@ require('dotenv').config()
 
 const SALT_ROUNDS = 10
 
-/*
- * Signup de um utilizador
+/**
+ * @swagger
+ * /signup:
+ *   post:
+ *     tags:
+ *       - Registar um utilizador
+ *     description: 
+ *     requestBody:
+ *       description: "Descricao do body"
+ *       required: true
+ *       content:
+ *         - application/json: {username, email, password}
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description:
+ *
  */
+
 router.post('/signup', async (req, res, next) => {
     passport.authenticate('signup', async (err, user, info) => {
         try {
@@ -160,32 +177,6 @@ router.put('/profile/edit', passport.authenticate('jwt', {
             })
     }
 )
-
-/*
- * Atualiza a path da imagem de um utilizador pelo ID
- */
-router.put('/profile/editPhoto', passport.authenticate('jwt', {
-        session: false
-    }),
-    (req, res) => {
-        const editUserImage = req.body
-        editUserImage.updated = new Date()
-        User.updateUserImage(req.user._id, editUserImage)
-            .then(data => {
-                res.jsonp({
-                    message: 'Imagem de perfil editada com sucesso.',
-                    user: data,
-                    success: true
-                })
-            })
-            .catch(err => {
-                res.jsonp({
-                    message: 'Erro ao editar a imagem de perfil do utilizador ' + req.user._id,
-                    success: false
-                })
-            })
-    })
-
 /*
  * Atualiza a password de um utilizador pelo ID
  */
@@ -207,30 +198,6 @@ router.put('/profile/editPassword', passport.authenticate('jwt', {
             .catch(err => {
                 res.jsonp({
                     message: 'Erro ao editar a password do utilizador ' + req.user._id,
-                    success: false
-                })
-            })
-    })
-
-/*
- * Adiciona a path da nova imagem de um utilizador pelo ID
- */
-router.post('/profile/addImage', passport.authenticate('jwt', {
-        session: false
-    }),
-    (req, res) => {
-        const addUserImage = req.body.imagePath
-        User.addUserImage(req.user._id, addUserImage)
-            .then(data => {
-                res.jsonp({
-                    message: 'Imagem adicionada com sucesso.',
-                    user: data,
-                    success: true
-                })
-            })
-            .catch(err => {
-                res.jsonp({
-                    message: 'Erro ao adicionada a imagem',
                     success: false
                 })
             })
