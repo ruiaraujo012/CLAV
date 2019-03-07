@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const passport = require('passport')
 const Tipologias = require('../controllers/tipologias')
 const authenticate = require('../auth/auth').authenticate
 
@@ -20,6 +21,6 @@ const authenticate = require('../auth/auth').authenticate
 */
 router.get('/', authenticate(), (req, res) => {
 
-    Tipologias.listarTipologias().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    Entidades.listarTipologias().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
 
 })
