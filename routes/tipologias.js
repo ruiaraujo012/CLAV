@@ -23,3 +23,4 @@ router.get('/', authenticate(), (req, res) => {
     Tipologias.listarTipologias().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
 
 })
+module.exports = router
