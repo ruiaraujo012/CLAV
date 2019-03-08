@@ -29,8 +29,8 @@ router.get('/:id', authenticate(), async (req, res) => {
     let entidade = await Entidades.listarEntidadePorId(req.params.id)
     entidade = entidade.data.results.bindings[0]
 
-    let tipologiasPertencentes = await Entidades.tipologiasPertencentes(req.params.id)
-    tipologiasPertencentes = tipologiasPertencentes.data.results.bindings
+    let tipologias = await Entidades.tipologias(req.params.id)
+    tipologias = tipologias.data.results.bindings
 
     let intervencaoComoDono = await Entidades.intervencaoComoDono(req.params.id)
     intervencaoComoDono = intervencaoComoDono.data.results.bindings
@@ -38,7 +38,7 @@ router.get('/:id', authenticate(), async (req, res) => {
     let intervencaoComoParticipante = await Entidades.intervencaoComoParticipante(req.params.id)
     intervencaoComoParticipante = intervencaoComoParticipante.data.results.bindings
 
-    res.json({ entidade, tipologiasPertencentes, intervencaoComoDono, intervencaoComoParticipante })
+    res.json({ entidade, tipologias, intervencaoComoDono, intervencaoComoParticipante })
 })
 
 module.exports = router

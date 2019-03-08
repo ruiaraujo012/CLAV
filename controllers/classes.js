@@ -33,3 +33,28 @@ Classes.listarClassesPorNivel = (nivel) => {
     `
     return Graphdb.fetch(query)
 }
+
+
+Classes.listarClassesPorId = (id) => {
+
+    query = `
+    SELECT * WHERE { 
+        clav:${id} clav:titulo ?titulo;
+            clav:codigo ?codigo;
+            clav:classeStatus ?status;
+            clav:descricao ?desc.
+        OPTIONAL {
+            clav:${id} clav:temPai ?pai.
+            ?pai clav:codigo ?codigoPai;
+                clav:titulo ?tituloPai.
+        } 
+        
+        OPTIONAL {
+            clav:${id} clav:processoTransversal ?procTrans;
+                clav:processoTipoVC ?pt.
+            ?pt skos:prefLabel ?procTipo.
+        }
+    }
+    `
+    return Graphdb.fetch(query)
+}

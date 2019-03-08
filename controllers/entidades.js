@@ -32,7 +32,7 @@ Entidades.listarEntidadePorId = (id) => {
     return Graphdb.fetch(query)
 }
 
-Entidades.tipologiasPertencentes = (id) => {
+Entidades.tipologias = (id) => {
     query = `
     SELECT ?id ?sigla ?designacao WHERE {
         clav:${id} clav:pertenceTipologiaEnt ?id .

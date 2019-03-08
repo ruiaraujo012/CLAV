@@ -18,10 +18,20 @@ const authenticate = require('../auth/auth').authenticate
  *         description: Get all classes page
  */
 
-router.get('/:nivel', authenticate(), (req, res) => {
+router.get('/', authenticate(), (req, res) => {
 
-    Classes.listarClassesPorNivel(req.params.nivel).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    let nivel = req.query.nivel
+    if (!req.query.nivel)
+        nivel = 1
+    
+    Classes.listarClassesPorNivel(nivel).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+})
 
+router.get('/:id', authenticate(), (req, res) => {
+
+    if (req.params.id){
+        Classes.listarClassesPorId(req.params.id).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    }
 })
 
 module.exports = router
