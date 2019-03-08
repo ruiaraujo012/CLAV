@@ -23,4 +23,10 @@ router.get('/', authenticate(), (req, res) => {
     Tipologias.listarTipologias().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
 
 })
+
+router.get('/:id', authenticate(), (req, res) => {
+
+    Tipologias.listarTipologiaPorId(req.params.id).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+
+})
 module.exports = router

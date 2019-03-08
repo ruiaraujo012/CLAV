@@ -5,7 +5,7 @@ Tipologias.listarTipologias = () => {
 
     query = `
     SELECT ?id ?sigla ?designacao ?internacional ?sioe {
-        ?id rdf:type clav:Tipologia ;
+        ?id rdf:type clav:TipologiaEntidade ;
             clav:tipSigla ?sigla ;
             clav:tipDesignacao ?designacao .
     }
@@ -18,7 +18,7 @@ Tipologias.listarTipologiaPorId = (id) => {
     query = `
     SELECT ?sigla ?designacao
     WHERE {
-            clav:tip_INEM rdf:type clav:Tipologia ;
+            clav:${id} rdf:type clav:TipologiaEntidade ;
             clav:tipSigla ?sigla ;
             clav:tipDesignacao ?designacao .
 
