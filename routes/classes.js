@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const passport = require('passport')
 const Classes = require('../controllers/classes')
 const authenticate = require('../auth/auth').authenticate
+const Graphdb = require('../controllers/graphdb')
 
 /**
  * @swagger
@@ -24,8 +24,10 @@ router.get('/', authenticate(), async (req, res, next) => {
     if (!req.query.nivel)
         nivel = 1
     
-    //Classes.listarClassesPorNivel(nivel).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
-    req.dados = (await Classes.listarClassesPorNivel(nivel)).data
+    let resposta = (await Classes.listarClassesPorNivel(nivel)).data
+    let campos = resposta.head.vars 
+    let dados = resposta.results.bindings
+    res.locals.dados = Graphdb.simplificaSPARQLRes(dados, campos)
     next()
 })
 

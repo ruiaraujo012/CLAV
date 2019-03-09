@@ -4,14 +4,18 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 const jsonxml = require('jsontoxml')
+const passport = require('passport')
+const mongoose = require('mongoose')
+const jsoncsv = require('json-2-csv');
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
 const usersRouter = require('./routes/users')
 const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
-const passport = require('passport')
-const mongoose = require('mongoose')
+
+const swaggerConfig = require('./configs/swaggerConfig.json')
+const Graphdb = require('./controllers/graphdb')
 
 const app = express()
 
@@ -19,40 +23,20 @@ require('dotenv').config()
 require('./auth/auth')
 
 /*
- * Swagger definition
- */
-const swaggerDefinition = {
-    info: {
-        title: 'CLAV API',
-        version: '1.0.0',
-        description: 'Esta é a API do projeto CLAV. Pode encontrar mais informação sobre o CLAV em [http://clav.dglab.gov.pt](http://clav.dglab.gov.pt). Por motivos de segurança, toda a informação é devolvida em JSONP. Num futuro próximo serão disponibilizados resultados noutros formatos textuais como XML e CSV.',
-        contact: {
-            name: 'CLAV',
-            email: 'clav@dglab.gov.pt'
-        }
-    },
-    host: 'localhost:8000',
-    basePath: '/',
-    schemes: [
-        'http'
-    ]
-}
-
-/*
  * Ligação à base de dados
  */
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true
-})
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
     .then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
     .catch(err => console.log('Mongo: erro na conexão: ' + err))
 
 mongoose.set('useFindAndModify', false)
 
 /*
-* Inicialização do passport
-*/
+ * Inicialização do passport
+ */
 app.use(passport.initialize())
 
 /*
@@ -60,7 +44,7 @@ app.use(passport.initialize())
  */
 const options = {
     // import swaggerDefinitions
-    swaggerDefinition: swaggerDefinition,
+    swaggerDefinition: swaggerConfig,
     // path to the API docs
     apis: ['./routes/*.js'],
 }
@@ -87,16 +71,29 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 let formatOutput = (req, res, next) => {
+    let dados = res.locals.dados
 
     switch (req.headers.accept) {
         case 'application/json':
-            res.send(req.dados)
+            res.send(dados)
             break;
         case 'application/xml':
-            res.send(jsonxml(req.dados))
+            res.send(jsonxml(dados))
+            break;
+        case 'text/csv':
+            let options = {
+                expandArrayObjects: true,
+                prependHeader: true
+            }
+
+            jsoncsv.json2csv(dados, (err, csv) => {
+                if (err) return
+                res.send(csv)
+            }, options)
+            
             break;
         default:
-            res.send(req.dados)
+            res.send(dados)
             break;
     }
 }
@@ -106,6 +103,5 @@ app.use('/entidades', entidadesRouter)
 app.use('/tipologias', tipologiasRouter)
 app.use('/legislacao', legislacaoRouter)
 app.use('/', usersRouter)
-
 
 module.exports = app
