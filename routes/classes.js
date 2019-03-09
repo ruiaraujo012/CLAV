@@ -18,13 +18,15 @@ const authenticate = require('../auth/auth').authenticate
  *         description: Get all classes page
  */
 
-router.get('/', authenticate(), (req, res) => {
+router.get('/', authenticate(), async (req, res, next) => {
 
     let nivel = req.query.nivel
     if (!req.query.nivel)
         nivel = 1
     
-    Classes.listarClassesPorNivel(nivel).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    //Classes.listarClassesPorNivel(nivel).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    req.dados = (await Classes.listarClassesPorNivel(nivel)).data
+    next()
 })
 
 router.get('/:id', authenticate(), (req, res) => {

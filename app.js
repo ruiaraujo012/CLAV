@@ -3,6 +3,7 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
+const jsonxml = require('jsontoxml')
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
@@ -44,8 +45,8 @@ mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
     useCreateIndex: true
 })
-.then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
-.catch(err => console.log('Mongo: erro na conexão: ' + err))
+    .then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
+    .catch(err => console.log('Mongo: erro na conexão: ' + err))
 
 mongoose.set('useFindAndModify', false)
 
@@ -85,7 +86,22 @@ app.use(express.urlencoded({
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use('/classes', classesRouter)
+let formatOutput = (req, res, next) => {
+
+    switch (req.headers.accept) {
+        case 'application/json':
+            res.send(req.dados)
+            break;
+        case 'application/xml':
+            res.send(jsonxml(req.dados))
+            break;
+        default:
+            res.send(req.dados)
+            break;
+    }
+}
+
+app.use('/classes', classesRouter, formatOutput)
 app.use('/entidades', entidadesRouter)
 app.use('/tipologias', tipologiasRouter)
 app.use('/legislacao', legislacaoRouter)

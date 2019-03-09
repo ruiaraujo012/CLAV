@@ -17,6 +17,12 @@ const authenticate = require('../auth/auth').authenticate
  *       200:
  *         description: Get all entidades page
  */
+router.get('/teste', authenticate(), (req, res, next) => {
+
+    let vari = {"batatas" : "20kg"}
+    next(vari)
+
+})
 
 router.get('/', authenticate(), (req, res) => {
 
