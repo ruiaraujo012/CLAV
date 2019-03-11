@@ -72,13 +72,17 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 let formatOutput = (req, res, next) => {
     let dados = res.locals.dados
+    let campos = dados.head.vars
+    let bindings = dados.results.bindings
+    let dadosNormalizados = Graphdb.simplificaSPARQLRes(bindings, campos)
 
     switch (req.headers.accept) {
         case 'application/json':
-            res.send(dados)
+            res.send(dadosNormalizados)
             break;
         case 'application/xml':
-            res.send(jsonxml(dados))
+            res.send(jsonxml(dadosNormalizados))
+
             break;
         case 'text/csv':
             let options = {
@@ -86,11 +90,11 @@ let formatOutput = (req, res, next) => {
                 prependHeader: true
             }
 
-            jsoncsv.json2csv(dados, (err, csv) => {
+            jsoncsv.json2csv(dadosNormalizados, (err, csv) => {
                 if (err) return
                 res.send(csv)
             }, options)
-            
+
             break;
         default:
             res.send(dados)
@@ -99,7 +103,7 @@ let formatOutput = (req, res, next) => {
 }
 
 app.use('/classes', classesRouter, formatOutput)
-app.use('/entidades', entidadesRouter)
+app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter)
 app.use('/legislacao', legislacaoRouter)
 app.use('/', usersRouter)

@@ -34,5 +34,6 @@ Graphdb.simplificaSPARQLRes = (sparqlRes, campos) => {
                 resultado[i][campos[j]] = sparqlRes[i][campos[j]].value
         }
     }
+
     return resultado
 }

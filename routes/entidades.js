@@ -19,14 +19,21 @@ const authenticate = require('../auth/auth').authenticate
  */
 router.get('/teste', authenticate(), (req, res, next) => {
 
-    let vari = {"batatas" : "20kg"}
+    let vari = {
+        "batatas": "20kg"
+    }
     next(vari)
 
 })
 
-router.get('/', authenticate(), (req, res) => {
+router.get('/', authenticate(), (req, res, next) => {
 
-    Entidades.listarEntidades().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    Entidades.listarEntidades()
+        .then(data => {
+            res.locals.dados = data.data
+            next()
+        })
+        .catch(err => res.send(err)) // Como tratar o erro?
 
 })
 
@@ -44,7 +51,12 @@ router.get('/:id', authenticate(), async (req, res) => {
     let intervencaoComoParticipante = await Entidades.intervencaoComoParticipante(req.params.id)
     intervencaoComoParticipante = intervencaoComoParticipante.data.results.bindings
 
-    res.json({ entidade, tipologias, intervencaoComoDono, intervencaoComoParticipante })
+    res.json({
+        entidade,
+        tipologias,
+        intervencaoComoDono,
+        intervencaoComoParticipante
+    })
 })
 
 module.exports = router

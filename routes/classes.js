@@ -23,17 +23,14 @@ router.get('/', authenticate(), async (req, res, next) => {
     let nivel = req.query.nivel
     if (!req.query.nivel)
         nivel = 1
-    
-    let resposta = (await Classes.listarClassesPorNivel(nivel)).data
-    let campos = resposta.head.vars 
-    let dados = resposta.results.bindings
-    res.locals.dados = Graphdb.simplificaSPARQLRes(dados, campos)
+
+    res.locals.dados = (await Classes.listarClassesPorNivel(nivel)).data
     next()
 })
 
 router.get('/:id', authenticate(), (req, res) => {
 
-    if (req.params.id){
+    if (req.params.id) {
         Classes.listarClassesPorId(req.params.id).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
     }
 })
