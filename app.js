@@ -17,7 +17,11 @@ const legislacaoRouter = require('./routes/legislacao')
 const swaggerConfig = require('./configs/swaggerConfig.json')
 const Graphdb = require('./controllers/graphdb')
 
+const jsonrdf = require('jsonld')
+
 const app = express()
+
+
 
 require('dotenv').config()
 require('./auth/auth')
@@ -71,41 +75,47 @@ app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
 let formatOutput = (req, res, next) => {
+
+    if(!res.locals.dados)
+        next()
+
     let dados = res.locals.dados
     let campos = dados.head.vars
     let bindings = dados.results.bindings
     let dadosNormalizados = Graphdb.simplificaSPARQLRes(bindings, campos)
 
-    switch (req.headers.accept) {
+    let format = req.query.format || req.headers.accept
+
+    switch (format) {
         case 'application/json':
+        case 'json':
             res.send(dadosNormalizados)
             break;
         case 'application/xml':
+        case 'xml':
             res.send(jsonxml(dadosNormalizados))
-
             break;
         case 'text/csv':
+        case 'csv':
             let options = {
                 expandArrayObjects: true,
                 prependHeader: true
             }
-
             jsoncsv.json2csv(dadosNormalizados, (err, csv) => {
                 if (err) return
                 res.send(csv)
             }, options)
-
             break;
         default:
-            res.send(dados)
+            res.send(dadosNormalizados)
             break;
     }
 }
 
 app.use('/classes', classesRouter, formatOutput)
 app.use('/entidades', entidadesRouter, formatOutput)
-app.use('/tipologias', tipologiasRouter)
-app.use('/legislacao', legislacaoRouter)
+app.use('/tipologias', tipologiasRouter, formatOutput)
+app.use('/legislacao', legislacaoRouter, formatOutput)
 app.use('/', usersRouter)
 
 module.exports = app

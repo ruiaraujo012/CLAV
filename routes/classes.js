@@ -28,11 +28,15 @@ router.get('/', authenticate(), async (req, res, next) => {
     next()
 })
 
-router.get('/:id', authenticate(), (req, res) => {
+router.get('/:id', authenticate(), async (req, res, next) => {
 
+    
     if (req.params.id) {
-        Classes.listarClassesPorId(req.params.id).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+        let classe = await Classes.listarClassesPorId(req.params.id)
+        res.locals.dados = classe.data
     }
+
+    next()
 })
 
 module.exports = router

@@ -18,15 +18,21 @@ const authenticate = require('../auth/auth').authenticate
 *         description:
 *           falta preencher
 */
-router.get('/', authenticate(), (req, res) => {
+router.get('/', authenticate(), async (req, res, next) => {
 
-    Tipologias.listarTipologias().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    let tipologias = await Tipologias.listarTipologias()
+    res.locals.dados = tipologias.data
+    
+    next()
 
 })
 
-router.get('/:id', authenticate(), (req, res) => {
+router.get('/:id', authenticate(), async (req, res, next) => {
 
-    Tipologias.listarTipologiaPorId(req.params.id).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    let tipologia = await Tipologias.listarTipologiaPorId(req.params.id)
+    res.locals.dados = tipologia.data
+
+    next()
 
 })
 module.exports = router

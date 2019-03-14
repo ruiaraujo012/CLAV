@@ -17,15 +17,22 @@ const authenticate = require('../auth/auth').authenticate
  *         description: Get all classes page
  */
 
-router.get('/', authenticate(), (req, res) => {
+router.get('/', authenticate(), async (req, res, next) => {
 
-    Legislacao.listarLegislacao().then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
+    let legislacoes = await Legislacao.listarLegislacao()
+    res.locals.dados = legislacoes.data
+
+    next()
+
+})
+
+router.get('/:id', authenticate(), async (req, res, next) => {
+
+    let legislacao = await Legislacao.listarLegislacaoPorId(req.params.id)
+    res.locals.dados = legislacao.data
+
+    next()
 
 })
 
-router.get('/:id', authenticate(), (req, res) => {
-
-    Legislacao.listarLegislacaoPorId(req.params.id).then(data => res.json(data.data.results.bindings)).catch(err => res.send(err))
-
-})
 module.exports = router
