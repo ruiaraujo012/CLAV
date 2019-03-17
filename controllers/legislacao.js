@@ -48,3 +48,31 @@ Legislacao.listarLegislacaoPorId = (id) => {
     `
     return Graphdb.fetch(query)
 }
+
+Legislacao.regularProcessosDeNegocio = id => {
+    
+    query = `
+    SELECT DISTINCT ?id ?codigo ?titulo WHERE { 
+        {
+            ?id clav:temLegislacao clav:${id};
+        } 
+        UNION {
+            ?crit clav:temLegislacao clav:${id}.
+            ?just clav:temCriterio ?crit .
+            ?aval clav:temJustificacao ?just .
+            {
+                ?id clav:temPCA ?aval ;
+            } 
+            UNION {
+                ?id clav:temDF ?aval ;
+            }
+        }
+        ?id clav:codigo ?codigo;
+            clav:titulo ?titulo;
+            clav:classeStatus 'A'.
+            
+    } ORDER BY ?codigo
+    `
+
+    return Graphdb.fetch(query)
+}

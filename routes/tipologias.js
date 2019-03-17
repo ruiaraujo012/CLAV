@@ -21,7 +21,7 @@ const authenticate = require('../auth/auth').authenticate
 router.get('/', authenticate(), async (req, res, next) => {
 
     let tipologias = await Tipologias.listarTipologias()
-    res.locals.dados = tipologias.data
+    res.locals.dados = tipologias
     
     next()
 
@@ -30,7 +30,7 @@ router.get('/', authenticate(), async (req, res, next) => {
 router.get('/:id', authenticate(), async (req, res, next) => {
 
     let tipologia = await Tipologias.listarTipologiaPorId(req.params.id)
-    res.locals.dados = tipologia.data
+    res.locals.dados = tipologia
 
     next()
 

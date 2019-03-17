@@ -13,18 +13,6 @@ const prefixes = {
     skos: 'http://www.w3.org/2004/02/skos/core#'
 }
 
-Graphdb.fetch = (query) => {
-
-    let prefixConcat = ""
-    for (let key in prefixes) {
-        prefixConcat += "PREFIX " + key + ": <" + prefixes[key] + "> "
-    }
-
-    query = prefixConcat + query
-
-    return axios.get(graphdbAdress + '/repositories/' + graphdbRepository + '?query=' + encodeURIComponent(query))
-}
-
 Graphdb.simplificaSPARQLRes = (sparqlRes, campos) => {
     let resultado = new Array()
     for (let i = 0; i < sparqlRes.length; i++) {
@@ -36,4 +24,22 @@ Graphdb.simplificaSPARQLRes = (sparqlRes, campos) => {
     }
 
     return resultado
+}
+
+Graphdb.fetch = async (query) => {
+
+    let prefixConcat = ""
+    for (let key in prefixes) {
+        prefixConcat += "PREFIX " + key + ": <" + prefixes[key] + "> "
+    }
+
+    query = prefixConcat + query
+
+    let dados = (await axios.get(graphdbAdress + '/repositories/' + graphdbRepository + '?query=' + encodeURIComponent(query))).data
+    let campos = dados.head.vars
+    let bindings = dados.results.bindings
+    let dadosNormalizados = this.simplificaSPARQLRes(bindings, campos)
+
+    return dadosNormalizados
+
 }

@@ -20,7 +20,7 @@ const authenticate = require('../auth/auth').authenticate
 
 router.get('/', authenticate(), async (req, res, next) => {
 
-    let entidades = (await Entidades.listarEntidades()).data
+    let entidades = await Entidades.listarEntidades()
     res.locals.dados = entidades
 
     next()
@@ -34,11 +34,12 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     let intervencaoComoDono = await Entidades.intervencaoComoDono(req.params.id)
     let intervencaoComoParticipante = await Entidades.intervencaoComoParticipante(req.params.id)
 
+    // NAO FUNCIONA
     res.locals.dados = {
-        ...entidade.data,
-        ...tipologias.data,
-        ...intervencaoComoDono.data,
-        ...intervencaoComoParticipante.data
+        ...entidade[0],
+        tipologias,
+        intervencaoComoDono,
+        intervencaoComoParticipante
     }
 
     next()

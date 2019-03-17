@@ -80,20 +80,16 @@ let formatOutput = (req, res, next) => {
         next()
 
     let dados = res.locals.dados
-    let campos = dados.head.vars
-    let bindings = dados.results.bindings
-    let dadosNormalizados = Graphdb.simplificaSPARQLRes(bindings, campos)
-
     let format = req.query.format || req.headers.accept
 
     switch (format) {
         case 'application/json':
         case 'json':
-            res.send(dadosNormalizados)
+            res.send(dados)
             break;
         case 'application/xml':
         case 'xml':
-            res.send(jsonxml(dadosNormalizados))
+            res.send(jsonxml(dados))
             break;
         case 'text/csv':
         case 'csv':
@@ -101,13 +97,13 @@ let formatOutput = (req, res, next) => {
                 expandArrayObjects: true,
                 prependHeader: true
             }
-            jsoncsv.json2csv(dadosNormalizados, (err, csv) => {
+            jsoncsv.json2csv(dados, (err, csv) => {
                 if (err) return
                 res.send(csv)
             }, options)
             break;
         default:
-            res.send(dadosNormalizados)
+            res.send(dados)
             break;
     }
 }

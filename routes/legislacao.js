@@ -20,7 +20,7 @@ const authenticate = require('../auth/auth').authenticate
 router.get('/', authenticate(), async (req, res, next) => {
 
     let legislacoes = await Legislacao.listarLegislacao()
-    res.locals.dados = legislacoes.data
+    res.locals.dados = legislacoes
 
     next()
 
@@ -29,7 +29,12 @@ router.get('/', authenticate(), async (req, res, next) => {
 router.get('/:id', authenticate(), async (req, res, next) => {
 
     let legislacao = await Legislacao.listarLegislacaoPorId(req.params.id)
-    res.locals.dados = legislacao.data
+    let processosDeNegocio = await Legislacao.regularProcessosDeNegocio(req.params.id)
+
+    res.locals.dados = {
+        ...legislacao[0],
+        processosDeNegocio
+    }
 
     next()
 

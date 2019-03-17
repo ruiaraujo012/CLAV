@@ -24,16 +24,17 @@ router.get('/', authenticate(), async (req, res, next) => {
     if (!req.query.nivel)
         nivel = 1
 
-    res.locals.dados = (await Classes.listarClassesPorNivel(nivel)).data
+    res.locals.dados = await Classes.listarClassesPorNivel(nivel)
     next()
+
 })
 
 router.get('/:id', authenticate(), async (req, res, next) => {
 
-    
     if (req.params.id) {
         let classe = await Classes.listarClassesPorId(req.params.id)
-        res.locals.dados = classe.data
+        console.log(classe)
+        res.locals.dados = classe
     }
 
     next()
