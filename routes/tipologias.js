@@ -29,8 +29,19 @@ router.get('/', authenticate(), async (req, res, next) => {
 
 router.get('/:id', authenticate(), async (req, res, next) => {
 
-    let tipologia = await Tipologias.listarTipologiaPorId(req.params.id)
-    res.locals.dados = tipologia
+    let id = req.params.id
+
+    let tipologia = await Tipologias.listarTipologiaPorId(id)
+    let dono = await Tipologias.dono(id)
+    let participacao = await Tipologias.participante(id)
+    let entidades = await Tipologias.entidades(id)
+
+    res.locals.dados = {
+        ...tipologia[0],
+        dono,
+        participacao,
+        entidades
+    }
 
     next()
 
