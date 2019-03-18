@@ -9,13 +9,14 @@ Legislacao.listarLegislacao = () => {
             ?id ?data ?numero ?tipo ?sumario
             (GROUP_CONCAT(CONCAT(STR(?ent),"::",?entSigla); SEPARATOR=";") AS ?entidades)
         WHERE { 
-            ?id rdf:type clav:Legislacao;
+            ?idd rdf:type clav:Legislacao;
                 clav:diplomaData ?data;
                 clav:diplomaNumero ?numero;
                 clav:diplomaTipo ?tipo;
-                clav:diplomaSumario ?sumario.
+                clav:diplomaSumario ?sumario;
+            BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
             optional{
-                ?id clav:diplomaEntidade ?ent.
+                ?idd clav:diplomaEntidade ?ent.
                 ?ent clav:entSigla ?entSigla;
             }
         }
@@ -54,20 +55,21 @@ Legislacao.regularProcessosDeNegocio = id => {
     query = `
     SELECT DISTINCT ?id ?codigo ?titulo WHERE { 
         {
-            ?id clav:temLegislacao clav:${id};
+            ?idd clav:temLegislacao clav:${id};
+            BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         } 
         UNION {
             ?crit clav:temLegislacao clav:${id}.
             ?just clav:temCriterio ?crit .
             ?aval clav:temJustificacao ?just .
             {
-                ?id clav:temPCA ?aval ;
+                ?idd clav:temPCA ?aval ;
             } 
             UNION {
-                ?id clav:temDF ?aval ;
+                ?idd clav:temDF ?aval ;
             }
         }
-        ?id clav:codigo ?codigo;
+        ?idd clav:codigo ?codigo;
             clav:titulo ?titulo;
             clav:classeStatus 'A'.
             

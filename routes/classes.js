@@ -33,7 +33,6 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 
     if (req.params.id) {
         let classe = await Classes.listarClassesPorId(req.params.id)
-        console.log(classe)
         res.locals.dados = classe
     }
 

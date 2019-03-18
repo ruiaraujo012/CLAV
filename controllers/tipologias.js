@@ -5,9 +5,10 @@ Tipologias.listarTipologias = () => {
 
     query = `
     SELECT ?id ?sigla ?designacao ?internacional ?sioe {
-        ?id rdf:type clav:TipologiaEntidade ;
+        ?idd rdf:type clav:TipologiaEntidade ;
             clav:tipSigla ?sigla ;
-            clav:tipDesignacao ?designacao .
+            clav:tipDesignacao ?designacao ;
+            BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }
     `
     return Graphdb.fetch(query)
@@ -31,11 +32,12 @@ Tipologias.dono = id => {
 
     query = ` 
     SELECT ?id ?codigo ?titulo WHERE {
-        ?id clav:temDono clav:${id} ;
+        ?idd clav:temDono clav:${id} ;
             clav:codigo ?codigo ;
             clav:titulo ?titulo ;
             clav:pertenceLC clav:lc1 ;
             clav:classeStatus "A" .
+        BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }
     `
 
@@ -46,7 +48,7 @@ Tipologias.participante = id => {
 
     query = `
     select ?id ?codigo ?titulo ?tipo where { 
-        ?id clav:temParticipante clav:${id} ;
+        ?idd clav:temParticipante clav:${id} ;
             ?tipo clav:${id} ;
         
             clav:titulo ?titulo ;
@@ -55,6 +57,7 @@ Tipologias.participante = id => {
             clav:classeStatus "A" .
         
         filter (?tipo!=clav:temParticipante && ?tipo!=clav:temDono)
+        BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }`
 
     return Graphdb.fetch(query)
@@ -65,11 +68,12 @@ Tipologias.entidades = id => {
 
     query = `
     SELECT ?id ?sigla ?designacao WHERE {
-        ?id clav:pertenceTipologiaEnt clav:${id} .
+        ?idd clav:pertenceTipologiaEnt clav:${id} .
         
-        ?id clav:entEstado "Ativa";
+        ?idd clav:entEstado "Ativa";
             clav:entSigla ?sigla;
-            clav:entDesignacao ?designacao.
+            clav:entDesignacao ?designacao;
+        BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }`
 
     return Graphdb.fetch(query)
