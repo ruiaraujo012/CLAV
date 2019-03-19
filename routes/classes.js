@@ -31,11 +31,22 @@ router.get('/', authenticate(), async (req, res, next) => {
 
 router.get('/:id', authenticate(), async (req, res, next) => {
 
-    if (req.params.id) {
-        let classe = await Classes.listarClassesPorId(req.params.id)
-        res.locals.dados = classe
+    let nivelClasse = null
+    if (!req.params.id) {
+        next()
     }
+    let id = req.params.id
 
+    // Alterar
+    nivelClasse = 3
+
+    switch (nivelClasse) {
+        case 3:
+            res.locals.dados = await Classes.obtencaoDadosNivel3(id)
+            break
+        default:
+            break
+    }
     next()
 })
 
