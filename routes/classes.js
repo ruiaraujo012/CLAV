@@ -38,9 +38,15 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     let id = req.params.id
 
     // Alterar
-    nivelClasse = 3
-
+    nivelClasse = 1
+        
     switch (nivelClasse) {
+        case 1:
+            res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
+            break
+        case 2:
+            res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
+            break
         case 3:
             res.locals.dados = await Classes.obtencaoDadosNivel3(id)
             break

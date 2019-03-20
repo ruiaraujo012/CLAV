@@ -18,6 +18,7 @@ Classes.listarClasses = () => {
     return Graphdb.fetch(query)
 }
 
+
 Classes.listarClassesPorNivel = (nivel) => {
 
     query = `
@@ -56,6 +57,46 @@ Classes.listarClassesPorId = (id) => {
         }
     }
     `
+    return Graphdb.fetch(query)
+}
+
+Classes.listarNotasAplicacao = (id) => {
+
+    query = `
+    SELECT * WHERE { 
+        clav:${id} clav:temNotaAplicacao ?idNota.
+        ?idNota clav:conteudo ?nota .
+    }`
+    return Graphdb.fetch(query)
+}
+
+Classes.listarExemplosNotasAplicacao = (id) => {
+
+    query = `
+    SELECT * WHERE { 
+        clav:${id} clav:exemploNA ?exemplo.
+    }`
+    return Graphdb.fetch(query)
+}
+
+Classes.listarNotasExclusao = (id) => {
+
+    query = `
+    SELECT * WHERE { 
+        clav:${id} clav:temNotaExclusao ?idNota.
+        ?idNota clav:conteudo ?nota .
+    }`
+    return Graphdb.fetch(query)
+}
+
+Classes.listarTermosIndice = (id) => {
+
+    query = `
+    SELECT * WHERE { 
+        ?idTI a clav:TermoIndice;
+              clav:estaAssocClasse clav:${id} ;
+              clav:termo ?termo
+    }`
     return Graphdb.fetch(query)
 }
 
@@ -126,6 +167,22 @@ Classes.legislacao = id => {
         } order by ?tipo ?numero`
 
     return Graphdb.fetch(query)
+}
+
+Classes.obtencaoDadosNivel1_2 = async id => {
+
+    let classe = await this.listarClassesPorId(id)
+    let notasAplic = await this.listarNotasAplicacao(id)
+    let exeNotasAplic = await this.listarExemplosNotasAplicacao(id)
+    let notasExclus = await this.listarNotasExclusao(id)
+    let termosInd = await this.listarTermosIndice(id)
+    return {
+        ...classe[0],
+        notasAplic,
+        exeNotasAplic,
+        notasExclus,
+        termosInd
+    }
 }
 
 Classes.obtencaoDadosNivel3 = async id => {
