@@ -169,6 +169,72 @@ Classes.legislacao = id => {
     return Graphdb.fetch(query)
 }
 
+Classes.listarPca = id => {
+    let query = `
+        SELECT 
+            ?idPCA
+            ?formaContagem
+            ?subFormaContagem
+            ?idJustificacao
+            (GROUP_CONCAT(DISTINCT ?valor; SEPARATOR="###") AS ?valores)
+            (GROUP_CONCAT(DISTINCT ?nota; SEPARATOR="###") AS ?notas)
+        WHERE { 
+            clav:${id} clav:temPCA ?idPCA .
+            OPTIONAL {
+                ?idPCA clav:pcaFormaContagemNormalizada ?contNormID .    
+                ?contNormID skos:prefLabel ?formaContagem .
+            }
+            OPTIONAL {
+                ?idPCA clav:pcaSubformaContagem ?subContID .
+                ?subContID skos:scopeNote ?subFormaContagem .
+            }
+            OPTIONAL {
+                ?idPCA clav:pcaNota ?nota .
+            }
+            OPTIONAL {
+                ?idPCA clav:pcaValor ?valor .
+            }
+            OPTIONAL {
+                ?idPCA clav:temJustificacao ?idJustificacao .
+            }    
+        }GROUP BY ?idPCA ?formaContagem ?subFormaContagem ?idJustificacao 
+        `
+    return Graphdb.fetch(query)
+}
+
+Classes.listarJustificacao = id => {
+    let query = `
+        SELECT
+            ?criterio ?tipoLabel ?conteudo
+        WHERE {
+            clav:${id} clav:temCriterio ?criterio . 
+            ?criterio clav:conteudo ?conteudo.
+            ?criterio a ?tipo.
+            ?tipo rdfs:subClassOf clav:CriterioJustificacao.
+            ?tipo rdfs:label ?tipoLabel.
+        }`
+    return Graphdb.fetch(query)
+}
+
+Classes.listarDf = id => {
+    let query = `
+        SELECT 
+            ?idDF ?valor ?idJustificacao
+        WHERE { 
+            clav:${id} clav:temDF ?idDF .
+            OPTIONAL {
+                ?idDF clav:dfValor ?valor ;
+            }
+            OPTIONAL {
+                ?idDF clav:dfNota ?Nota ;
+            }
+            OPTIONAL {
+                ?idDF clav:temJustificacao ?idJustificacao .
+            }    
+        }`
+    return Graphdb.fetch(query)
+}
+
 Classes.obtencaoDadosNivel1_2 = async id => {
 
     let classe = await this.listarClassesPorId(id)
@@ -186,20 +252,33 @@ Classes.obtencaoDadosNivel1_2 = async id => {
 }
 
 Classes.obtencaoDadosNivel3 = async id => {
-    
-    //let classe = await this.listarClassesPorId(id)
+
     let descritivo = await this.obtencaoDadosNivel1_2(id)
     let donos = await this.donos(id)
     let participantes = await this.participantes(id)
     let processosRelacionados = await this.processosRelacionados(id)
     let legislacao = await this.legislacao(id)
+    let decisao = await this.obtencaoDadosNivel4(id)
 
     return {
-        //...classe[0],
         descritivo,
         donos,
         participantes,
         processosRelacionados,
         legislacao
+    }
+}
+
+Classes.obtencaoDadosNivel4 = async id => {
+    let descritivo = await this.obtencaoDadosNivel1_2(id)
+    let pca = await this.listarPca(id)
+    let justificacao = await this.listarJustificacao(id)
+    let df = await this.listarDf(id)
+
+    return {
+        descritivo,
+        pca,
+        justificacao,
+        df
     }
 }

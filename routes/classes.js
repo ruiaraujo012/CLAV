@@ -50,6 +50,9 @@ router.get('/:id', authenticate(), async (req, res, next) => {
         case 3:
             res.locals.dados = await Classes.obtencaoDadosNivel3(id)
             break
+        case 4:
+            res.locals.dados = await Classes.obtencaoDadosNivel4(id)
+            break
         default:
             break
     }
