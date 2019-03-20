@@ -186,15 +186,17 @@ Classes.obtencaoDadosNivel1_2 = async id => {
 }
 
 Classes.obtencaoDadosNivel3 = async id => {
-
-    let classe = await this.listarClassesPorId(id)
+    
+    //let classe = await this.listarClassesPorId(id)
+    let descritivo = await this.obtencaoDadosNivel1_2(id)
     let donos = await this.donos(id)
     let participantes = await this.participantes(id)
     let processosRelacionados = await this.processosRelacionados(id)
     let legislacao = await this.legislacao(id)
 
     return {
-        ...classe[0],
+        //...classe[0],
+        descritivo,
         donos,
         participantes,
         processosRelacionados,

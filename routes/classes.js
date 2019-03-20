@@ -38,7 +38,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     let id = req.params.id
 
     // Alterar
-    nivelClasse = 1
+    nivelClasse = 3
         
     switch (nivelClasse) {
         case 1:
