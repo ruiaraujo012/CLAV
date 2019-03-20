@@ -4,7 +4,7 @@ const Graphdb = require('./graphdb')
 // TODO : Alterar query para abranger todos os níveis.
 Legislacao.listarLegislacao = () => {
 
-    query = `
+    let query = `
     SELECT  
             ?id ?data ?numero ?tipo ?sumario
             (GROUP_CONCAT(CONCAT(STR(?ent),"::",?entSigla); SEPARATOR=";") AS ?entidades)
@@ -28,7 +28,7 @@ Legislacao.listarLegislacao = () => {
 
 Legislacao.listarLegislacaoPorId = (id) => {
 
-    query = `
+    let query = `
     SELECT  
         ?tipo ?data ?numero ?sumario ?link
         (GROUP_CONCAT(CONCAT(STR(?ent),"::",?entSigla,"::",?entDesignacao); SEPARATOR=";") AS ?entidades)
@@ -52,7 +52,7 @@ Legislacao.listarLegislacaoPorId = (id) => {
 
 Legislacao.regularProcessosDeNegocio = id => {
     
-    query = `
+    let query = `
     SELECT DISTINCT ?id ?codigo ?titulo WHERE { 
         {
             ?idd clav:temLegislacao clav:${id};

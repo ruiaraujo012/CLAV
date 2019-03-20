@@ -4,7 +4,7 @@ const Graphdb = require('./graphdb')
 // TODO : Alterar query para abranger todos os níveis.
 Classes.listarClasses = () => {
 
-    query = `
+    let query = `
         Select ?id                            
         ?codigo 
         ?titulo 
@@ -21,7 +21,7 @@ Classes.listarClasses = () => {
 
 Classes.listarClassesPorNivel = (nivel) => {
 
-    query = `
+    let query = `
         Select ?id                            
         ?codigo 
         ?titulo 
@@ -38,7 +38,7 @@ Classes.listarClassesPorNivel = (nivel) => {
 
 Classes.listarClassesPorId = (id) => {
 
-    query = `
+    let query = `
     SELECT * WHERE { 
         clav:${id} clav:titulo ?titulo;
             clav:codigo ?codigo;
@@ -62,7 +62,7 @@ Classes.listarClassesPorId = (id) => {
 
 Classes.listarNotasAplicacao = (id) => {
 
-    query = `
+    let query = `
     SELECT * WHERE { 
         clav:${id} clav:temNotaAplicacao ?idNota.
         ?idNota clav:conteudo ?nota .
@@ -72,7 +72,7 @@ Classes.listarNotasAplicacao = (id) => {
 
 Classes.listarExemplosNotasAplicacao = (id) => {
 
-    query = `
+    let query = `
     SELECT * WHERE { 
         clav:${id} clav:exemploNA ?exemplo.
     }`
@@ -81,7 +81,7 @@ Classes.listarExemplosNotasAplicacao = (id) => {
 
 Classes.listarNotasExclusao = (id) => {
 
-    query = `
+    let query = `
     SELECT * WHERE { 
         clav:${id} clav:temNotaExclusao ?idNota.
         ?idNota clav:conteudo ?nota .
@@ -91,7 +91,7 @@ Classes.listarNotasExclusao = (id) => {
 
 Classes.listarTermosIndice = (id) => {
 
-    query = `
+    let query = `
     SELECT * WHERE { 
         ?idTI a clav:TermoIndice;
               clav:estaAssocClasse clav:${id} ;

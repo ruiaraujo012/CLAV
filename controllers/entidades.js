@@ -19,7 +19,7 @@ Entidades.listarEntidades = () => {
 
 Entidades.listarEntidadePorId = (id) => {
 
-    query = `
+    let query = `
     SELECT ?sigla ?estado ?internacional ?designacao ?sioe
     WHERE {
             clav:ent_INEM rdf:type clav:Entidade ;
@@ -34,7 +34,7 @@ Entidades.listarEntidadePorId = (id) => {
 }
 
 Entidades.tipologias = (id) => {
-    query = `
+    let query = `
     SELECT ?id ?sigla ?designacao WHERE {
         clav:${id} clav:pertenceTipologiaEnt ?idd .
         ?idd clav:tipEstado "Ativa" ;
@@ -47,7 +47,7 @@ Entidades.tipologias = (id) => {
 }
 
 Entidades.intervencaoComoDono = (id) => {
-    query = `
+    let query = `
     SELECT ?id ?codigo ?titulo WHERE {
         ?idd clav:temDono clav:${id} ;
             clav:codigo ?codigo ;
@@ -61,7 +61,7 @@ Entidades.intervencaoComoDono = (id) => {
 }
 
 Entidades.intervencaoComoParticipante = (id) => {
-    query = `
+    let query = `
     select ?id ?codigo ?titulo where { 
         ?idd clav:temParticipante clav:${id} ;
             ?Type clav:${id} ;

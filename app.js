@@ -6,18 +6,18 @@ const swaggerJSDoc = require('swagger-jsdoc')
 const jsonxml = require('jsontoxml')
 const passport = require('passport')
 const mongoose = require('mongoose')
-const jsoncsv = require('json-2-csv');
+const jsoncsv = require('json-2-csv')
+const jsonrdf = require('jsonld')
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
 const usersRouter = require('./routes/users')
 const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
+const termoIndiceRouter = require('./routes/termoIndice')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 const Graphdb = require('./controllers/graphdb')
-
-const jsonrdf = require('jsonld')
 
 const app = express()
 
@@ -112,6 +112,7 @@ app.use('/classes', classesRouter, formatOutput)
 app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter, formatOutput)
 app.use('/legislacao', legislacaoRouter, formatOutput)
+app.use('/termoindice', termoIndiceRouter, formatOutput)
 app.use('/', usersRouter)
 
 module.exports = app

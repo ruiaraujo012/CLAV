@@ -3,7 +3,7 @@ const Graphdb = require('./graphdb')
 
 Tipologias.listarTipologias = () => {
 
-    query = `
+    let query = `
     SELECT ?id ?sigla ?designacao ?internacional ?sioe {
         ?idd rdf:type clav:TipologiaEntidade ;
             clav:tipSigla ?sigla ;
@@ -16,7 +16,7 @@ Tipologias.listarTipologias = () => {
 
 Tipologias.listarTipologiaPorId = (id) => {
 
-    query = `
+    let query = `
     SELECT ?sigla ?designacao
     WHERE {
             clav:${id} rdf:type clav:TipologiaEntidade ;
@@ -30,7 +30,7 @@ Tipologias.listarTipologiaPorId = (id) => {
 
 Tipologias.dono = id => {
 
-    query = ` 
+    let query = ` 
     SELECT ?id ?codigo ?titulo WHERE {
         ?idd clav:temDono clav:${id} ;
             clav:codigo ?codigo ;
@@ -46,7 +46,7 @@ Tipologias.dono = id => {
 
 Tipologias.participante = id => {
 
-    query = `
+    let query = `
     select ?id ?codigo ?titulo ?tipo where { 
         ?idd clav:temParticipante clav:${id} ;
             ?tipo clav:${id} ;
@@ -66,7 +66,7 @@ Tipologias.participante = id => {
 
 Tipologias.entidades = id => {
 
-    query = `
+    let query = `
     SELECT ?id ?sigla ?designacao WHERE {
         ?idd clav:pertenceTipologiaEnt clav:${id} .
         
