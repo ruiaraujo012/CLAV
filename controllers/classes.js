@@ -282,3 +282,32 @@ Classes.obtencaoDadosNivel4 = async id => {
         df
     }
 }
+
+Classes.obterNivelDaClasse = async id => {
+
+    id = id.replace("c", "")
+
+    let query = `
+        SELECT ?id ?tipo where {   
+            ?id clav:codigo "${id}" ;
+            rdf:type ?tipo .
+        }
+    `
+
+    let result = await Graphdb.fetch(query)
+
+    let decider = JSON.stringify(result)
+
+    if (decider.includes("Classe_N1")) {
+        return 1
+    } else if (decider.includes("Classe_N2")) {
+        return 2 
+    } else if (decider.includes("Classe_N3")) {
+        return 3
+    } else if (decider.includes("Classe_N4")) {
+        return 4
+    }
+
+    return 0
+
+}
