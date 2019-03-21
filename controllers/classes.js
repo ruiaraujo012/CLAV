@@ -36,29 +36,6 @@ Classes.listarClassesPorNivel = (nivel) => {
 }
 
 
-Classes.listarClassesPorId = (id) => {
-
-    let query = `
-    SELECT * WHERE { 
-        clav:${id} clav:titulo ?titulo;
-            clav:codigo ?codigo;
-            clav:classeStatus ?status;
-            clav:descricao ?desc.
-        OPTIONAL {
-            clav:${id} clav:temPai ?pai.
-            ?pai clav:codigo ?codigoPai;
-                clav:titulo ?tituloPai.
-        } 
-        
-        OPTIONAL {
-            clav:${id} clav:processoTransversal ?procTrans;
-                clav:processoTipoVC ?pt.
-            ?pt skos:prefLabel ?procTipo.
-        }
-    }
-    `
-    return Graphdb.fetch(query)
-}
 
 Classes.listarNotasAplicacao = (id) => {
 
@@ -237,7 +214,7 @@ Classes.listarDf = id => {
 
 Classes.obtencaoDadosNivel1_2 = async id => {
 
-    let classe = await this.listarClassesPorId(id)
+    let classe = await this.blocoDescritivo(id)
     let notasAplic = await this.listarNotasAplicacao(id)
     let exeNotasAplic = await this.listarExemplosNotasAplicacao(id)
     let notasExclus = await this.listarNotasExclusao(id)
@@ -253,34 +230,80 @@ Classes.obtencaoDadosNivel1_2 = async id => {
 
 Classes.obtencaoDadosNivel3 = async id => {
 
+    // TODO : talvez alterar para o bloco descritivo
     let descritivo = await this.obtencaoDadosNivel1_2(id)
-    let donos = await this.donos(id)
-    let participantes = await this.participantes(id)
-    let processosRelacionados = await this.processosRelacionados(id)
-    let legislacao = await this.legislacao(id)
-    let decisao = await this.obtencaoDadosNivel4(id)
+    let blocoContexto = await this.blocoContexto(id)
+    let blocoDecisao = await this.blocoDecisao(id)
 
     return {
-        descritivo,
-        donos,
-        participantes,
-        processosRelacionados,
-        legislacao
+        ...descritivo,
+        ...blocoContexto,
+        ...blocoDecisao
     }
 }
 
 Classes.obtencaoDadosNivel4 = async id => {
     let descritivo = await this.obtencaoDadosNivel1_2(id)
+    let blocoDecisao = await this.blocoDecisao(id)
+
+    return {
+        ...descritivo,
+        ...blocoDecisao
+    }
+}
+
+Classes.blocoDescritivo = (id) => {
+
+    let query = `
+    SELECT * WHERE { 
+        clav:${id} clav:titulo ?titulo;
+            clav:codigo ?codigo;
+            clav:classeStatus ?status;
+            clav:descricao ?desc.
+        OPTIONAL {
+            clav:${id} clav:temPai ?pai.
+            ?pai clav:codigo ?codigoPai;
+                clav:titulo ?tituloPai.
+        } 
+        
+        OPTIONAL {
+            clav:${id} clav:processoTransversal ?procTrans;
+                clav:processoTipoVC ?pt.
+            ?pt skos:prefLabel ?procTipo.
+        }
+    }
+    `
+    return Graphdb.fetch(query)
+}
+
+Classes.blocoContexto = async id => {
+
+    let donos = await this.donos(id)
+    let participantes = await this.participantes(id)
+    let processosRelacionados = await this.processosRelacionados(id)
+    let legislacao = await this.legislacao(id)
+
+    return {
+        donos,
+        participantes,
+        processosRelacionados,
+        legislacao
+    }
+    
+}
+
+Classes.blocoDecisao = async id => {
+
     let pca = await this.listarPca(id)
     let justificacao = await this.listarJustificacao(id)
     let df = await this.listarDf(id)
 
     return {
-        descritivo,
         pca,
         justificacao,
         df
     }
+
 }
 
 Classes.obterNivelDaClasse = async id => {
@@ -298,16 +321,11 @@ Classes.obterNivelDaClasse = async id => {
 
     let decider = JSON.stringify(result)
 
-    if (decider.includes("Classe_N1")) {
-        return 1
-    } else if (decider.includes("Classe_N2")) {
-        return 2 
-    } else if (decider.includes("Classe_N3")) {
-        return 3
-    } else if (decider.includes("Classe_N4")) {
-        return 4
-    }
+    let classes = ["Classe_N1", "Classe_N2", "Classe_N3", "Classe_N4"]
+
+    for(key in classes)
+        if(decider.includes(classes[key])) 
+            return parseInt(key) + 1
 
     return 0
-
 }

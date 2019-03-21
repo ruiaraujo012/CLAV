@@ -58,4 +58,74 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     next()
 })
 
+router.get('/:id/donos', authenticate(), async (req, res, next) => {
+
+
+    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+
+    if (nivel != 3) 
+        next()
+    
+    res.locals.dados = await Classes.donos(req.params.id)
+    next()
+
+})
+
+router.get('/:id/participantes', authenticate(), async (req, res, next) => {
+
+    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+
+    if (nivel != 3) 
+        next()
+    
+    res.locals.dados = await Classes.participantes(req.params.id)
+    next()
+
+})
+
+router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) => {
+
+
+    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+
+    if (nivel != 3) 
+        next()
+    
+    res.locals.dados = await Classes.processosRelacionados(req.params.id)
+    next()
+})
+
+router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
+
+    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+
+    if (nivel != 3) 
+        next()
+    
+    res.locals.dados = await Classes.legislacao(req.params.id)
+    next()
+})
+
+router.get('/:id/pca', authenticate(), async (req, res, next) => {
+
+    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+
+    if (nivel != 3 && nivel != 4) 
+        next()
+    
+    res.locals.dados = await Classes.listarPca(req.params.id)
+    next()
+})
+
+router.get('/:id/destinofinal', authenticate(), async (req, res, next) => {
+
+    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+
+    if (nivel != 3 && nivel != 4) 
+        next()
+    
+    res.locals.dados = await Classes.listarDf(req.params.id)
+    next()
+})
+
 module.exports = router
