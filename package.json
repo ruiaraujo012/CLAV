@@ -12,6 +12,7 @@
     "debug": "~2.6.9",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "js2xmlparser": "^4.0.0",
     "json-2-csv": "^3.4.1",
     "jsonld": "^1.5.4",
     "jsontoxml": "^1.0.1",

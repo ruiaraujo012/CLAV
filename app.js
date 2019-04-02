@@ -8,7 +8,7 @@ const passport = require('passport')
 const mongoose = require('mongoose')
 const jsoncsv = require('json-2-csv')
 const jsonrdf = require('jsonld')
-
+var js2xmlparser = require("js2xmlparser");
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
 const usersRouter = require('./routes/users')
@@ -81,7 +81,7 @@ let formatOutput = (req, res, next) => {
 
     let dados = res.locals.dados
     let format = req.query.format || req.headers.accept
-
+    
     switch (format) {
         case 'application/json':
         case 'json':
@@ -89,7 +89,8 @@ let formatOutput = (req, res, next) => {
             break;
         case 'application/xml':
         case 'xml':
-            res.send(jsonxml(dados))
+            //res.send(jsonxml(dados))
+            res.send(js2xmlparser.parse("dados",{"dado": dados}))
             break;
         case 'text/csv':
         case 'csv':
