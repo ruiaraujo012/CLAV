@@ -3,12 +3,11 @@ const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
-const jsonxml = require('jsontoxml')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const jsoncsv = require('json-2-csv')
-const jsonrdf = require('jsonld')
-var js2xmlparser = require("js2xmlparser");
+const json2xml = require("js2xmlparser");
+
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
 const usersRouter = require('./routes/users')
@@ -76,12 +75,12 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 let formatOutput = (req, res, next) => {
 
-    if(!res.locals.dados)
+    if (!res.locals.dados)
         next()
 
     let dados = res.locals.dados
     let format = req.query.format || req.headers.accept
-    
+
     switch (format) {
         case 'application/json':
         case 'json':
@@ -89,8 +88,15 @@ let formatOutput = (req, res, next) => {
             break;
         case 'application/xml':
         case 'xml':
-            //res.send(jsonxml(dados))
-            res.send(js2xmlparser.parse("dados",{"dado": dados}))
+            let pai = req.originalUrl
+            pai = pai.split('?')[0]
+            pai = pai.substring(1, pai.length)
+            let filho = pai.substring(0, pai.length - 1)
+
+            let obj = {}
+            obj[filho] = dados
+
+            res.send(json2xml.parse(pai, obj))
             break;
         case 'text/csv':
         case 'csv':
@@ -113,7 +119,7 @@ app.use('/classes', classesRouter, formatOutput)
 app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter, formatOutput)
 app.use('/legislacao', legislacaoRouter, formatOutput)
-app.use('/termoindice', termoIndiceRouter, formatOutput)
+app.use('/termoindices', termoIndiceRouter, formatOutput) // Ver como por isto
 app.use('/', usersRouter)
 
 module.exports = app
