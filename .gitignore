@@ -73,6 +73,7 @@ typings/
 
 # Yarn lock
 *.lock
+yarn.lock
 
 # Swap
 *.swp

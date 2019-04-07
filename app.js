@@ -6,7 +6,6 @@ const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const jsoncsv = require('json-2-csv')
-const json2xml = require("js2xmlparser");
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
@@ -88,15 +87,30 @@ let formatOutput = (req, res, next) => {
             break;
         case 'application/xml':
         case 'xml':
-            let pai = req.originalUrl
-            pai = pai.split('?')[0]
-            pai = pai.substring(1, pai.length)
-            let filho = pai.substring(0, pai.length - 1)
+            let uri = req.originalUrl
+            uri = uri.split('?')[0]
+            uri = uri.substring(1, uri.length)
 
-            let obj = {}
-            obj[filho] = dados
-
-            res.send(json2xml.parse(pai, obj))
+            switch (uri) {
+                case 'tipologias':
+                    res.send(JSON2XML(dados, 'tipologias'))
+                    break
+                case 'legislacao':
+                    res.send(JSON2XML(dados, 'legislacao'))
+                    break
+                case 'termoindice':
+                    res.send(JSON2XML(dados, 'termoindice'))
+                    break
+                case 'classes':
+                    res.send(JSON2XML(dados, 'classes'))
+                    break
+                case 'entidades':
+                    res.send(JSON2XML(dados, 'entidades'))
+                    break
+                default:
+                    res.send(JSON2XML(dados, null))
+                    break
+            }
             break;
         case 'text/csv':
         case 'csv':
@@ -119,7 +133,43 @@ app.use('/classes', classesRouter, formatOutput)
 app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter, formatOutput)
 app.use('/legislacao', legislacaoRouter, formatOutput)
-app.use('/termoindices', termoIndiceRouter, formatOutput) // Ver como por isto
+app.use('/termoindice', termoIndiceRouter, formatOutput)
 app.use('/', usersRouter)
+
+JSON2XML = (jsonData, optional) => {
+    let xml = ''
+    if (optional != null) {
+        xml += "<" + optional + 'Bloco' + ">"
+        for (let key in jsonData) {
+            if (typeof jsonData[key] == "object") {
+                xml += "<" + optional + ">"
+                xml += JSON2XML(new Object(jsonData[key]))
+                xml += "</" + optional + ">"
+            }
+        }
+        xml += "</" + optional + 'Bloco' + ">"
+    } else {
+        for (let key in jsonData) {
+            if (Array.isArray(jsonData[key])) {
+                xml += "<" + key + 'Bloco' + ">"
+                for (let array of jsonData[key]) {
+                    xml += "<" + key + ">"
+                    xml += JSON2XML(new Object(array))
+                    xml += "</" + key + ">"
+                }
+                xml += "</" + key + 'Bloco' + ">"
+            } else if (typeof jsonData[key] == "object") {
+                xml += "<" + key + ">"
+                xml += JSON2XML(new Object(jsonData[key]))
+                xml += "</" + key + ">"
+            } else {
+                xml += "<" + key + ">"
+                xml += jsonData[key]
+                xml += "</" + key + ">"
+            }
+        }
+    }
+    return xml
+}
 
 module.exports = app
