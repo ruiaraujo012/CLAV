@@ -21,7 +21,8 @@ router.get('/', authenticate(), async (req, res, next) => {
 
     let legislacoes = await Legislacao.listarLegislacao()
     res.locals.dados = legislacoes
-
+    res.locals.xmlContainer = ["legislacoes", "legislacao"]
+    
     next()
 
 })

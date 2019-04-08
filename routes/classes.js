@@ -19,7 +19,7 @@ const Graphdb = require('../controllers/graphdb')
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
-        
+
     res.locals.dados = await Classes.listaConsolidada()
     next()
 
@@ -34,7 +34,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 
     let nivelClasse = await Classes.obterNivelDaClasse(id)
     // Alterar
-        
+
     switch (nivelClasse) {
         case 1:
             res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
@@ -51,6 +51,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
         default:
             break
     }
+
     next()
 })
 
@@ -59,10 +60,12 @@ router.get('/:id/donos', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    if (nivel != 3) 
+    if (nivel != 3)
         next()
-    
+
     res.locals.dados = await Classes.donos(req.params.id)
+    res.locals.xmlContainer = ["donos", "dono"]
+
     next()
 
 })
@@ -71,10 +74,12 @@ router.get('/:id/participantes', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    if (nivel != 3) 
+    if (nivel != 3)
         next()
-    
+
     res.locals.dados = await Classes.participantes(req.params.id)
+    res.locals.xmlContainer = ["participantes", "participante"]
+
     next()
 
 })
@@ -84,10 +89,12 @@ router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) 
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    if (nivel != 3) 
+    if (nivel != 3)
         next()
-    
+
     res.locals.dados = await Classes.processosRelacionados(req.params.id)
+    res.locals.xmlContainer = ["processosRelacionados", "processoRelacionado"]
+
     next()
 })
 
@@ -95,10 +102,12 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    if (nivel != 3) 
+    if (nivel != 3)
         next()
-    
+
     res.locals.dados = await Classes.legislacao(req.params.id)
+    res.locals.xmlContainer = ["legislacoes", "legislacao"]
+
     next()
 })
 
@@ -106,10 +115,12 @@ router.get('/:id/pca', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    if (nivel != 3 && nivel != 4) 
+    if (nivel != 3 && nivel != 4)
         next()
-    
+
     res.locals.dados = await Classes.listarPca(req.params.id)
+    res.locals.xmlContainer = ["pcas", "pca"]
+
     next()
 })
 
@@ -117,10 +128,12 @@ router.get('/:id/destinofinal', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    if (nivel != 3 && nivel != 4) 
+    if (nivel != 3 && nivel != 4)
         next()
-    
+
     res.locals.dados = await Classes.listarDf(req.params.id)
+    res.locals.xmlContainer = ["destinosfinais", "destinofinal"]
+
     next()
 })
 

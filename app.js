@@ -87,31 +87,8 @@ let formatOutput = (req, res, next) => {
             break;
         case 'application/xml':
         case 'xml':
-            let uri = req.originalUrl
-            uri = uri.split('?')[0]
-            uri = uri.substring(1, uri.length)
-
-            switch (uri) {
-                case 'tipologias':
-                    res.send(JSON2XML(dados, 'tipologias'))
-                    break
-                case 'legislacao':
-                    res.send(JSON2XML(dados, 'legislacao'))
-                    break
-                case 'termoindice':
-                    res.send(JSON2XML(dados, 'termoindice'))
-                    break
-                case 'classes':
-                    res.send(JSON2XML(dados, 'classes'))
-                    break
-                case 'entidades':
-                    res.send(JSON2XML(dados, res.locals.xmlContainer))
-                    break
-                default:
-                    res.send(JSON2XML(dados, null))
-                    break
-            }
-            break;
+            res.send(JSON2XML(dados, res.locals.xmlContainer))
+            break
         case 'text/csv':
         case 'csv':
             let options = {
@@ -147,7 +124,7 @@ JSON2XML = (jsonData, optional) => {
                 xml += "</" + optional[1] + ">"
             }
         }
-        xml += "</" + optional + 'Bloco' + ">"
+        xml += "</" + optional[0] + ">"
     } else {
         for (let key in jsonData) {
             if (Array.isArray(jsonData[key])) {
