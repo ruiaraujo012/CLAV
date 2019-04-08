@@ -105,7 +105,7 @@ let formatOutput = (req, res, next) => {
                     res.send(JSON2XML(dados, 'classes'))
                     break
                 case 'entidades':
-                    res.send(JSON2XML(dados, 'entidades'))
+                    res.send(JSON2XML(dados, res.locals.xmlContainer))
                     break
                 default:
                     res.send(JSON2XML(dados, null))
@@ -138,13 +138,13 @@ app.use('/', usersRouter)
 
 JSON2XML = (jsonData, optional) => {
     let xml = ''
-    if (optional != null) {
-        xml += "<" + optional + 'Bloco' + ">"
+    if (optional) {
+        xml += "<" + optional[0] + ">"
         for (let key in jsonData) {
             if (typeof jsonData[key] == "object") {
-                xml += "<" + optional + ">"
+                xml += "<" + optional[1] + ">"
                 xml += JSON2XML(new Object(jsonData[key]))
-                xml += "</" + optional + ">"
+                xml += "</" + optional[1] + ">"
             }
         }
         xml += "</" + optional + 'Bloco' + ">"

@@ -35,6 +35,24 @@ Classes.listarClassesPorNivel = (nivel) => {
     return Graphdb.fetch(query)
 }
 
+Classes.listarClassesPorNivelComPai = (nivel) => {
+
+    let query = `
+        Select ?id                            
+        ?codigo 
+        ?titulo 
+        ?pai
+        Where {  
+            ?id rdf:type clav:Classe_N${nivel} ;
+             clav:classeStatus 'A';  
+             clav:codigo ?codigo ;
+             clav:titulo ?titulo ;
+             clav:temPai ?paii
+             BIND (STRAFTER(STR(?paii), 'clav#') AS ?pai).
+        }  Order by ?id 
+    `
+    return Graphdb.fetch(query)
+}
 
 
 Classes.listarNotasAplicacao = (id) => {
@@ -94,6 +112,7 @@ Classes.donos = id => {
         BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         BIND (STRAFTER(STR(?tipoo), 'clav#') AS ?tipo).
         }`
+
     return Graphdb.fetch(query)
 }
 
@@ -289,7 +308,7 @@ Classes.blocoContexto = async id => {
         processosRelacionados,
         legislacao
     }
-    
+
 }
 
 Classes.blocoDecisao = async id => {
@@ -304,6 +323,64 @@ Classes.blocoDecisao = async id => {
         df
     }
 
+}
+
+Classes.listaConsolidada = id => {
+
+    let query = `
+    SELECT DISTINCT
+    ?Avo ?AvoCodigo ?AvoTitulo 
+    ?Pai ?PaiCodigo ?PaiTitulo 
+    ?PN ?PNCodigo ?PNTitulo   
+    (GROUP_CONCAT(DISTINCT(CONCAT(STR(?Filho),":::",?FilhoCodigo, ":::",?FilhoTitulo)); SEPARATOR="###") AS ?Filhos)
+    (GROUP_CONCAT(CONCAT(STR(?FilhoCodigo),":::",?FilhoTi);Separator="###") AS ?TIsFilhos)
+    (GROUP_CONCAT(?TermoI; SEPARATOR="###") AS ?TermosPesquisa)
+WHERE {  
+    
+    ?PN rdf:type clav:Classe_N3
+    MINUS { 
+        ?PN clav:pertenceLC ?lc
+        filter( ?lc != clav:lc1 )
+    }
+    ?PN clav:classeStatus 'A'.
+    
+    ?PN clav:temPai ?Pai.
+    ?Pai clav:temPai ?Avo.
+    
+    ?PN clav:codigo ?PNCodigo;
+        clav:titulo ?PNTitulo.
+    
+    ?Pai clav:codigo ?PaiCodigo;
+        clav:titulo ?PaiTitulo.
+    
+    ?Avo clav:codigo ?AvoCodigo;
+        clav:titulo ?AvoTitulo.
+    
+    OPTIONAL {
+        ?Filho clav:temPai ?PN;
+           clav:codigo ?FilhoCodigo;
+           clav:titulo ?FilhoTitulo
+        OPTIONAL {
+            ?fTI clav:estaAssocClasse ?Filho;
+                 clav:termo ?FilhoTi
+        }
+    }
+    OPTIONAL {
+        {
+            ?ti clav:estaAssocClasse ?PN ;
+                clav:termo ?TermoI .
+        } UNION {
+            ?PN clav:exemploNA ?TermoI .
+        } UNION {
+            ?PN clav:temNotaAplicacao ?pNA.
+            ?pNA clav:conteudo ?TermoI .
+        }
+    }
+}
+Group By ?PN ?PNCodigo ?PNTitulo ?Pai ?PaiCodigo ?PaiTitulo ?Avo ?AvoCodigo ?AvoTitulo 
+Order By ?PN`
+
+    return Graphdb.fetch(query)
 }
 
 Classes.obterNivelDaClasse = async id => {
@@ -323,8 +400,8 @@ Classes.obterNivelDaClasse = async id => {
 
     let classes = ["Classe_N1", "Classe_N2", "Classe_N3", "Classe_N4"]
 
-    for(key in classes)
-        if(decider.includes(classes[key])) 
+    for (key in classes)
+        if (decider.includes(classes[key]))
             return parseInt(key) + 1
 
     return 0

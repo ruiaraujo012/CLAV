@@ -19,12 +19,8 @@ const Graphdb = require('../controllers/graphdb')
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
-
-    let nivel = req.query.nivel
-    if (!req.query.nivel)
-        nivel = 1
-
-    res.locals.dados = await Classes.listarClassesPorNivel(nivel)
+        
+    res.locals.dados = await Classes.listaConsolidada()
     next()
 
 })
