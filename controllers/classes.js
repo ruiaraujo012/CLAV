@@ -153,13 +153,18 @@ Classes.processosRelacionados = id => {
     return Graphdb.fetch(query)
 }
 
-Classes.legislacao = id => {
+Classes.legislacao = async id => {
     let query = `
-        SELECT ?id ?tipo ?numero ?sumario WHERE { 
+        SELECT 
+            ?id 
+            ?tipo 
+            ?numero 
+            ?sumario 
+        WHERE { 
             clav:${id} clav:temLegislacao ?id.
-            ?id clav:diplomaNumero ?numero;
-                clav:diplomaTitulo ?sumario;
-                clav:diplomaTipo ?tipo.
+            ?id clav:diplomaNumero ?numero.
+            ?id clav:diplomaTitulo ?sumario.
+            ?id clav:diplomaTipo ?tipo.
         } order by ?tipo ?numero`
 
     return Graphdb.fetch(query)
@@ -174,6 +179,9 @@ Classes.listarPca = id => {
             ?idJustificacao
             (GROUP_CONCAT(DISTINCT ?valor; SEPARATOR="###") AS ?valores)
             (GROUP_CONCAT(DISTINCT ?nota; SEPARATOR="###") AS ?notas)
+            ?idCriterio 
+            ?criterio 
+            ?justificacao
         WHERE { 
             clav:${id} clav:temPCA ?idPCA .
             OPTIONAL {
@@ -192,30 +200,21 @@ Classes.listarPca = id => {
             }
             OPTIONAL {
                 ?idPCA clav:temJustificacao ?idJustificacao .
-            }    
-        }GROUP BY ?idPCA ?formaContagem ?subFormaContagem ?idJustificacao 
+                ?idJustificacao clav:temCriterio ?idCriterio . 
+                ?idCriterio clav:conteudo ?justificacao.
+                ?idCriterio a ?tipo.
+                ?tipo rdfs:subClassOf clav:CriterioJustificacao.
+                ?tipo rdfs:label ?criterio.
+            }
+        }GROUP BY ?idPCA ?formaContagem ?subFormaContagem ?idJustificacao ?idCriterio ?criterio ?justificacao
         `
-    return Graphdb.fetch(query)
-}
-
-Classes.listarJustificacao = id => {
-    let query = `
-        SELECT
-            ?criterio ?tipoLabel ?conteudo
-        WHERE {
-            clav:${id} clav:temCriterio ?criterio . 
-            ?criterio clav:conteudo ?conteudo.
-            ?criterio a ?tipo.
-            ?tipo rdfs:subClassOf clav:CriterioJustificacao.
-            ?tipo rdfs:label ?tipoLabel.
-        }`
     return Graphdb.fetch(query)
 }
 
 Classes.listarDf = id => {
     let query = `
         SELECT 
-            ?idDF ?valor ?idJustificacao
+            ?idDF ?valor ?idJustificacao ?idCriterio ?criterio ?justificacao
         WHERE { 
             clav:${id} clav:temDF ?idDF .
             OPTIONAL {
@@ -226,7 +225,12 @@ Classes.listarDf = id => {
             }
             OPTIONAL {
                 ?idDF clav:temJustificacao ?idJustificacao .
-            }    
+                ?idJustificacao clav:temCriterio ?idCriterio . 
+                ?idCriterio clav:conteudo ?justificacao.
+                ?idCriterio a ?tipo.
+                ?tipo rdfs:subClassOf clav:CriterioJustificacao.
+                ?tipo rdfs:label ?criterio.
+            }
         }`
     return Graphdb.fetch(query)
 }
@@ -314,12 +318,10 @@ Classes.blocoContexto = async id => {
 Classes.blocoDecisao = async id => {
 
     let pca = await this.listarPca(id)
-    let justificacao = await this.listarJustificacao(id)
     let df = await this.listarDf(id)
 
     return {
         pca,
-        justificacao,
         df
     }
 
