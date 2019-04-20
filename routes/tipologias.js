@@ -22,6 +22,7 @@ router.get('/', authenticate(), async (req, res, next) => {
 
     let tipologias = await Tipologias.listarTipologias()
     res.locals.dados = tipologias
+    res.locals.xmlContainer = ["tipologias", "tipologia"]
     
     next()
 

@@ -22,6 +22,7 @@ router.get('/', authenticate(), async (req, res, next) => {
 
     let termoIndice = await TermoIndice.listarTermoIndice()
     res.locals.dados = termoIndice
+    res.locals.xmlContainer = ["termosindice", "termoindice"]
     
     next()
 
