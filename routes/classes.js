@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const Classes = require('../controllers/classes')
+const ListaConsolidada = require('../controllers/listaConsolidada')
 const authenticate = require('../auth/auth').authenticate
 const Graphdb = require('../controllers/graphdb')
 
@@ -20,7 +21,7 @@ const Graphdb = require('../controllers/graphdb')
 
 router.get('/', authenticate(), async (req, res, next) => {
         
-    res.locals.dados = await Classes.listaConsolidada()
+    res.locals.dados = await ListaConsolidada.listar()
     next()
 
 })

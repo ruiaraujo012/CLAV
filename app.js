@@ -6,6 +6,7 @@ const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const jsoncsv = require('json-2-csv')
+const axios = require('axios')
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
@@ -171,5 +172,12 @@ JSON2XML = (jsonData, optional) => {
     }
     return xml
 }
+
+testFunction = async () => {
+    let data = await axios.get("http://localhost:8000/classes/")
+    console.log(data.data)
+}
+
+testFunction()
 
 module.exports = app
