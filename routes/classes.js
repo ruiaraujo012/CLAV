@@ -35,7 +35,7 @@ router.get('/', authenticate(), async (req, res, next) => {
  *     parameters:
  *      - name: classID
  *        in: path
- *        description: Class ID
+ *        description: c150.20.501
  *        type: string
  *        required: true
  *     produces:
@@ -84,7 +84,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
  *     parameters:
  *      - name: classID
  *        in: path
- *        description: Class ID
+ *        description: c150.20.501
  *        type: string
  *        required: true
  *     produces:
@@ -118,7 +118,7 @@ router.get('/:id/donos', authenticate(), async (req, res, next) => {
  *     parameters:
  *      - name: classID
  *        in: path
- *        description: Class ID
+ *        description: c150.20.501
  *        type: string
  *        required: true
  *     produces:
@@ -151,7 +151,7 @@ router.get('/:id/participantes', authenticate(), async (req, res, next) => {
  *     parameters:
  *      - name: classID
  *        in: path
- *        description: Class ID
+ *        description: c150.20.501
  *        type: string
  *        required: true
  *     produces:
@@ -185,7 +185,7 @@ router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) 
  *     parameters:
  *      - name: classID
  *        in: path
- *        description: Class ID
+ *        description: c150.20.501
  *        type: string
  *        required: true
  *     produces:
@@ -218,7 +218,7 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
  *     parameters:
  *      - name: classID
  *        in: path
- *        description: Class ID
+ *        description: c150.20.501
  *        type: string
  *        required: true
  *     produces:
