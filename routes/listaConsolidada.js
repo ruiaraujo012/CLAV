@@ -8,13 +8,13 @@ const authenticate = require('../auth/auth').authenticate
  * /classes:
  *   get:
  *     tags:
- *       - Get all classes Page
- *     description: Returns index page
+ *       - Classes
+ *     description: Retorna a lista consolidada que inclui todas as classes
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Get all classes page
+ *         description: Retorna a lista consolidada que inclui todas as classes
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
