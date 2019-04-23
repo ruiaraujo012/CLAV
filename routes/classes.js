@@ -20,7 +20,7 @@ const Graphdb = require('../controllers/graphdb')
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
-        
+
     res.locals.dados = await ListaConsolidada.listar()
     next()
 
@@ -229,20 +229,17 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
  */
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
-
-    if (nivel != 3 && nivel != 4)
-        next()
-
-    res.locals.dados = await Classes.listarPca(req.params.id)
-    res.locals.xmlContainer = ["pcas", "pca"]
-
+    // c150.20.501 tem multiplos criterios de pca para se verificar
+    let pca = await Classes.pca(req.params.id)
+    res.locals.dados = pca
     next()
+    
 })
 
 /**
+ * 
  * @swagger
- * /classes/{classID}/destinofinal:
+ * /classes/{classID}/df:
  *   get:
  *     tags:
  *       - Classes
@@ -259,16 +256,14 @@ router.get('/:id/pca', authenticate(), async (req, res, next) => {
  *       200:
  *         description: Retorna o destino final relativo a uma classe
  */
-router.get('/:id/destinofinal', authenticate(), async (req, res, next) => {
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+router.get('/:id/df', authenticate(), async (req, res, next) => {
 
-    if (nivel != 3 && nivel != 4)
-        next()
+    // c400.10.001 tem multiplos dfs para testar
 
-    res.locals.dados = await Classes.listarDf(req.params.id)
-    res.locals.xmlContainer = ["destinosfinais", "destinofinal"]
-
+    let destinoFinal = await Classes.df(req.params.id)
+    res.locals.dados = destinoFinal
+    
     next()
 })
 
