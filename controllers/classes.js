@@ -9,10 +9,11 @@ Classes.listarClasses = () => {
         ?codigo 
         ?titulo 
         Where {  
-            ?id rdf:type clav:Classe_N1;
+            ?idd rdf:type clav:Classe_N1;
              clav:classeStatus 'A';  
              clav:codigo ?codigo ;
               clav:titulo ?titulo . 
+        BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         }  Order by ?id 
     `
     return Graphdb.fetch(query)
@@ -26,10 +27,11 @@ Classes.listarClassesPorNivel = (nivel) => {
         ?codigo 
         ?titulo 
         Where {  
-            ?id rdf:type clav:Classe_N${nivel} ;
+            ?idd rdf:type clav:Classe_N${nivel} ;
              clav:classeStatus 'A';  
              clav:codigo ?codigo ;
               clav:titulo ?titulo . 
+        BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         }  Order by ?id 
     `
     return Graphdb.fetch(query)
@@ -58,9 +60,10 @@ Classes.listarClassesPorNivelComPai = (nivel) => {
 Classes.listarNotasAplicacao = (id) => {
 
     let query = `
-    SELECT * WHERE { 
+    SELECT ?id ?nota WHERE { 
         clav:${id} clav:temNotaAplicacao ?idNota.
         ?idNota clav:conteudo ?nota .
+    BIND (STRAFTER(STR(?idNota), 'clav#') AS ?id).
     }`
     return Graphdb.fetch(query)
 }
@@ -68,8 +71,9 @@ Classes.listarNotasAplicacao = (id) => {
 Classes.listarExemplosNotasAplicacao = (id) => {
 
     let query = `
-    SELECT * WHERE { 
-        clav:${id} clav:exemploNA ?exemplo.
+    SELECT ?exemplo WHERE { 
+        clav:${id} clav:exemploNA ?exemploo.
+    BIND (STRAFTER(STR(?exemploo), 'clav#') AS ?exemplo).
     }`
     return Graphdb.fetch(query)
 }
@@ -77,9 +81,10 @@ Classes.listarExemplosNotasAplicacao = (id) => {
 Classes.listarNotasExclusao = (id) => {
 
     let query = `
-    SELECT * WHERE { 
+    SELECT ?id ?nota WHERE { 
         clav:${id} clav:temNotaExclusao ?idNota.
-        ?idNota clav:conteudo ?nota .
+        ?idNota clav:conteudo ?nota . 
+    BIND (STRAFTER(STR(?idNota), 'clav#') AS ?id).
     }`
     return Graphdb.fetch(query)
 }
@@ -87,11 +92,13 @@ Classes.listarNotasExclusao = (id) => {
 Classes.listarTermosIndice = (id) => {
 
     let query = `
-    SELECT * WHERE { 
+    SELECT ?id ?termo WHERE { 
         ?idTI a clav:TermoIndice;
               clav:estaAssocClasse clav:${id} ;
               clav:termo ?termo
+    BIND (STRAFTER(STR(?idTI), 'clav#') AS ?id).
     }`
+    
     return Graphdb.fetch(query)
 }
 
@@ -155,11 +162,12 @@ Classes.processosRelacionados = id => {
 
 Classes.legislacao = id => {
     let query = `
-        SELECT * WHERE { 
+        SELECT ?id ?Tipo ?Súmario ?Número WHERE { 
             clav:${id} clav:temLegislacao ?idLeg.
             ?idLeg clav:diplomaTipo ?Tipo;
                 clav:diplomaSumario ?Súmario;
                 clav:diplomaNumero ?Número. 
+        BIND (STRAFTER(STR(?idLeg), 'clav#') AS ?id).
         }
         `
     return Graphdb.fetch(query)
