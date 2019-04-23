@@ -45,12 +45,13 @@ Classes.listarClassesPorNivelComPai = (nivel) => {
         ?titulo 
         ?pai
         Where {  
-            ?id rdf:type clav:Classe_N${nivel} ;
+            ?idd rdf:type clav:Classe_N${nivel} ;
              clav:classeStatus 'A';  
              clav:codigo ?codigo ;
              clav:titulo ?titulo ;
              clav:temPai ?paii
              BIND (STRAFTER(STR(?paii), 'clav#') AS ?pai).
+             BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).  
         }  Order by ?id 
     `
     return Graphdb.fetch(query)
@@ -176,10 +177,9 @@ Classes.legislacao = id => {
 Classes.listarPca = id => {
     let query = `
         SELECT 
-            ?idPCA
+            ?id
             ?formaContagem
             ?subFormaContagem
-            ?idJustificacao
             (GROUP_CONCAT(DISTINCT ?valor; SEPARATOR="###") AS ?valores)
             (GROUP_CONCAT(DISTINCT ?nota; SEPARATOR="###") AS ?notas)
             (GROUP_CONCAT(DISTINCT ?Criterio; SEPARATOR="###") AS ?Criterios)
@@ -202,8 +202,9 @@ Classes.listarPca = id => {
             OPTIONAL {
                 ?idPCA clav:temJustificacao ?idJustificacao .
                 ?idJustificacao clav:temCriterio ?Criterio
-            }    
-        }GROUP BY ?idPCA ?formaContagem ?subFormaContagem ?idJustificacao 
+            }
+        BIND (STRAFTER(STR(?idPCA), 'clav#') AS ?id). 
+        }GROUP BY ?id ?formaContagem ?subFormaContagem 
         `
     return Graphdb.fetch(query)
 }
@@ -226,11 +227,11 @@ Classes.listarJustificacao = id => {
 Classes.listarDf = id => {
     let query = `
     SELECT 
-    ?idDF ?Valor ?idJustificacao ?Criterio
+    ?id
     (GROUP_CONCAT(DISTINCT ?Valor; SEPARATOR="###") AS ?Valores)
     (GROUP_CONCAT(DISTINCT ?Criterio; SEPARATOR="###") AS ?Criterios)
 WHERE { 
-    clav:c100.10.001 clav:temDF ?idDF .
+    clav:${id} clav:temDF ?idDF .
     OPTIONAL {
         ?idDF clav:dfValor ?Valor ;
     }
@@ -240,8 +241,9 @@ WHERE {
     OPTIONAL {
         ?idDF clav:temJustificacao ?idJustificacao .
         ?idJustificacao clav:temCriterio ?Criterio .
-    }    
-} GROUP BY ?idDF ?Valor ?idJustificacao ?Criterio`
+    }
+BIND (STRAFTER(STR(?idDF), 'clav#') AS ?id).     
+} GROUP BY ?id`
     return Graphdb.fetch(query)
 }
 
@@ -255,27 +257,27 @@ Classes.criteria = function (criteria) {
             ?id
             ?Tipo
             ?Conteudo
-            (GROUP_CONCAT(CONCAT(STR(?leg),":::",?LegTipo, ":::",?LegNumero); SEPARATOR="###") AS ?Legislacao)
-            (GROUP_CONCAT(CONCAT(STR(?proc),":::",?Codigo, ":::",?Titulo); SEPARATOR="###") AS ?Processos)
         WHERE { 
-            VALUES ?id { ${'clav:' + criteria.join(' clav:')} }
-            ?id rdf:type ?Tipo ;
+            VALUES ?idd { ${'clav:' + criteria.join(' clav:')} }
+            ?idd rdf:type ?Tipoo ;
                 clav:conteudo ?Conteudo .
             OPTIONAL {
-                ?id clav:temLegislacao ?leg .
+                ?idd clav:temLegislacao ?leg .
                 ?leg clav:diplomaNumero ?LegNumero ;
                     clav:diplomaTipo ?LegTipo .
             }
             OPTIONAL {
                 {
-                	?id clav:temProcessoRelacionado ?proc .
+                	?idd clav:temProcessoRelacionado ?proc .
         		} UNION {
-            		?id clav:eComplementarDe ?proc .
+            		?idd clav:eComplementarDe ?proc .
         		}
                 ?proc clav:codigo ?Codigo ;
                       clav:titulo ?Titulo .
             }
-            FILTER(?Tipo != owl:NamedIndividual && ?Tipo != clav:CriterioJustificacao && ?Tipo != clav:AtributoComposto)
+            FILTER(?Tipoo != owl:NamedIndividual && ?Tipoo != clav:CriterioJustificacao && ?Tipoo != clav:AtributoComposto)
+            BIND (STRAFTER(STR(?Tipoo), 'clav#') AS ?Tipo).
+            BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         } GROUP BY ?id ?Tipo ?Conteudo
     `;
 
