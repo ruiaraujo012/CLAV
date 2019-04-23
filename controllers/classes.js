@@ -72,8 +72,9 @@ Classes.listarNotasAplicacao = (id) => {
 Classes.listarExemplosNotasAplicacao = (id) => {
 
     let query = `
-    SELECT ?exemplo WHERE { 
+    SELECT ?exemplo ?conteudo WHERE { 
         clav:${id} clav:exemploNA ?exemploo.
+        ?exemploo clav:conteudo ?conteudo .
     BIND (STRAFTER(STR(?exemploo), 'clav#') AS ?exemplo).
     }`
     return Graphdb.fetch(query)
@@ -287,16 +288,16 @@ Classes.criteria = function (criteria) {
 Classes.obtencaoDadosNivel1_2 = async id => {
 
     let classe = await this.blocoDescritivo(id)
-    let notasAplic = await this.listarNotasAplicacao(id)
-    let exeNotasAplic = await this.listarExemplosNotasAplicacao(id)
-    let notasExclus = await this.listarNotasExclusao(id)
-    let termosInd = await this.listarTermosIndice(id)
+    let notasAplicacao= await this.listarNotasAplicacao(id)
+    let exemploNotasAplicacao = await this.listarExemplosNotasAplicacao(id)
+    let notasExclusao = await this.listarNotasExclusao(id)
+    let termosIndice = await this.listarTermosIndice(id)
     return {
         ...classe[0],
-        notasAplic,
-        exeNotasAplic,
-        notasExclus,
-        termosInd
+        notasAplicacao: notasAplicacao,
+        exemplosNotasAplicacao: exemploNotasAplicacao,
+        notasExclusao: notasExclusao,
+        termosIndice: termosIndice
     }
 }
 
