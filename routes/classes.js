@@ -20,7 +20,7 @@ const Graphdb = require('../controllers/graphdb')
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
-        
+
     res.locals.dados = await ListaConsolidada.listar()
     next()
 
@@ -114,27 +114,42 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
 
+
+    // c150.20.501 tem multiplos criterios de pca para se verificar
+
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
     if (nivel != 3 && nivel != 4)
         next()
 
-    res.locals.dados = await Classes.listarPca(req.params.id)
-    res.locals.xmlContainer = ["pcas", "pca"]
+    let pca = await Classes.listarPca(req.params.id)
+
+    let criteria = (pca[0].Criterios).split("###");
+    criteria = criteria.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
+    console.log(criteria)
+
+    let criteriosFinais = await Classes.criteria(criteria)
+    console.log("criteriosFinais")
+    console.log(criteriosFinais)
+
+    let data = {
+        ...pca[0],
+        justificao: criteriosFinais
+    }
+
+    res.locals.dados = data
+    // res.locals.xmlContainer = ["pcas", "pca"]
 
     next()
 })
 
-router.get('/:id/destinofinal', authenticate(), async (req, res, next) => {
+router.get('/:id/df', authenticate(), async (req, res, next) => {
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+    // c400.10.001 tem multiplos dfs para testar
 
-    if (nivel != 3 && nivel != 4)
-        next()
-
-    res.locals.dados = await Classes.listarDf(req.params.id)
-    res.locals.xmlContainer = ["destinosfinais", "destinofinal"]
-
+    let destinoFinal = await Classes.df(req.params.id);
+    res.locals.dados = destinoFinal
+    
     next()
 })
 

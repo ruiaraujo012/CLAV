@@ -24,7 +24,7 @@ Classes.listarClassesPorNivel = (nivel) => {
     let query = `
         Select ?id                            
         ?codigo 
-        ?titulo 
+        ?titulo j
         Where {  
             ?id rdf:type clav:Classe_N${nivel} ;
              clav:classeStatus 'A';  
@@ -174,6 +174,7 @@ Classes.listarPca = id => {
             ?idJustificacao
             (GROUP_CONCAT(DISTINCT ?valor; SEPARATOR="###") AS ?valores)
             (GROUP_CONCAT(DISTINCT ?nota; SEPARATOR="###") AS ?notas)
+            (GROUP_CONCAT(DISTINCT ?Criterio; SEPARATOR="###") AS ?Criterios)
         WHERE { 
             clav:${id} clav:temPCA ?idPCA .
             OPTIONAL {
@@ -192,11 +193,13 @@ Classes.listarPca = id => {
             }
             OPTIONAL {
                 ?idPCA clav:temJustificacao ?idJustificacao .
+                ?idJustificacao clav:temCriterio ?Criterio
             }    
         }GROUP BY ?idPCA ?formaContagem ?subFormaContagem ?idJustificacao 
         `
     return Graphdb.fetch(query)
 }
+
 
 Classes.listarJustificacao = id => {
     let query = `
@@ -214,20 +217,60 @@ Classes.listarJustificacao = id => {
 
 Classes.listarDf = id => {
     let query = `
-        SELECT 
-            ?idDF ?valor ?idJustificacao
+    SELECT 
+    ?idDF ?Valor ?idJustificacao ?Criterio
+    (GROUP_CONCAT(DISTINCT ?Valor; SEPARATOR="###") AS ?Valores)
+    (GROUP_CONCAT(DISTINCT ?Criterio; SEPARATOR="###") AS ?Criterios)
+WHERE { 
+    clav:c100.10.001 clav:temDF ?idDF .
+    OPTIONAL {
+        ?idDF clav:dfValor ?Valor ;
+    }
+    OPTIONAL {
+        ?idDF clav:dfNota ?Nota ;
+    }
+    OPTIONAL {
+        ?idDF clav:temJustificacao ?idJustificacao .
+        ?idJustificacao clav:temCriterio ?Criterio .
+    }    
+} GROUP BY ?idDF ?Valor ?idJustificacao ?Criterio`
+    return Graphdb.fetch(query)
+}
+
+
+Classes.criteria = function (criteria) {
+
+    // exemplo de criteria para match do destinoFinal --> clav:crit_just_df_c100.10.001_1
+
+    var query = `
+        SELECT
+            ?id
+            ?Tipo
+            ?Conteudo
+            (GROUP_CONCAT(CONCAT(STR(?leg),":::",?LegTipo, ":::",?LegNumero); SEPARATOR="###") AS ?Legislacao)
+            (GROUP_CONCAT(CONCAT(STR(?proc),":::",?Codigo, ":::",?Titulo); SEPARATOR="###") AS ?Processos)
         WHERE { 
-            clav:${id} clav:temDF ?idDF .
+            VALUES ?id { ${'clav:' + criteria.join(' clav:')} }
+            ?id rdf:type ?Tipo ;
+                clav:conteudo ?Conteudo .
             OPTIONAL {
-                ?idDF clav:dfValor ?valor ;
+                ?id clav:temLegislacao ?leg .
+                ?leg clav:diplomaNumero ?LegNumero ;
+                    clav:diplomaTipo ?LegTipo .
             }
             OPTIONAL {
-                ?idDF clav:dfNota ?Nota ;
+                {
+                	?id clav:temProcessoRelacionado ?proc .
+        		} UNION {
+            		?id clav:eComplementarDe ?proc .
+        		}
+                ?proc clav:codigo ?Codigo ;
+                      clav:titulo ?Titulo .
             }
-            OPTIONAL {
-                ?idDF clav:temJustificacao ?idJustificacao .
-            }    
-        }`
+            FILTER(?Tipo != owl:NamedIndividual && ?Tipo != clav:CriterioJustificacao && ?Tipo != clav:AtributoComposto)
+        } GROUP BY ?id ?Tipo ?Conteudo
+    `;
+
     return Graphdb.fetch(query)
 }
 
@@ -313,16 +356,45 @@ Classes.blocoContexto = async id => {
 
 Classes.blocoDecisao = async id => {
 
-    let pca = await this.listarPca(id)
-    let justificacao = await this.listarJustificacao(id)
-    let df = await this.listarDf(id)
+
+    //  let justificacao = await this.listarJustificacao(id)
+
+    let pca = await this.pca(id);
+    let df = await this.df(id);
 
     return {
-        pca,
-        justificacao,
-        df
+        pca : {...pca},
+        df : {...df}
     }
 
+}
+
+Classes.pca = async id => {
+
+    let pca = await this.listarPca(id)
+    let criteriaPca = (pca[0].Criterios).split("###");
+    criteriaPca = criteriaPca.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
+    let criteriosPca = await this.criteria(criteriaPca)
+
+    return {
+        ...pca[0],
+        justificacao: criteriosPca
+    }
+
+}
+
+Classes.df = async id => {
+
+    let df = await this.listarDf(id)
+
+    let criteriaDf = (df[0].Criterios).split("###");
+    criteriaDf = criteriaDf.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
+    let criteriosDf = await this.criteria(criteriaDf)
+
+    return {
+        ...df[0],
+        justificacao: criteriosDf
+    }
 }
 
 Classes.listaConsolidada = id => {
