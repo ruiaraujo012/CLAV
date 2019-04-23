@@ -10,13 +10,13 @@ const Graphdb = require('../controllers/graphdb')
  * /classes:
  *   get:
  *     tags:
- *       - Get all classes Page
- *     description: Returns index page
+ *       - Classes
+ *     description: Retorna a lista consolidada que inclui todas as classes
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Get all classes page
+ *         description: Retorna a lista consolidada que inclui todas as classes
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
@@ -24,8 +24,26 @@ router.get('/', authenticate(), async (req, res, next) => {
     res.locals.dados = await ListaConsolidada.listar()
     next()
 
-})
-
+}) 
+/**
+ * @swagger
+ * /classes/{classID}:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna toda a indormação relativa a uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c150.20.501
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna toda a indormação relativa a uma classe
+ */
 router.get('/:id', authenticate(), async (req, res, next) => {
 
     if (!req.params.id) {
@@ -54,8 +72,27 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     }
 
     next()
-})
+}) 
 
+/**
+ * @swagger
+ * /classes/{classID}/donos:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna todos os donos de uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c150.20.501
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna todos os donos de uma classe
+ */
 router.get('/:id/donos', authenticate(), async (req, res, next) => {
 
 
@@ -69,8 +106,27 @@ router.get('/:id/donos', authenticate(), async (req, res, next) => {
 
     next()
 
-})
+}) 
 
+/**
+ * @swagger
+ * /classes/{classID}/participantes:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna todos os participantes de uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c150.20.501
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna todos os participantes de uma classe
+ */
 router.get('/:id/participantes', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
@@ -84,6 +140,26 @@ router.get('/:id/participantes', authenticate(), async (req, res, next) => {
     next()
 
 })
+
+/**
+ * @swagger
+ * /classes/{classID}/processosRelacionados:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna todos os processos relacionados de uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c150.20.501
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna todos os processos relacionados de uma classe
+ */
 
 router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) => {
 
@@ -99,6 +175,26 @@ router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) 
     next()
 })
 
+/**
+ * @swagger
+ * /classes/{classID}/legislacao:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna a legislação de uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c150.20.501
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna a legislação de uma classe
+ */
+
 router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
@@ -112,42 +208,60 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
     next()
 })
 
+/**
+ * @swagger
+ * /classes/{classID}/pca:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna o PCA relativo a uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c150.20.501
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna o PCA relativo a uma classe
+ */
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
 
-
     // c150.20.501 tem multiplos criterios de pca para se verificar
-
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
-
-    if (nivel != 3 && nivel != 4)
-        next()
-
-    let pca = await Classes.listarPca(req.params.id)
-
-    let criteria = (pca[0].Criterios).split("###");
-    criteria = criteria.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
-    console.log(criteria)
-
-    let criteriosFinais = await Classes.criteria(criteria)
-    console.log("criteriosFinais")
-    console.log(criteriosFinais)
-
-    let data = {
-        ...pca[0],
-        justificao: criteriosFinais
-    }
-
-    res.locals.dados = data
-    // res.locals.xmlContainer = ["pcas", "pca"]
-
+    let pca = await Classes.pca(req.params.id)
+    res.locals.dados = pca
     next()
+    
 })
+
+/**
+ * 
+ * @swagger
+ * /classes/{classID}/df:
+ *   get:
+ *     tags:
+ *       - Classes
+ *     description: Retorna o destino final relativo a uma classe
+ *     parameters:
+ *      - name: classID
+ *        in: path
+ *        description: c500.40.500
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna o destino final relativo a uma classe
+ */
 
 router.get('/:id/df', authenticate(), async (req, res, next) => {
 
     // c400.10.001 tem multiplos dfs para testar
 
-    let destinoFinal = await Classes.df(req.params.id);
+    let destinoFinal = await Classes.df(req.params.id)
     res.locals.dados = destinoFinal
     
     next()

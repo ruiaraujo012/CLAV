@@ -9,13 +9,13 @@ const authenticate = require('../auth/auth').authenticate
  * /entidades:
  *   get:
  *     tags:
- *       - Get all entidades Page
- *     description: Returns index page
+ *       - Entidades
+ *     description: Retorna todas as entidades existentes
  *     produces:
  *       - application/json
  *     responses:
  *       200:
- *         description: Get all entidades page
+ *         description: Retorna todas as entidades existentes
  */
 
 router.get('/', authenticate(), async (req, res, next) => {
@@ -28,6 +28,25 @@ router.get('/', authenticate(), async (req, res, next) => {
     
 })
 
+/**
+ * @swagger
+ * /entidades/{entidadesID}:
+ *   get:
+ *     tags:
+ *       - Entidades
+ *     description: Retorna toda a informação relativa a uma entidade
+ *     parameters:
+ *      - name: entidadesID
+ *        in: path
+ *        description: ent_ACSS
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna toda a informação relativa a uma entidade
+ */
 router.get('/:id', authenticate(), async (req, res, next) => {
 
     let entidade = await Entidades.listarEntidadePorId(req.params.id)

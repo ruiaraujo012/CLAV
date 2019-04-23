@@ -6,17 +6,17 @@ const authenticate = require('../auth/auth').authenticate
 
 /**
 * @swagger
-* /tipologias/:
+* /tipologias:
 *   get:
 *     tags:
-*       - Obter lista de todas as tipologias
-*     description: Devolve um array de tipologias
+*       - Tipologias
+*     description: Retorna todas as tipologias de uma classe
 *     produces:
 *       - application/json
 *     responses:
 *       200:
-*         description:
-*           falta preencher
+*         description: Retorna todas as tipologias de uma classe
+*     
 */
 router.get('/', authenticate(), async (req, res, next) => {
 
@@ -27,6 +27,26 @@ router.get('/', authenticate(), async (req, res, next) => {
     next()
 
 })
+
+/**
+ * @swagger
+ * /tipologias/{tipologiasID}:
+ *   get:
+ *     tags:
+ *       - Tipologias
+ *     description: Retorna toda a informação sobre uma tipologia de uma classe
+ *     parameters:
+ *      - name: tipologiasID
+ *        in: path
+ *        description: tip_AAC
+ *        type: string
+ *        required: true
+ *     produces:
+ *       - application/json
+ *     responses:
+ *       200:
+ *         description: Retorna toda a informação sobre uma tipologia de uma classe
+ */
 
 router.get('/:id', authenticate(), async (req, res, next) => {
 

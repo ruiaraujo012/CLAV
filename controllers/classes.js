@@ -155,13 +155,13 @@ Classes.processosRelacionados = id => {
 
 Classes.legislacao = id => {
     let query = `
-        SELECT ?id ?tipo ?numero ?sumario WHERE { 
-            clav:${id} clav:temLegislacao ?id.
-            ?id clav:diplomaNumero ?numero;
-                clav:diplomaTitulo ?sumario;
-                clav:diplomaTipo ?tipo.
-        } order by ?tipo ?numero`
-
+        SELECT * WHERE { 
+            clav:${id} clav:temLegislacao ?idLeg.
+            ?idLeg clav:diplomaTipo ?Tipo;
+                clav:diplomaSumario ?Súmario;
+                clav:diplomaNumero ?Número. 
+        }
+        `
     return Graphdb.fetch(query)
 }
 
