@@ -89,3 +89,22 @@ ListaConsolidada.listar = async () => {
 
     return nivel1 
 }
+
+
+// TODO : a obtencao de dados nao pode ser por id, 
+ListaConsolidada.listarCompleta = async (id) => {
+
+    let classesN1 = await Classes.obtencaoDadosNivel1_2(id)
+    let classesN2 = await Classes.obtencaoDadosNivel1_2(id)
+    let classesN3 = await Classes.obtencaoDadosNivel3(id)
+    let classesN4 = await Classes.obtencaoDadosNivel4(id)
+
+    // construir a estrutura de baixo para cima. 4 -> 3 -> 2 -> 1
+
+    let nivel4 = construcaoEstruturaUltimoNivel(classesN4)
+    let nivel3 = construcaoEstrutura(nivel4, classesN3)
+    let nivel2 = construcaoEstrutura(nivel3, classesN2)
+    let nivel1 = construcaoEstruturaPrimeiroNivel(nivel2, classesN1)
+
+    return nivel1
+}

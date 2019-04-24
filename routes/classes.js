@@ -25,6 +25,14 @@ router.get('/', authenticate(), async (req, res, next) => {
     next()
 
 }) 
+
+// TODO : ainda em fase de testes, corrigir
+router.get('/lc/:id', authenticate(), async (req, res, next) => {
+
+    res.locals.dados = await ListaConsolidada.listarCompleta(req.params.id)
+    next()
+
+}) 
 /**
  * @swagger
  * /classes/{classID}:
@@ -56,9 +64,6 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 
     switch (nivelClasse) {
         case 1:
-            res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-            res.locals.xmlContainer = ['classe', 'notaAplic', 'exeNotaAplic', 'notaExclus', 'termoInd']
-            break
         case 2:
             res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
             res.locals.xmlContainer = ['classe', 'notaAplic', 'exeNotaAplic', 'notaExclus', 'termoInd']

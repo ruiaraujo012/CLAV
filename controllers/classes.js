@@ -249,7 +249,7 @@ BIND (STRAFTER(STR(?idDF), 'clav#') AS ?id).
 }
 
 
-Classes.criteria = function (criteria) {
+Classes.criteria = (criteria) => {
 
     // exemplo de criteria para match do destinoFinal --> clav:crit_just_df_c100.10.001_1
 
@@ -328,15 +328,16 @@ Classes.obtencaoDadosNivel4 = async id => {
 Classes.blocoDescritivo = (id) => {
 
     let query = `
-    SELECT * WHERE { 
+    SELECT ?titulo ?codigo ?status ?desc ?pai ?codigoPai ?tituloPai WHERE { 
         clav:${id} clav:titulo ?titulo;
             clav:codigo ?codigo;
             clav:classeStatus ?status;
             clav:descricao ?desc.
         OPTIONAL {
-            clav:${id} clav:temPai ?pai.
-            ?pai clav:codigo ?codigoPai;
+            clav:${id} clav:temPai ?paii.
+            ?paii clav:codigo ?codigoPai;
                 clav:titulo ?tituloPai.
+             BIND (STRAFTER(STR(?paii), 'clav#') AS ?pai).
         } 
         
         OPTIONAL {

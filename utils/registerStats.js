@@ -1,4 +1,15 @@
-exports.extractStats = (req, res, next) => {
+const Stats = require("../controllers/stats")
+
+const msDifference = 3*1000;
+let lastTimer = Date.now();
+
+exports.extractStats = async (req, res, next) => {
+
+    await Stats.insert({url : "www.google.com", username: "Uminho", accessDate: Date.now()})
+    
+    let data = await Stats.listByUsername("Uminho")
+    console.log("DADOS DA BD")
+    console.log(data)
 
     let url = req.originalUrl
 
@@ -14,13 +25,28 @@ exports.extractStats = (req, res, next) => {
         queryStringValues.push({[qq[0]] :qq[1]})   
     })
 
-    urlBlocks[urlBlocks.length - 1] = urlBlocks[urlBlocks.length - 1].split("?")[0]
+    let blocksLength = urlBlocks.length - 1
+    urlBlocks[blocksLength] = urlBlocks[blocksLength].split("?")[0]
+
+    if(urlBlocks[blocksLength] == "")
+        urlBlocks.pop()
+
+    // TODO: Fazer a extracao do bearer token
+
+
+    if(Date.now() - lastTimer >= msDifference) {
+        // REALIZAR O DUMP DAS STATS
+        console.log("PASSOU DO TEMPO")
+    }
+
+
+    lastTimer = Date.now() 
     console.log("Information about url")
     console.log(url)
     console.log(urlBlocks)
-    console.log(queriesString)
     console.log(queryStringValues)
-    console.log("\n\n\n\n\n")
+    console.log("\n\n\n")
+
     next()
 
 }
