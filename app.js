@@ -130,6 +130,8 @@ JSON2XML = (jsonData, containers) => {
 
             xml += "</" + key + ">"
         } else if (typeof jsonData[key] == "object") {
+            containers.splice(0, 1)
+
             xml += "<" + key + ">"
             xml += JSON2XML(new Object(jsonData[key]), containers)
 
