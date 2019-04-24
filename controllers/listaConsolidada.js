@@ -55,7 +55,6 @@ ListaConsolidada.listar = async () => {
 
     let nivel1 = [] 
 
-    // Apenas difere por armazenar no array em vez de dic.
     for (n1 in classesN1) {
 
         let current = classesN1[n1]

@@ -387,6 +387,8 @@ Classes.pca = async id => {
     criteriaPca = criteriaPca.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
     let criteriosPca = await this.criteria(criteriaPca)
 
+    delete pca[0].Criterios
+
     return {
         ...pca[0],
         justificacao: criteriosPca
@@ -401,6 +403,8 @@ Classes.df = async id => {
     let criteriaDf = (df[0].Criterios).split("###");
     criteriaDf = criteriaDf.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
     let criteriosDf = await this.criteria(criteriaDf)
+
+    delete df[0].Criterios
 
     return {
         ...df[0],
