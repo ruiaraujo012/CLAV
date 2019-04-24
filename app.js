@@ -15,6 +15,8 @@ const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
+const { extractStats } = require('./utils/registerStats')
+
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
 const app = express()
@@ -26,9 +28,9 @@ require('./auth/auth')
  * Ligação à base de dados
  */
 mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useCreateIndex: true
-    })
+    useNewUrlParser: true,
+    useCreateIndex: true
+})
     .then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
     .catch(err => console.log('Mongo: erro na conexão: ' + err))
 
@@ -104,6 +106,9 @@ let formatOutput = (req, res, next) => {
     }
 }
 
+
+app.use(extractStats)
+
 app.use('/classes', classesRouter, formatOutput)
 app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter, formatOutput)
@@ -151,10 +156,10 @@ JSON2XML = (jsonData, containers) => {
 }
 
 testFunction = async () => {
-    let data = await axios.get("http://localhost:8000/classes/c150.20.501/pca")
+    let data = await axios.get("http://localhost:8000/classes/c150.20.501/pca?nivel=2&format=csv")
     console.log(data.data)
 }
 
-//testFunction()
+testFunction()
 
 module.exports = app
