@@ -27,6 +27,52 @@ construcaoEstrutura = (nivelAnterior, classesAtuais) => {
     return nivel;
 }
 
+construcaoEstruturaUltimoNivel = (classes) => {
+
+    let nivel = {}
+    for (n in classes) {
+
+        let current = classes[n]
+
+        if (!nivel[current.pai]) {
+            nivel[current.pai] = []
+        }
+        let pai = current.pai
+        delete current.pai
+        nivel[pai].push(current)
+    }
+    return nivel
+}
+
+construcaoEstruturaPrimeiroNivel = (nivelAnterior, classesAtuais) => {
+
+    let nivel = [] 
+
+    for (n in classesAtuais) {
+
+        let current = classesAtuais[n]
+
+        if (!nivel[current.pai]) {
+            nivel[current.pai] = []
+        }
+
+        let codigo = "c" + current.codigo
+        let codigoPai = current.pai
+
+        if(codigo in nivelAnterior){
+            
+            if(!current.filhos){
+                current.filhos = []
+            }
+            current.filhos.push(nivelAnterior[codigo])
+        }
+
+        delete current.pai
+        nivel.push(current)
+    }
+    return nivel
+}
+
 ListaConsolidada.listar = async () => {
 
     let classesN1 = await Classes.listarClassesPorNivelComPai(1)
@@ -34,49 +80,12 @@ ListaConsolidada.listar = async () => {
     let classesN3 = await Classes.listarClassesPorNivelComPai(3)
     let classesN4 = await Classes.listarClassesPorNivelComPai(4)
 
-    // code : hashmap
-
     // construir a estrutura de baixo para cima. 4 -> 3 -> 2 -> 1
-    let nivel4 = {}
-    for (n4 in classesN4) {
 
-        let current = classesN4[n4]
-
-        if (!nivel4[current.pai]) {
-            nivel4[current.pai] = []
-        }
-        let pai = current.pai
-        delete current.pai
-        nivel4[pai].push(current)
-    }
-
+    let nivel4 = construcaoEstruturaUltimoNivel(classesN4)
     let nivel3 = construcaoEstrutura(nivel4, classesN3)
     let nivel2 = construcaoEstrutura(nivel3, classesN2)
-
-    let nivel1 = [] 
-
-    for (n1 in classesN1) {
-
-        let current = classesN1[n1]
-
-        if (!nivel1[current.pai]) {
-            nivel1[current.pai] = []
-        }
-
-        let codigo = "c" + current.codigo
-        let codigoPai = current.pai
-
-        if(codigo in nivel2){
-            
-            if(!current.filhos){
-                current.filhos = []
-            }
-            current.filhos.push(nivel2[codigo])
-        }
-
-        delete current.pai
-        nivel1.push(current)
-    }
+    let nivel1 = construcaoEstruturaPrimeiroNivel(nivel2, classesN1)
 
     return nivel1 
 }
