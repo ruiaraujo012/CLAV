@@ -149,7 +149,7 @@ JSON2XML = (jsonData, containers) => {
 }
 
 testFunction = async () => {
-    let data = await axios.get("http://localhost:8000/classes/")
+    let data = await axios.get("http://localhost:8000/classes/c150.20.501/pca")
     console.log(data.data)
 }
 

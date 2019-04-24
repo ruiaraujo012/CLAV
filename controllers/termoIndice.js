@@ -4,12 +4,15 @@ const Graphdb = require('./graphdb')
 TermoIndice.listarTermoIndice = () => {
 
     let query = `
-    SELECT * WHERE { 
-        ?s rdf:type clav:TermoIndice ;
+    SELECT ?s ?Termo ?id ?Tit ?Classe WHERE { 
+        ?ss rdf:type clav:TermoIndice ;
             clav:termo ?Termo ;
-            clav:estaAssocClasse ?id .
-        ?id clav:codigo ?Classe ;
+            clav:estaAssocClasse ?idd .
+        ?idd clav:codigo ?Classe ;
             clav:titulo ?Tit .
+
+    BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
+    BIND (STRAFTER(STR(?ss), 'clav#') AS ?s).
     }`
 
     return Graphdb.fetch(query)
@@ -18,12 +21,13 @@ TermoIndice.listarTermoIndice = () => {
 TermoIndice.listarTermoIndicePorID = (id) => {
 
     let query = `
-    SELECT * WHERE { 
+    SELECT ?Termo ?id ?Classe ?Tit WHERE { 
         clav:${id} rdf:type clav:TermoIndice ;
             clav:termo ?Termo ;
-            clav:estaAssocClasse ?id .
-        ?id clav:codigo ?Classe ;
+            clav:estaAssocClasse ?idd .
+        ?idd clav:codigo ?Classe ;
             clav:titulo ?Tit .
+    BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }`
 
     return Graphdb.fetch(query)
