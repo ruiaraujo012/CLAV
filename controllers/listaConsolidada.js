@@ -19,7 +19,9 @@ construcaoEstrutura = (nivelAnterior, classesAtuais) => {
             current.filhos.push(nivelAnterior[codigo])
         }
 
-        nivel[current.pai].push(current)
+        let pai = current.pai
+        delete current.pai
+        nivel[pai].push(current)
     }
 
     return nivel;
@@ -43,7 +45,9 @@ ListaConsolidada.listar = async () => {
         if (!nivel4[current.pai]) {
             nivel4[current.pai] = []
         }
-        nivel4[current.pai].push(current)
+        let pai = current.pai
+        delete current.pai
+        nivel4[pai].push(current)
     }
 
     let nivel3 = construcaoEstrutura(nivel4, classesN3)
@@ -71,6 +75,7 @@ ListaConsolidada.listar = async () => {
             current.filhos.push(nivel2[codigo])
         }
 
+        delete current.pai
         nivel1.push(current)
     }
 
