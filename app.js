@@ -16,11 +16,8 @@ const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
-const Graphdb = require('./controllers/graphdb')
 
 const app = express()
-
-
 
 require('dotenv').config()
 require('./auth/auth')
@@ -114,39 +111,40 @@ app.use('/legislacao', legislacaoRouter, formatOutput)
 app.use('/termoindice', termoIndiceRouter, formatOutput)
 app.use('/', usersRouter)
 
-JSON2XML = (jsonData, optional) => {
+JSON2XML = (jsonData, containers) => {
     let xml = ''
-    if (optional) {
-        xml += "<" + optional[0] + ">"
-        for (let key in jsonData) {
-            if (typeof jsonData[key] == "object") {
-                xml += "<" + optional[1] + ">"
-                xml += JSON2XML(new Object(jsonData[key]))
-                xml += "</" + optional[1] + ">"
+
+    let blockContainer = containers[0]
+
+    xml += "<" + blockContainer + ">"
+
+    for (let key in jsonData) {
+        if (Array.isArray(jsonData[key])) {
+            containers.splice(0, 1)
+
+            xml += "<" + key + ">"
+
+            for (let array of jsonData[key]) {
+                xml += JSON2XML(new Object(array), containers)
             }
-        }
-        xml += "</" + optional[0] + ">"
-    } else {
-        for (let key in jsonData) {
-            if (Array.isArray(jsonData[key])) {
-                xml += "<" + key + 'Bloco' + ">"
-                for (let array of jsonData[key]) {
-                    xml += "<" + key + ">"
-                    xml += JSON2XML(new Object(array))
-                    xml += "</" + key + ">"
-                }
-                xml += "</" + key + 'Bloco' + ">"
-            } else if (typeof jsonData[key] == "object") {
-                xml += "<" + key + ">"
-                xml += JSON2XML(new Object(jsonData[key]))
-                xml += "</" + key + ">"
-            } else {
-                xml += "<" + key + ">"
-                xml += jsonData[key]
-                xml += "</" + key + ">"
-            }
+
+            xml += "</" + key + ">"
+        } else if (typeof jsonData[key] == "object") {
+            xml += "<" + key + ">"
+            xml += JSON2XML(new Object(jsonData[key]), containers)
+
+            xml += "</" + key + ">"
+        } else {
+            xml += "<" + key + ">"
+
+            xml += jsonData[key]
+
+            xml += "</" + key + ">"
         }
     }
+
+    xml += "</" + blockContainer + ">"
+
     return xml
 }
 
@@ -155,6 +153,6 @@ testFunction = async () => {
     console.log(data.data)
 }
 
-testFunction()
+//testFunction()
 
 module.exports = app

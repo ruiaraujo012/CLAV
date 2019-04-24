@@ -57,9 +57,11 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     switch (nivelClasse) {
         case 1:
             res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
+            res.locals.xmlContainer = ['classe', 'notaAplic', 'exeNotaAplic', 'notaExclus', 'termoInd']
             break
         case 2:
             res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
+            res.locals.xmlContainer = ['classe', 'notaAplic', 'exeNotaAplic', 'notaExclus', 'termoInd']
             break
         case 3:
             res.locals.dados = await Classes.obtencaoDadosNivel3(id)
