@@ -10,6 +10,10 @@ Stats.listByUsername = username => {
         .exec()
 }
 
+Stats.insertMany = listStats => {
+    return Stat.insertMany(listStats)
+}
+
 Stats.insert = stat => {
     return Stat.create(stat)
 }

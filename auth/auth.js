@@ -1,5 +1,3 @@
-// auth/auth.js
-
 const passport = require('passport')
 const localStrategy = require('passport-local').Strategy
 const User = require('../models/user')
@@ -9,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 const SALT_ROUNDS = 10
 
-const AUTHENTICATION_ENABLED = false
+const AUTHENTICATION_ENABLED = true
 
 require('dotenv').config()
 

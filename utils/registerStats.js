@@ -1,52 +1,52 @@
 const Stats = require("../controllers/stats")
+var jwt = require('jsonwebtoken');
 
-const msDifference = 3*1000;
+const msDifference = 5 * 1000;
 let lastTimer = Date.now();
+let savedStats = []
 
-exports.extractStats = async (req, res, next) => {
-
-    await Stats.insert({url : "www.google.com", username: "Uminho", accessDate: Date.now()})
-    
-    let data = await Stats.listByUsername("Uminho")
-    console.log("DADOS DA BD")
-    console.log(data)
+// TODO : alterar como pretendido
+processStats = () => {
 
     let url = req.originalUrl
-
     let urlBlocks = url.split("/")
     urlBlocks.shift()
 
     let queriesString = urlBlocks[urlBlocks.length - 1].split(/[?&]/)
     queriesString.shift()
 
-    let queryStringValues = [] 
+    let queryStringValues = []
     queriesString.map(q => {
-        let qq = q.split("=") 
-        queryStringValues.push({[qq[0]] :qq[1]})   
+        let qq = q.split("=")
+        queryStringValues.push({ [qq[0]]: qq[1] })
     })
 
     let blocksLength = urlBlocks.length - 1
     urlBlocks[blocksLength] = urlBlocks[blocksLength].split("?")[0]
 
-    if(urlBlocks[blocksLength] == "")
+    if (urlBlocks[blocksLength] == "")
         urlBlocks.pop()
+}
 
-    // TODO: Fazer a extracao do bearer token
+exports.extractStats = async (req, res, next) => {
 
+    const token = req.headers.authorization || req.query.api_key
+    let userData = {}
 
-    if(Date.now() - lastTimer >= msDifference) {
+    if (token)
+        userData = jwt.decode(token) //id, email, fullName, role
+
+    let url = req.originalUrl
+    let accessInformation = { url: url, email: userData.user.email || "", accessDate: Date.now() }
+    savedStats.push(accessInformation);
+
+    if (Date.now() - lastTimer >= msDifference) {
         // REALIZAR O DUMP DAS STATS
-        console.log("PASSOU DO TEMPO")
+        Stats.insertMany(savedStats)
+        console.log("A enviar estatisticas para a BD")
+        savedStats = []
     }
 
-
-    lastTimer = Date.now() 
-    console.log("Information about url")
-    console.log(url)
-    console.log(urlBlocks)
-    console.log(queryStringValues)
-    console.log("\n\n\n")
-
+    lastTimer = Date.now()
     next()
-
 }
