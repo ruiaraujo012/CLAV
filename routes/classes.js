@@ -62,15 +62,15 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     let nivelClasse = await Classes.obterNivelDaClasse(id)
     // Alterar
 
-    switch (nivelClasse) {
+    switch (nivelClasse) { 
         case 1:
         case 2:
             res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-            res.locals.xmlContainer = ['classe', 'notaAplic', 'exeNotaAplic', 'notaExclus', 'termoInd']
+            res.locals.xmlContainer = ['classes', 'classe', 'notasAplicacao', 'notaAplicacao', 'exemplosNotasAplicacao', 'exemploNotaAplicacao', 'notasExclusao', 'notaExclusao', 'termosIndice', 'termoIndice']
             break
         case 3:
             res.locals.dados = await Classes.obtencaoDadosNivel3(id)
-            res.locals.xmlContainer = ['classe', 'notaAplic', 'exeNotaAplic', 'notaExclus', 'termoInd', 'dono', 'participante', 'processoRelacionado', 'legis', 'pca', 'justifica', 'df', 'justifica']
+            res.locals.xmlContainer = ['classes', 'classe', 'notasAplicacao', 'notaAplicacao', 'exemplosNotasAplicacao', 'exemploNotaAplicacao', 'notasExclusao', 'notaExclusao', 'termosIndice', 'termoIndice', 'donos', 'dono', 'participantes', 'participante', 'processosRelacionados', 'processoRelacionado', 'legislacoes', 'legislacao', 'prazosConservacaoAdministrativa', 'prazoConservacaoAdministrativa', 'justificacoes', 'justificacao', 'destinosFinais', 'destinoFinal', 'justificacoes', 'justificacao']
             break
         case 4:
             res.locals.dados = await Classes.obtencaoDadosNivel4(id)
