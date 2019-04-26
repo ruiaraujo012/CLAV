@@ -15,7 +15,9 @@ const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
-const { extractStats } = require('./utils/registerStats')
+const {
+    extractStats
+} = require('./utils/registerStats')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
@@ -28,9 +30,9 @@ require('./auth/auth')
  * Ligação à base de dados
  */
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true
-})
+        useNewUrlParser: true,
+        useCreateIndex: true
+    })
     .then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
     .catch(err => console.log('Mongo: erro na conexão: ' + err))
 
@@ -119,28 +121,30 @@ app.use('/', usersRouter)
 JSON2XML = (jsonData, containers) => {
     let xml = ''
 
-    let blockContainer = containers[0]
+    let blockContainer = containers[1]
 
     xml += "<" + blockContainer + ">"
 
     for (let key in jsonData) {
         if (Array.isArray(jsonData[key])) {
-            containers.splice(0, 1)
+            containers.splice(0, 2)
 
-            xml += "<" + key + ">"
+            xml += "<" + containers[0] + ">"
 
             for (let array of jsonData[key]) {
                 xml += JSON2XML(new Object(array), containers)
             }
 
-            xml += "</" + key + ">"
+            xml += "</" + containers[0] + ">"
         } else if (typeof jsonData[key] == "object") {
-            containers.splice(0, 1)
+            containers.splice(0, 2)
 
-            xml += "<" + key + ">"
+            let insideBlock = containers[0]
+
+            xml += "<" + insideBlock + ">"
             xml += JSON2XML(new Object(jsonData[key]), containers)
 
-            xml += "</" + key + ">"
+            xml += "</" + insideBlock + ">"
         } else {
             xml += "<" + key + ">"
 
@@ -165,7 +169,8 @@ dummyRequests = async () => {
     const urls = ["/classes/c100.10.001", "/classes/c100.10.002", "/classes/c100.10",
         "/classes/c150.10.001", "/classes/c150.20.501", "/classes/c150.20.502", "/entidades",
         "/classes", "/termoIndice/c100.10.001", "/tipologias", "/tipologias/c100.10.001",
-        "/classes/c100.10.001/pca"]
+        "/classes/c100.10.001/pca"
+    ]
 
     const quant = 1000;
     for (let i = 0; i < quant; i++) {
