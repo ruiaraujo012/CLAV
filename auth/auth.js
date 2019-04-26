@@ -7,7 +7,7 @@ const bcrypt = require('bcrypt')
 
 const SALT_ROUNDS = 10
 
-const AUTHENTICATION_ENABLED = true
+const AUTHENTICATION_ENABLED = false
 
 require('dotenv').config()
 

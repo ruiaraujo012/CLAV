@@ -160,6 +160,23 @@ testFunction = async () => {
     await axios.get("http://localhost:8000/classes/c150.20.501/pca/")
 }
 
+dummyRequests = async () => {
+
+    const urls = ["/classes/c100.10.001", "/classes/c100.10.002", "/classes/c100.10",
+        "/classes/c150.10.001", "/classes/c150.20.501", "/classes/c150.20.502", "/entidades",
+        "/classes", "/termoIndice/c100.10.001", "/tipologias", "/tipologias/c100.10.001",
+        "/classes/c100.10.001/pca"]
+
+    const quant = 1000;
+    for (let i = 0; i < quant; i++) {
+        let url = "http://localhost:8000" + urls[Math.floor(Math.random() * urls.length - 1) + 1]
+        console.log(url)
+        await axios.get(url)
+    }
+}
+
+// dummyRequests();
+
 // testFunction()
 
 module.exports = app

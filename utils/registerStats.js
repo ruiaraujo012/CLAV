@@ -36,17 +36,22 @@ exports.extractStats = async (req, res, next) => {
     if (token)
         userData = jwt.decode(token) //id, email, fullName, role
 
+    let email = ""
+    if (typeof userData.user !== "undefined" && typeof userData.user.email !== "undefined")
+        email = userData.user.email
+
     let url = req.originalUrl
-    let accessInformation = { url: url, email: userData.user.email || "", accessDate: Date.now() }
+    let accessInformation = { url: url, email: email, accessDate: Date.now() }
     savedStats.push(accessInformation);
 
     if (Date.now() - lastTimer >= msDifference) {
         // REALIZAR O DUMP DAS STATS
         Stats.insertMany(savedStats)
-        console.log("A enviar estatisticas para a BD")
+        console.log("\n\n\n\n\nA enviar estatisticas para a BD")
+        console.log(savedStats)
         savedStats = []
+        lastTimer = Date.now()
     }
 
-    lastTimer = Date.now()
     next()
 }

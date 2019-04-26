@@ -8,12 +8,12 @@ const StatsSchema = new Schema({
     },
     email: {
         type: String,
-        required: true
+        required: false
     },
     accessDate: {
         type: Date,
         required: true,
-        unique: true
+        unique: false
     }
 })
 
