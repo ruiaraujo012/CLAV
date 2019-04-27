@@ -3,21 +3,6 @@ const router = express.Router()
 const Tipologias = require('../controllers/tipologias')
 const authenticate = require('../auth/auth').authenticate
 
-
-/**
-* @swagger
-* /tipologias:
-*   get:
-*     tags:
-*       - Tipologias
-*     description: Retorna todas as tipologias de uma classe
-*     produces:
-*       - application/json
-*     responses:
-*       200:
-*         description: Retorna todas as tipologias de uma classe
-*     
-*/
 router.get('/', authenticate(), async (req, res, next) => {
 
     let tipologias = await Tipologias.listarTipologias()
@@ -27,26 +12,6 @@ router.get('/', authenticate(), async (req, res, next) => {
     next()
 
 })
-
-/**
- * @swagger
- * /tipologias/{tipologiasID}:
- *   get:
- *     tags:
- *       - Tipologias
- *     description: Retorna toda a informação sobre uma tipologia de uma classe
- *     parameters:
- *      - name: tipologiasID
- *        in: path
- *        description: tip_AAC
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna toda a informação sobre uma tipologia de uma classe
- */
 
 router.get('/:id', authenticate(), async (req, res, next) => {
 

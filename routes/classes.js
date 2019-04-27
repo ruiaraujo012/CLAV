@@ -5,20 +5,6 @@ const ListaConsolidada = require('../controllers/listaConsolidada')
 const authenticate = require('../auth/auth').authenticate
 const Graphdb = require('../controllers/graphdb')
 
-/**
- * @swagger
- * /classes:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna a lista consolidada que inclui todas as classes
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna a lista consolidada que inclui todas as classes
- */
-
 router.get('/', authenticate(), async (req, res, next) => {
 
     res.locals.dados = await ListaConsolidada.listar()
@@ -26,32 +12,13 @@ router.get('/', authenticate(), async (req, res, next) => {
 
 }) 
 
-// TODO : ainda em fase de testes, corrigir
-router.get('/lc/:id', authenticate(), async (req, res, next) => {
+router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
 
-    res.locals.dados = await ListaConsolidada.listarCompleta(req.params.id)
+    res.locals.dados = await ListaConsolidada.listarComTodosCampos()
     next()
 
 }) 
-/**
- * @swagger
- * /classes/{classID}:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna toda a indormação relativa a uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c150.20.501
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna toda a indormação relativa a uma classe
- */
+
 router.get('/:id', authenticate(), async (req, res, next) => {
 
     if (!req.params.id) {
@@ -82,25 +49,6 @@ router.get('/:id', authenticate(), async (req, res, next) => {
     next()
 }) 
 
-/**
- * @swagger
- * /classes/{classID}/donos:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna todos os donos de uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c150.20.501
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna todos os donos de uma classe
- */
 router.get('/:id/donos', authenticate(), async (req, res, next) => {
 
 
@@ -116,25 +64,6 @@ router.get('/:id/donos', authenticate(), async (req, res, next) => {
 
 }) 
 
-/**
- * @swagger
- * /classes/{classID}/participantes:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna todos os participantes de uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c150.20.501
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna todos os participantes de uma classe
- */
 router.get('/:id/participantes', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
@@ -148,26 +77,6 @@ router.get('/:id/participantes', authenticate(), async (req, res, next) => {
     next()
 
 })
-
-/**
- * @swagger
- * /classes/{classID}/processosRelacionados:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna todos os processos relacionados de uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c150.20.501
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna todos os processos relacionados de uma classe
- */
 
 router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) => {
 
@@ -183,26 +92,6 @@ router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) 
     next()
 })
 
-/**
- * @swagger
- * /classes/{classID}/legislacao:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna a legislação de uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c150.20.501
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna a legislação de uma classe
- */
-
 router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 
     let nivel = await Classes.obterNivelDaClasse(req.params.id)
@@ -216,25 +105,6 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
     next()
 })
 
-/**
- * @swagger
- * /classes/{classID}/pca:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna o PCA relativo a uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c150.20.501
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna o PCA relativo a uma classe
- */
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
 
     // c150.20.501 tem multiplos criterios de pca para se verificar
@@ -243,27 +113,6 @@ router.get('/:id/pca', authenticate(), async (req, res, next) => {
     next()
     
 })
-
-/**
- * 
- * @swagger
- * /classes/{classID}/df:
- *   get:
- *     tags:
- *       - Classes
- *     description: Retorna o destino final relativo a uma classe
- *     parameters:
- *      - name: classID
- *        in: path
- *        description: c500.40.500
- *        type: string
- *        required: true
- *     produces:
- *       - application/json
- *     responses:
- *       200:
- *         description: Retorna o destino final relativo a uma classe
- */
 
 router.get('/:id/df', authenticate(), async (req, res, next) => {
 

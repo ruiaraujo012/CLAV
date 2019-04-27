@@ -35,10 +35,19 @@ Graphdb.fetch = async (query) => {
 
     query = prefixConcat + query
 
-    let dados = (await axios.get(graphdbAdress + '/repositories/' + graphdbRepository + '?query=' + encodeURIComponent(query))).data
-    let campos = dados.head.vars
-    let bindings = dados.results.bindings
-    let dadosNormalizados = this.simplificaSPARQLRes(bindings, campos)
+    let dadosNormalizados = {}
+
+    try {
+
+        let dados = (await axios.get(graphdbAdress + '/repositories/' + graphdbRepository + '?query=' + encodeURIComponent(query))).data
+        let campos = dados.head.vars
+        let bindings = dados.results.bindings
+        dadosNormalizados = this.simplificaSPARQLRes(bindings, campos)
+
+    } catch (error) {
+        console.log("[GRAPHD ERROR] " + error.response.data)
+        console.log("Query: " + query)
+    }
 
     return dadosNormalizados
 

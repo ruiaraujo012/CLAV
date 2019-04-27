@@ -16,6 +16,15 @@ const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
+/*
+ * Swagger
+ */
+const classesDocs = require('./docs/classes')
+const entidadesDocs = require('./docs/entidades')
+const legislacaoDocs = require('./docs/legislacao')
+const termoindiceDocs = require('./docs/termoIndice')
+const tipologiasDocs = require('./docs/tipologias')
+
 const { extractStats } = require('./utils/registerStats')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
@@ -52,7 +61,7 @@ const options = {
 	// import swaggerDefinitions
 	swaggerDefinition: swaggerConfig,
 	// path to the API docs
-	apis: ['./routes/*.js']
+	apis: ['./docs/*.js']
 }
 
 /*
@@ -78,6 +87,15 @@ app.use(
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
+/*
+ *Swagger
+ */
+app.use('/classes', classesDocs)
+app.use('/entidades', entidadesDocs)
+app.use('/legislacao', legislacaoDocs)
+app.use('/termoindice', termoindiceDocs)
+app.use('/tipologias', tipologiasDocs)
+
 const JSON2XML = (jsonData, containers) => {
 	let xml = ''
 
@@ -96,9 +114,6 @@ const JSON2XML = (jsonData, containers) => {
 				obj = array
 				xml += JSON2XML(obj, containers)
 			})
-			// for (let array of jsonData[key]) {
-
-			// }
 
 			xml += `</${containers[0]}>`
 		} else if (typeof jsonData[key] === 'object') {
@@ -175,8 +190,8 @@ app.use('/', usersRouter)
 
 // eslint-disable-next-line no-undef
 testFunction = async () => {
-	await axios.get('http://localhost:8000/classes/c150.20.501/pca?nivel=2&format=csv')
-	await axios.get('http://localhost:8000/classes/c150.20.501/pca/')
+	const data = await axios.get('http://localhost:8000/classes/listaConsolidada')
+	console.log(data.data)
 }
 
 // eslint-disable-next-line no-undef
