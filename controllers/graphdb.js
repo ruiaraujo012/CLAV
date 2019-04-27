@@ -45,7 +45,8 @@ Graphdb.fetch = async (query) => {
         dadosNormalizados = this.simplificaSPARQLRes(bindings, campos)
 
     } catch (error) {
-        console.log("[ERROR] Error while fetching data from graphdb")
+        console.log("[GRAPHD ERROR] " + error.response.data)
+        console.log("Query: " + query)
     }
 
     return dadosNormalizados
