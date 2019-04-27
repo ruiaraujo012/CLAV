@@ -1,3 +1,4 @@
+/* eslint-disable comma-dangle */
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -15,9 +16,7 @@ const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
-const {
-    extractStats
-} = require('./utils/registerStats')
+const { extractStats } = require('./utils/registerStats')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
@@ -29,12 +28,15 @@ require('./auth/auth')
 /*
  * Ligação à base de dados
  */
-mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useCreateIndex: true
-    })
-    .then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
-    .catch(err => console.log('Mongo: erro na conexão: ' + err))
+mongoose
+	.connect(process.env.MONGO_URI, {
+		useNewUrlParser: true,
+		useCreateIndex: true
+	})
+	.then(() => console.log(`Mongo ready: ${mongoose.connection.readyState}`))
+	.catch((err) => {
+		console.log(`Mongo: erro na conexão: ${err}`)
+	})
 
 mongoose.set('useFindAndModify', false)
 
@@ -47,10 +49,10 @@ app.use(passport.initialize())
  * Options for the swagger docs
  */
 const options = {
-    // import swaggerDefinitions
-    swaggerDefinition: swaggerConfig,
-    // path to the API docs
-    apis: ['./routes/*.js'],
+	// import swaggerDefinitions
+	swaggerDefinition: swaggerConfig,
+	// path to the API docs
+	apis: ['./routes/*.js']
 }
 
 /*
@@ -59,55 +61,108 @@ const options = {
 const swaggerSpec = swaggerJSDoc(options)
 
 /*
- * Serve swagger 
+ * Serve swagger
  */
 app.get('/swagger.json', (req, res) => {
-    res.setHeader('Content-Type', 'application/json')
-    res.send(swaggerSpec)
+	res.setHeader('Content-Type', 'application/json')
+	res.send(swaggerSpec)
 })
 
 app.use(logger('dev'))
 app.use(express.json())
-app.use(express.urlencoded({
-    extended: false
-}))
+app.use(
+	express.urlencoded({
+		extended: false
+	})
+)
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-let formatOutput = (req, res, next) => {
+const JSON2XML = (jsonData, containers) => {
+	let xml = ''
 
-    if (!res.locals.dados)
-        next()
+	const blockContainer = containers[1]
 
-    let dados = res.locals.dados
-    let format = req.query.format || req.headers.accept
+	xml += `<${blockContainer}>`
 
-    switch (format) {
-        case 'application/json':
-        case 'json':
-            res.send(dados)
-            break;
-        case 'application/xml':
-        case 'xml':
-            res.send(JSON2XML(dados, res.locals.xmlContainer))
-            break
-        case 'text/csv':
-        case 'csv':
-            let options = {
-                expandArrayObjects: true,
-                prependHeader: true
-            }
-            jsoncsv.json2csv(dados, (err, csv) => {
-                if (err) return
-                res.send(csv)
-            }, options)
-            break;
-        default:
-            res.send(dados)
-            break;
-    }
+	Object.keys(jsonData).forEach((key) => {
+		if (Array.isArray(jsonData[key])) {
+			containers.splice(0, 2)
+
+			xml += `<${containers[0]}>`
+
+			jsonData[key].forEach((array) => {
+				let obj = {}
+				obj = array
+				xml += JSON2XML(obj, containers)
+			})
+			// for (let array of jsonData[key]) {
+
+			// }
+
+			xml += `</${containers[0]}>`
+		} else if (typeof jsonData[key] === 'object') {
+			containers.splice(0, 2)
+
+			const insideBlock = containers[0]
+
+			xml += `<${insideBlock}>`
+
+			let obj = {}
+			obj = jsonData[key]
+
+			xml += JSON2XML(obj, containers)
+
+			xml += `</${insideBlock}>`
+		} else {
+			xml += `<${key}>`
+
+			xml += jsonData[key]
+
+			xml += `</${key}>`
+		}
+	})
+
+	xml += `</${blockContainer}>`
+	return xml
 }
 
+const formatOutput = (req, res, next) => {
+	if (!res.locals.dados) next()
+
+	const { dados } = res.locals
+	const format = req.query.format || req.headers.accept
+
+	const options2csv = {
+		expandArrayObjects: true,
+		prependHeader: true
+	}
+
+	switch (format) {
+		case 'application/json':
+		case 'json':
+			res.send(dados)
+			break
+		case 'application/xml':
+		case 'xml':
+			res.send(JSON2XML(dados, res.locals.xmlContainer))
+			break
+		case 'text/csv':
+		case 'csv':
+			jsoncsv.json2csv(
+				dados,
+				(err, csv) => {
+					if (err) return
+					res.send(csv)
+				},
+				options2csv
+			)
+			break
+		default:
+			res.send(dados)
+			break
+	}
+}
 
 app.use(extractStats)
 
@@ -118,66 +173,38 @@ app.use('/legislacao', legislacaoRouter, formatOutput)
 app.use('/termoindice', termoIndiceRouter, formatOutput)
 app.use('/', usersRouter)
 
-JSON2XML = (jsonData, containers) => {
-    let xml = ''
-
-    let blockContainer = containers[1]
-
-    xml += "<" + blockContainer + ">"
-
-    for (let key in jsonData) {
-        if (Array.isArray(jsonData[key])) {
-            containers.splice(0, 2)
-
-            xml += "<" + containers[0] + ">"
-
-            for (let array of jsonData[key]) {
-                xml += JSON2XML(new Object(array), containers)
-            }
-
-            xml += "</" + containers[0] + ">"
-        } else if (typeof jsonData[key] == "object") {
-            containers.splice(0, 2)
-
-            let insideBlock = containers[0]
-
-            xml += "<" + insideBlock + ">"
-            xml += JSON2XML(new Object(jsonData[key]), containers)
-
-            xml += "</" + insideBlock + ">"
-        } else {
-            xml += "<" + key + ">"
-
-            xml += jsonData[key]
-
-            xml += "</" + key + ">"
-        }
-    }
-
-    xml += "</" + blockContainer + ">"
-
-    return xml
-}
-
+// eslint-disable-next-line no-undef
 testFunction = async () => {
-    await axios.get("http://localhost:8000/classes/c150.20.501/pca?nivel=2&format=csv")
-    await axios.get("http://localhost:8000/classes/c150.20.501/pca/")
+	await axios.get('http://localhost:8000/classes/c150.20.501/pca?nivel=2&format=csv')
+	await axios.get('http://localhost:8000/classes/c150.20.501/pca/')
 }
 
+// eslint-disable-next-line no-undef
 dummyRequests = async () => {
+	const urls = [
+		'/classes/c100.10.001',
+		'/classes/c100.10.002',
+		'/classes/c100.10',
+		'/classes/c150.10.001',
+		'/classes/c150.20.501',
+		'/classes/c150.20.502',
+		'/entidades',
+		'/classes',
+		'/termoIndice/c100.10.001',
+		'/tipologias',
+		'/tipologias/c100.10.001',
+		'/classes/c100.10.001/pca'
+	]
 
-    const urls = ["/classes/c100.10.001", "/classes/c100.10.002", "/classes/c100.10",
-        "/classes/c150.10.001", "/classes/c150.20.501", "/classes/c150.20.502", "/entidades",
-        "/classes", "/termoIndice/c100.10.001", "/tipologias", "/tipologias/c100.10.001",
-        "/classes/c100.10.001/pca"
-    ]
+	const quant = 1000
+	let test
+	for (let i = 0; i < quant; i += 1) {
+		const url = `http://localhost:8000${urls[Math.floor(Math.random() * urls.length - 1) + 1]}`
+		console.log(url)
+		test = axios.get(url)
+	}
 
-    const quant = 1000;
-    for (let i = 0; i < quant; i++) {
-        let url = "http://localhost:8000" + urls[Math.floor(Math.random() * urls.length - 1) + 1]
-        console.log(url)
-        await axios.get(url)
-    }
+	await Promise.all(test)
 }
 
 // dummyRequests();
