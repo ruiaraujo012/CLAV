@@ -21,7 +21,7 @@ const termoIndiceRouter = require('./routes/termoIndice')
 const classesDocs = require('./docs/classes')
 const entidadesDocs = require('./docs/entidades')
 const legislacaoDocs = require('./docs/legislacao')
-const termoindiceDocs = require('./docs/termoindice')
+const termoindiceDocs = require('./docs/termoIndice')
 const tipologiasDocs = require('./docs/tipologias')
 
 
@@ -179,8 +179,8 @@ JSON2XML = (jsonData, containers) => {
 }
 
 testFunction = async () => {
-    await axios.get("http://localhost:8000/classes/c150.20.501/pca?nivel=2&format=csv")
-    await axios.get("http://localhost:8000/classes/c150.20.501/pca/")
+    let data = await axios.get("http://localhost:8000/classes/lc")
+    console.log(data.data)
 }
 
 dummyRequests = async () => {
@@ -201,6 +201,6 @@ dummyRequests = async () => {
 
 // dummyRequests();
 
-// testFunction()
+testFunction()
 
 module.exports = app

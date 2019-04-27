@@ -11,9 +11,9 @@ construcaoEstrutura = (nivelAnterior, classesAtuais) => {
             nivel[current.pai] = []
         }
 
-        if(codigo in nivelAnterior){
-            
-            if(!current.filhos){
+        if (codigo in nivelAnterior) {
+
+            if (!current.filhos) {
                 current.filhos = []
             }
             current.filhos.push(nivelAnterior[codigo])
@@ -46,7 +46,7 @@ construcaoEstruturaUltimoNivel = (classes) => {
 
 construcaoEstruturaPrimeiroNivel = (nivelAnterior, classesAtuais) => {
 
-    let nivel = [] 
+    let nivel = []
 
     for (n in classesAtuais) {
 
@@ -59,9 +59,9 @@ construcaoEstruturaPrimeiroNivel = (nivelAnterior, classesAtuais) => {
         let codigo = "c" + current.codigo
         let codigoPai = current.pai
 
-        if(codigo in nivelAnterior){
-            
-            if(!current.filhos){
+        if (codigo in nivelAnterior) {
+
+            if (!current.filhos) {
                 current.filhos = []
             }
             current.filhos.push(nivelAnterior[codigo])
@@ -87,24 +87,63 @@ ListaConsolidada.listar = async () => {
     let nivel2 = construcaoEstrutura(nivel3, classesN2)
     let nivel1 = construcaoEstruturaPrimeiroNivel(nivel2, classesN1)
 
-    return nivel1 
+    return nivel1
 }
 
 
-// TODO : a obtencao de dados nao pode ser por id, 
-ListaConsolidada.listarCompleta = async (id) => {
+ListaConsolidada.listarComTodosCampos = async () => {
 
-    let classesN1 = await Classes.obtencaoDadosNivel1_2(id)
-    let classesN2 = await Classes.obtencaoDadosNivel1_2(id)
-    let classesN3 = await Classes.obtencaoDadosNivel3(id)
-    let classesN4 = await Classes.obtencaoDadosNivel4(id)
+    // Obter lista de IDs para cada nivel
+    let idsNivel1 = await Classes.listarClassesApenasComIdPorNivel(1)
+    let idsNivel2 = await Classes.listarClassesApenasComIdPorNivel(2)
+    let idsNivel3 = await Classes.listarClassesApenasComIdPorNivel(3)
+    let idsNivel4 = await Classes.listarClassesApenasComIdPorNivel(4)
 
-    // construir a estrutura de baixo para cima. 4 -> 3 -> 2 -> 1
+    // pai : "c100.10.101"
+    // codigoPai : "100.10.101"
 
+    let classesN4 = await this.obterTodasClassesPorId(idsNivel4, 4)
     let nivel4 = construcaoEstruturaUltimoNivel(classesN4)
-    let nivel3 = construcaoEstrutura(nivel4, classesN3)
-    let nivel2 = construcaoEstrutura(nivel3, classesN2)
-    let nivel1 = construcaoEstruturaPrimeiroNivel(nivel2, classesN1)
+    classesN4 = []
 
-    return nivel1
+    let classesN3 = await this.obterTodasClassesPorId(idsNivel3, 3)
+    let nivel3 = construcaoEstrutura(nivel4, classesN3)
+    classesN3 = []
+
+    let classesN2 = await this.obterTodasClassesPorId(idsNivel2, 2)
+    let nivel2 = construcaoEstrutura(nivel3, classesN2)
+    classesN2 = []
+
+    let classesN1 = await this.obterTodasClassesPorId(idsNivel1, 1)
+    let nivel1 = construcaoEstruturaPrimeiroNivel(nivel2, classesN1)
+    classesN1 = []
+
+    return nivel1 
+}
+
+ListaConsolidada.obterTodasClassesPorId = async (ids, nivel) => {
+
+    let classes = []
+    let classe = {}
+
+    for (key in ids) {
+        console.log("Id : " + ids[key].id)
+        switch (nivel) {
+            case 1:
+            case 2:
+                classe = await Classes.obtencaoDadosNivel1_2(ids[key].id)
+                break;
+            case 3:
+                classe = await Classes.obtencaoDadosNivel3(ids[key].id)
+                break;
+            case 4:
+                classe = await Classes.obtencaoDadosNivel4(ids[key].id)
+                break;
+            default:
+                break;
+        }
+        classes.push(classe)
+    }
+
+    return classes
 }

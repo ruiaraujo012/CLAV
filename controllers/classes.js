@@ -37,6 +37,19 @@ Classes.listarClassesPorNivel = (nivel) => {
     return Graphdb.fetch(query)
 }
 
+Classes.listarClassesApenasComIdPorNivel = (nivel) => {
+    let query = `
+    Select ?id                            
+        Where {  
+            ?idd rdf:type clav:Classe_N${nivel} ;
+             clav:classeStatus 'A'.
+        BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
+        }  Order by ?id 
+    `
+
+    return Graphdb.fetch(query)
+}
+
 Classes.listarClassesPorNivelComPai = (nivel) => {
 
     let query = `
@@ -100,7 +113,7 @@ Classes.listarTermosIndice = (id) => {
               clav:termo ?termo
     BIND (STRAFTER(STR(?idTI), 'clav#') AS ?id).
     }`
-    
+
     return Graphdb.fetch(query)
 }
 
@@ -288,7 +301,7 @@ Classes.criteria = (criteria) => {
 Classes.obtencaoDadosNivel1_2 = async id => {
 
     let classe = await this.blocoDescritivo(id)
-    let notasAplicacao= await this.listarNotasAplicacao(id)
+    let notasAplicacao = await this.listarNotasAplicacao(id)
     let exemploNotasAplicacao = await this.listarExemplosNotasAplicacao(id)
     let notasExclusao = await this.listarNotasExclusao(id)
     let termosIndice = await this.listarTermosIndice(id)
@@ -375,8 +388,8 @@ Classes.blocoDecisao = async id => {
     let df = await this.df(id);
 
     return {
-        pca : {...pca},
-        df : {...df}
+        pca: { ...pca },
+        df: { ...df }
     }
 
 }
@@ -384,11 +397,14 @@ Classes.blocoDecisao = async id => {
 Classes.pca = async id => {
 
     let pca = await this.listarPca(id)
-    let criteriaPca = (pca[0].Criterios).split("###");
-    criteriaPca = criteriaPca.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
-    let criteriosPca = await this.criteria(criteriaPca)
+    let criteriosPca = {}
+    if (typeof pca[0] !== 'undefined' && 'Criterios' in pca[0]) {
+        let criteriaPca = (pca[0].Criterios).split("###");
+        criteriaPca = criteriaPca.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
+        criteriosPca = await this.criteria(criteriaPca)
 
-    delete pca[0].Criterios
+        delete pca[0].Criterios
+    }
 
     return {
         ...pca[0],
@@ -401,11 +417,15 @@ Classes.df = async id => {
 
     let df = await this.listarDf(id)
 
-    let criteriaDf = (df[0].Criterios).split("###");
-    criteriaDf = criteriaDf.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
-    let criteriosDf = await this.criteria(criteriaDf)
+    let criteriosDf = {}
+    if (typeof df[0] !== 'undefined' && 'Criterios' in df[0]) {
+        let criteriaDf = (df[0].Criterios).split("###");
+        criteriaDf = criteriaDf.map(a => a.replace('/[^#]+#(.*)/', '$1').split("#")[1]);
+        criteriosDf = await this.criteria(criteriaDf)
 
-    delete df[0].Criterios
+        delete df[0].Criterios
+    }
+
 
     return {
         ...df[0],

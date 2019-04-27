@@ -12,10 +12,9 @@ router.get('/', authenticate(), async (req, res, next) => {
 
 }) 
 
-// TODO : ainda em fase de testes, corrigir
-router.get('/lc/:id', authenticate(), async (req, res, next) => {
+router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
 
-    res.locals.dados = await ListaConsolidada.listarCompleta(req.params.id)
+    res.locals.dados = await ListaConsolidada.listarComTodosCampos()
     next()
 
 }) 
