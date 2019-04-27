@@ -15,6 +15,16 @@ const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
+/*
+ * Swagger
+ */
+const classesDocs = require('./docs/classes')
+const entidadesDocs = require('./docs/entidades')
+const legislacaoDocs = require('./docs/legislacao')
+const termoindiceDocs = require('./docs/termoindice')
+const tipologiasDocs = require('./docs/tipologias')
+
+
 const {
     extractStats
 } = require('./utils/registerStats')
@@ -50,7 +60,7 @@ const options = {
     // import swaggerDefinitions
     swaggerDefinition: swaggerConfig,
     // path to the API docs
-    apis: ['./routes/*.js'],
+    apis: ['./docs/*.js'],
 }
 
 /*
@@ -117,6 +127,15 @@ app.use('/tipologias', tipologiasRouter, formatOutput)
 app.use('/legislacao', legislacaoRouter, formatOutput)
 app.use('/termoindice', termoIndiceRouter, formatOutput)
 app.use('/', usersRouter)
+
+/*
+ *Swagger
+ */
+app.use('/classes', classesDocs)
+app.use('/entidades', entidadesDocs)
+app.use('/legislacao', legislacaoDocs)
+app.use('/termoindice', termoindiceDocs)
+app.use('/tipologias', tipologiasDocs)
 
 JSON2XML = (jsonData, containers) => {
     let xml = ''
