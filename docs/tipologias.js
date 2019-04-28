@@ -9,7 +9,9 @@ const router = express.Router()
 *       - Tipologias
 *     description: Retorna todas as tipologias de uma classe
 *     produces:
-*       - application/json
+ *       - application/json
+ *       - application/xml
+ *       - text/csv
 *     responses:
 *       200:
 *         description: Retorna todas as tipologias de uma classe
@@ -31,6 +33,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna toda a informação sobre uma tipologia de uma classe

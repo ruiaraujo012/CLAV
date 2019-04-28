@@ -10,6 +10,8 @@ const router = express.Router()
  *     description: Retorna toda a legislação de uma Classe
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna toda a legislação de uma Classe
@@ -30,6 +32,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna toda a informação sobre a legislação de uma classe
