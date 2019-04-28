@@ -9,7 +9,9 @@ const router = express.Router()
 *       - Termos Índice
 *     description: Retorna todos os termos índice
 *     produces:
-*       - application/json
+ *       - application/json
+ *       - application/xml
+ *       - text/csv
 *     responses:
 *       200:
 *         description: Retorna todos os termos índice
@@ -31,6 +33,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna toda a informação sobre um termo índice de uma classe

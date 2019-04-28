@@ -9,6 +9,8 @@ const router = express.Router()
  *     description: Retorna a lista consolidada que inclui todas as classes
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna a lista consolidada que inclui todas as classes
@@ -29,6 +31,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna toda a indormação relativa a uma classe
@@ -49,6 +53,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna todos os donos de uma classe
@@ -69,6 +75,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna todos os participantes de uma classe
@@ -89,6 +97,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna todos os processos relacionados de uma classe
@@ -109,6 +119,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna a legislação de uma classe
@@ -129,6 +141,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna o PCA relativo a uma classe
@@ -150,6 +164,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna o destino final relativo a uma classe

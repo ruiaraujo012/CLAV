@@ -10,6 +10,8 @@ const router = express.Router()
  *     description: Retorna todas as entidades existentes
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna todas as entidades existentes
@@ -30,6 +32,8 @@ const router = express.Router()
  *        required: true
  *     produces:
  *       - application/json
+ *       - application/xml
+ *       - text/csv
  *     responses:
  *       200:
  *         description: Retorna toda a informação relativa a uma entidade
