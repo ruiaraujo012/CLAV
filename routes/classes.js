@@ -6,122 +6,140 @@ const authenticate = require('../auth/auth').authenticate
 const Graphdb = require('../controllers/graphdb')
 
 router.get('/', authenticate(), async (req, res, next) => {
-
-    res.locals.dados = await ListaConsolidada.listar()
-    next()
-
-}) 
+	res.locals.dados = await ListaConsolidada.listar()
+	next()
+})
 
 router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
-
-    res.locals.dados = await ListaConsolidada.listarComTodosCampos()
-    next()
-
-}) 
+	res.locals.dados = await ListaConsolidada.listarComTodosCampos()
+	next()
+})
 
 router.get('/:id', authenticate(), async (req, res, next) => {
+	if (!req.params.id) {
+		next()
+	}
+	let id = req.params.id
 
-    if (!req.params.id) {
-        next()
-    }
-    let id = req.params.id
+	let nivelClasse = await Classes.obterNivelDaClasse(id)
+	// Alterar
 
-    let nivelClasse = await Classes.obterNivelDaClasse(id)
-    // Alterar
+	switch (nivelClasse) {
+		case 1:
+		case 2:
+			res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
+			res.locals.xmlContainer = [
+				'classes',
+				'classe',
+				'notasAplicacao',
+				'notaAplicacao',
+				'exemplosNotasAplicacao',
+				'exemploNotaAplicacao',
+				'notasExclusao',
+				'notaExclusao',
+				'termosIndice',
+				'termoIndice'
+			]
+			break
+		case 3:
+			res.locals.dados = await Classes.obtencaoDadosNivel3(id)
+			res.locals.xmlContainer = [
+				'classes',
+				'classe',
+				'notasAplicacao',
+				'notaAplicacao',
+				'exemplosNotasAplicacao',
+				'exemploNotaAplicacao',
+				'notasExclusao',
+				'notaExclusao',
+				'termosIndice',
+				'termoIndice',
+				'donos',
+				'dono',
+				'participantes',
+				'participante',
+				'processosRelacionados',
+				'processoRelacionado',
+				'legislacoes',
+				'legislacao',
+				'prazosConservacaoAdministrativa',
+				'prazoConservacaoAdministrativa',
+				'justificacoes',
+				'justificacao',
+				'destinosFinais',
+				'destinoFinal',
+				'justificacoes',
+				'justificacao'
+			]
+			break
+		case 4:
+			res.locals.dados = await Classes.obtencaoDadosNivel4(id)
+			break
+		default:
+			break
+	}
 
-    switch (nivelClasse) { 
-        case 1:
-        case 2:
-            res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-            res.locals.xmlContainer = ['classes', 'classe', 'notasAplicacao', 'notaAplicacao', 'exemplosNotasAplicacao', 'exemploNotaAplicacao', 'notasExclusao', 'notaExclusao', 'termosIndice', 'termoIndice']
-            break
-        case 3:
-            res.locals.dados = await Classes.obtencaoDadosNivel3(id)
-            res.locals.xmlContainer = ['classes', 'classe', 'notasAplicacao', 'notaAplicacao', 'exemplosNotasAplicacao', 'exemploNotaAplicacao', 'notasExclusao', 'notaExclusao', 'termosIndice', 'termoIndice', 'donos', 'dono', 'participantes', 'participante', 'processosRelacionados', 'processoRelacionado', 'legislacoes', 'legislacao', 'prazosConservacaoAdministrativa', 'prazoConservacaoAdministrativa', 'justificacoes', 'justificacao', 'destinosFinais', 'destinoFinal', 'justificacoes', 'justificacao']
-            break
-        case 4:
-            res.locals.dados = await Classes.obtencaoDadosNivel4(id)
-            break
-        default:
-            break
-    }
-
-    next()
-}) 
+	next()
+})
 
 router.get('/:id/donos', authenticate(), async (req, res, next) => {
+	let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
+	if (nivel != 3) next()
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	res.locals.dados = await Classes.donos(req.params.id)
+	res.locals.xmlContainer = ['donos', 'dono']
 
-    if (nivel != 3)
-        next()
-
-    res.locals.dados = await Classes.donos(req.params.id)
-    res.locals.xmlContainer = ["donos", "dono"]
-
-    next()
-
-}) 
+	next()
+})
 
 router.get('/:id/participantes', authenticate(), async (req, res, next) => {
+	let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	if (nivel != 3) next()
 
-    if (nivel != 3)
-        next()
+	res.locals.dados = await Classes.participantes(req.params.id)
+	res.locals.xmlContainer = ['participantes', 'participante']
 
-    res.locals.dados = await Classes.participantes(req.params.id)
-    res.locals.xmlContainer = ["participantes", "participante"]
-
-    next()
-
+	next()
 })
 
 router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) => {
+	let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
+	if (nivel != 3) next()
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	res.locals.dados = await Classes.processosRelacionados(req.params.id)
+	res.locals.xmlContainer = ['processosRelacionados', 'processoRelacionado']
 
-    if (nivel != 3)
-        next()
-
-    res.locals.dados = await Classes.processosRelacionados(req.params.id)
-    res.locals.xmlContainer = ["processosRelacionados", "processoRelacionado"]
-
-    next()
+	next()
 })
 
 router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
+	let nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-    let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	if (nivel != 3) next()
 
-    if (nivel != 3)
-        next()
+	res.locals.dados = await Classes.legislacao(req.params.id)
+	res.locals.xmlContainer = ['legislacoes', 'legislacao']
 
-    res.locals.dados = await Classes.legislacao(req.params.id)
-    res.locals.xmlContainer = ["legislacoes", "legislacao"]
-
-    next()
+	next()
 })
 
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
-
-    // c150.20.501 tem multiplos criterios de pca para se verificar
-    let pca = await Classes.pca(req.params.id)
-    res.locals.dados = pca
-    next()
-    
+	// c150.20.501 tem multiplos criterios de pca para se verificar
+	let pca = await Classes.pca(req.params.id)
+	res.locals.dados = pca
+	next()
 })
 
 router.get('/:id/df', authenticate(), async (req, res, next) => {
+	// c400.10.001 tem multiplos dfs para testar
 
-    // c400.10.001 tem multiplos dfs para testar
+	let destinoFinal = await Classes.df(req.params.id)
+	res.locals.dados = destinoFinal
 
-    let destinoFinal = await Classes.df(req.params.id)
-    res.locals.dados = destinoFinal
-    
-    next()
+	next()
 })
 
 module.exports = router

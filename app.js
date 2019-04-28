@@ -43,7 +43,7 @@ mongoose
 		useCreateIndex: true
 	})
 	.then(() => console.log(`Mongo ready: ${mongoose.connection.readyState}`))
-	.catch((err) => {
+	.catch(err => {
 		console.log(`Mongo: erro na conexão: ${err}`)
 	})
 
@@ -103,13 +103,13 @@ const JSON2XML = (jsonData, containers) => {
 
 	xml += `<${blockContainer}>`
 
-	Object.keys(jsonData).forEach((key) => {
+	Object.keys(jsonData).forEach(key => {
 		if (Array.isArray(jsonData[key])) {
 			containers.splice(0, 2)
 
 			xml += `<${containers[0]}>`
 
-			jsonData[key].forEach((array) => {
+			jsonData[key].forEach(array => {
 				let obj = {}
 				obj = array
 				xml += JSON2XML(obj, containers)
