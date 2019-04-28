@@ -139,6 +139,7 @@ Classes.donos = id => {
 }
 
 Classes.participantes = id => {
+
     let query = `
         select ?id ?sigla ?designacao ?tipoParticipante where { 
             clav:${id} clav:temParticipante ?idd ;

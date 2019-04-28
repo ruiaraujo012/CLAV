@@ -6,27 +6,7 @@ let lastTimer = Date.now();
 let savedStats = []
 
 // TODO : alterar como pretendido
-processStats = () => {
 
-    let url = req.originalUrl
-    let urlBlocks = url.split("/")
-    urlBlocks.shift()
-
-    let queriesString = urlBlocks[urlBlocks.length - 1].split(/[?&]/)
-    queriesString.shift()
-
-    let queryStringValues = []
-    queriesString.map(q => {
-        let qq = q.split("=")
-        queryStringValues.push({ [qq[0]]: qq[1] })
-    })
-
-    let blocksLength = urlBlocks.length - 1
-    urlBlocks[blocksLength] = urlBlocks[blocksLength].split("?")[0]
-
-    if (urlBlocks[blocksLength] == "")
-        urlBlocks.pop()
-}
 
 exports.extractStats = async (req, res, next) => {
 
@@ -39,6 +19,10 @@ exports.extractStats = async (req, res, next) => {
     let email = ""
     if (typeof userData.user !== "undefined" && typeof userData.user.email !== "undefined")
         email = userData.user.email
+
+
+    console.log("REQUEST ")
+    console.log(res)
 
     let url = req.originalUrl
     let accessInformation = { url: url, email: email, accessDate: Date.now() }

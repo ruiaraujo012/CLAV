@@ -118,7 +118,7 @@ ListaConsolidada.listarComTodosCampos = async () => {
     let nivel1 = construcaoEstruturaPrimeiroNivel(nivel2, classesN1)
     classesN1 = []
 
-    return nivel1 
+    return nivel1
 }
 
 ListaConsolidada.obterTodasClassesPorId = async (ids, nivel) => {
@@ -127,7 +127,6 @@ ListaConsolidada.obterTodasClassesPorId = async (ids, nivel) => {
     let classe = {}
 
     for (key in ids) {
-        console.log("Id : " + ids[key].id)
         switch (nivel) {
             case 1:
             case 2:

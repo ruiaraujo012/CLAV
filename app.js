@@ -15,6 +15,8 @@ const tipologiasRouter = require('./routes/tipologias')
 const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
+const statsRouter = require('./routes/stats')
+
 /*
  * Swagger
  */
@@ -40,9 +42,9 @@ require('./auth/auth')
  * Ligação à base de dados
  */
 mongoose.connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useCreateIndex: true
-    })
+    useNewUrlParser: true,
+    useCreateIndex: true
+})
     .then(() => console.log('Mongo ready: ' + mongoose.connection.readyState))
     .catch(err => console.log('Mongo: erro na conexão: ' + err))
 
@@ -126,6 +128,7 @@ app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter, formatOutput)
 app.use('/legislacao', legislacaoRouter, formatOutput)
 app.use('/termoindice', termoIndiceRouter, formatOutput)
+app.use('/stats', statsRouter)
 app.use('/', usersRouter)
 
 /*
@@ -179,7 +182,7 @@ JSON2XML = (jsonData, containers) => {
 }
 
 testFunction = async () => {
-    let data = await axios.get("http://localhost:8000/classes/listaConsolidada")
+    let data = await axios.get("http://localhost:8000/")
     console.log(data.data)
 }
 
