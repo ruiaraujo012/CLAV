@@ -119,26 +119,30 @@ ListaConsolidada.obterTodasClassesPorId = async (ids, nivel) => {
 	const classes = []
 	let classe = {}
 
-	Object.keys(ids).forEach(async (key) => {
-		switch (nivel) {
-			case 1:
-			case 2:
-				classe = Classes.obtencaoDadosNivel1_2(ids[key].id)
-				break
-			case 3:
-				classe = Classes.obtencaoDadosNivel3(ids[key].id)
-				break
-			case 4:
-				classe = Classes.obtencaoDadosNivel4(ids[key].id)
-				break
-			default:
-				break
-		}
+	await Promise.all(
+		ids.map(async (id) => {
+			switch (nivel) {
+				case 1:
+				case 2:
+					classe = await Classes.obtencaoDadosNivel1_2(id.id)
+					break
+				case 3:
+					classe = await Classes.obtencaoDadosNivel3(id.id)
+					break
+				case 4:
+					classe = await Classes.obtencaoDadosNivel4(id.id)
+					break
+				default:
+					break
+			}
 
-		await Promise.all(classe)
+			classes.push(classe)
+		})
+	)
 
-		classes.push(classe)
-	})
+	// const test = await Promise.all(classe)
+
+	// console.log(test)
 
 	return classes
 }
