@@ -3,9 +3,8 @@ const Graphdb = require('./graphdb')
 
 // TODO : Alterar query para abranger todos os níveis.
 Legislacao.listarLegislacao = () => {
-
-    let query = `
-    SELECT  
+	const query = `
+    	SELECT  
             ?id ?data ?numero ?tipo ?sumario
             (GROUP_CONCAT(CONCAT(STR(?ent),"::",?entSigla); SEPARATOR=";") AS ?entidades)
         WHERE { 
@@ -21,60 +20,57 @@ Legislacao.listarLegislacao = () => {
             }
         }
         Group by ?id ?data ?numero ?tipo ?sumario
-    Order by desc (?data)
+    	Order by desc (?data)
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Legislacao.listarLegislacaoPorId = (id) => {
-
-    let query = `
-    SELECT  
-        ?tipo ?data ?numero ?sumario ?link
-        (GROUP_CONCAT(CONCAT(STR(?ent),"::",?entSigla,"::",?entDesignacao); SEPARATOR=";") AS ?entidades)
-    WHERE { 
-        clav:${id} a clav:Legislacao;
-            clav:diplomaData ?data;
-            clav:diplomaNumero ?numero;
-            clav:diplomaTipo ?tipo;
-            clav:diplomaSumario ?sumario;
-            clav:diplomaLink ?link;
-        OPTIONAL{
-            clav:${id} clav:diplomaEntidade ?ent.
-            ?ent clav:entSigla ?entSigla;
-                clav:entDesignacao ?entDesignacao.
-        }
-    } GROUP BY ?tipo ?data ?numero ?sumario ?link
-
+	const query = `
+		SELECT  
+			?tipo ?data ?numero ?sumario ?link
+			(GROUP_CONCAT(CONCAT(STR(?ent),"::",?entSigla,"::",?entDesignacao); SEPARATOR=";") AS ?entidades)
+		WHERE { 
+			clav:${id} a clav:Legislacao;
+				clav:diplomaData ?data;
+				clav:diplomaNumero ?numero;
+				clav:diplomaTipo ?tipo;
+				clav:diplomaSumario ?sumario;
+				clav:diplomaLink ?link;
+			OPTIONAL{
+				clav:${id} clav:diplomaEntidade ?ent.
+				?ent clav:entSigla ?entSigla;
+					clav:entDesignacao ?entDesignacao.
+			}
+		} GROUP BY ?tipo ?data ?numero ?sumario ?link
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
-Legislacao.regularProcessosDeNegocio = id => {
-    
-    let query = `
-    SELECT DISTINCT ?id ?codigo ?titulo WHERE { 
-        {
-            ?idd clav:temLegislacao clav:${id};
-            BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
-        } 
-        UNION {
-            ?crit clav:temLegislacao clav:${id}.
-            ?just clav:temCriterio ?crit .
-            ?aval clav:temJustificacao ?just .
-            {
-                ?idd clav:temPCA ?aval ;
-            } 
-            UNION {
-                ?idd clav:temDF ?aval ;
-            }
-        }
-        ?idd clav:codigo ?codigo;
-            clav:titulo ?titulo;
-            clav:classeStatus 'A'.
-            
-    } ORDER BY ?codigo
+Legislacao.regularProcessosDeNegocio = (id) => {
+	const query = `
+		SELECT DISTINCT ?id ?codigo ?titulo WHERE { 
+			{
+				?idd clav:temLegislacao clav:${id};
+				BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
+			} 
+			UNION {
+				?crit clav:temLegislacao clav:${id}.
+				?just clav:temCriterio ?crit .
+				?aval clav:temJustificacao ?just .
+				{
+					?idd clav:temPCA ?aval ;
+				} 
+				UNION {
+					?idd clav:temDF ?aval ;
+				}
+			}
+			?idd clav:codigo ?codigo;
+				clav:titulo ?titulo;
+				clav:classeStatus 'A'.
+				
+		} ORDER BY ?codigo
     `
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }

@@ -1,4 +1,5 @@
 const express = require('express')
+
 const router = express.Router()
 /**
  * @swagger
@@ -16,7 +17,7 @@ const router = express.Router()
  *         description: Retorna a lista consolidada que inclui todas as classes
  */
 
- /**
+/**
  * @swagger
  * /classes/{classID}:
  *   get:
@@ -38,7 +39,7 @@ const router = express.Router()
  *         description: Retorna toda a indormação relativa a uma classe
  */
 
- /**
+/**
  * @swagger
  * /classes/{classID}/donos:
  *   get:
@@ -60,7 +61,7 @@ const router = express.Router()
  *         description: Retorna todos os donos de uma classe
  */
 
- /**
+/**
  * @swagger
  * /classes/{classID}/participantes:
  *   get:
@@ -82,7 +83,7 @@ const router = express.Router()
  *         description: Retorna todos os participantes de uma classe
  */
 
- /**
+/**
  * @swagger
  * /classes/{classID}/processosRelacionados:
  *   get:
@@ -148,8 +149,8 @@ const router = express.Router()
  *         description: Retorna o PCA relativo a uma classe
  */
 
- /**
- * 
+/**
+ *
  * @swagger
  * /classes/{classID}/df:
  *   get:

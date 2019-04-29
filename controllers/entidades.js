@@ -2,8 +2,7 @@ const Entidades = module.exports
 const Graphdb = require('./graphdb')
 
 Entidades.listarEntidades = () => {
-
-    query = `
+	const query = `
     SELECT ?id ?sigla ?designacao ?internacional ?sioe {
         ?idd rdf:type clav:Entidade ;
             clav:entEstado "Ativa";
@@ -14,12 +13,11 @@ Entidades.listarEntidades = () => {
             BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
-Entidades.listarEntidadePorId = (id) => {
-
-    let query = `
+Entidades.listarEntidadePorId = () => {
+	const query = `
     SELECT ?sigla ?estado ?internacional ?designacao ?sioe
     WHERE {
             clav:ent_INEM rdf:type clav:Entidade ;
@@ -30,11 +28,11 @@ Entidades.listarEntidadePorId = (id) => {
                 clav:entSIOE ?sioe .
     }`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Entidades.tipologias = (id) => {
-    let query = `
+	const query = `
     SELECT ?id ?sigla ?designacao WHERE {
         clav:${id} clav:pertenceTipologiaEnt ?idd .
         ?idd clav:tipEstado "Ativa" ;
@@ -43,11 +41,11 @@ Entidades.tipologias = (id) => {
             BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Entidades.intervencaoComoDono = (id) => {
-    let query = `
+	const query = `
     SELECT ?id ?codigo ?titulo WHERE {
         ?idd clav:temDono clav:${id} ;
             clav:codigo ?codigo ;
@@ -57,11 +55,11 @@ Entidades.intervencaoComoDono = (id) => {
             BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Entidades.intervencaoComoParticipante = (id) => {
-    let query = `
+	const query = `
     select ?id ?codigo ?titulo where { 
         ?idd clav:temParticipante clav:${id} ;
             ?Type clav:${id} ;
@@ -73,5 +71,5 @@ Entidades.intervencaoComoParticipante = (id) => {
         BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
     }`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
