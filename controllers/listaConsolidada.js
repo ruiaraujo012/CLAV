@@ -5,7 +5,7 @@ const construcaoEstrutura = (nivelAnterior, classesAtuais) => {
 	const nivel = {}
 	Object.keys(classesAtuais).forEach((key) => {
 		const current = classesAtuais[key]
-		const codigo = `c ${current.codigo}`
+		const codigo = `c${current.codigo}`
 
 		if (!nivel[current.pai]) {
 			nivel[current.pai] = []
@@ -52,7 +52,7 @@ const construcaoEstruturaPrimeiroNivel = (nivelAnterior, classesAtuais) => {
 			nivel[current.pai] = []
 		}
 
-		const codigo = `c ${current.codigo}`
+		const codigo = `c${current.codigo}`
 		// Miguel Brito, se vires isto apaga caso não vás precisar da variavel
 		// const codigoPai = current.pai
 
