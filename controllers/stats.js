@@ -10,15 +10,14 @@ Stats.processFromDb = async () => {
 
     // _id, url, email, accessDate
     let statsFromDb = await this.export();
-    console.log(statsFromDb)
 
     let data = []
     for (stat in statsFromDb) {
         let info = this.extractInformationFromUrl(statsFromDb[stat])
-        console.log(info)
         data.push(info)
     }
 
+    return data
 }
 
 Stats.extractInformationFromUrl = (info) => {

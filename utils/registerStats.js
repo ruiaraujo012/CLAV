@@ -1,7 +1,7 @@
 const Stats = require("../controllers/stats")
 var jwt = require('jsonwebtoken');
 
-const msDifference = 5 * 1000;
+const msDifference = 10 * 60 * 1000;
 let lastTimer = Date.now();
 let savedStats = []
 
@@ -20,10 +20,6 @@ exports.extractStats = async (req, res, next) => {
     if (typeof userData.user !== "undefined" && typeof userData.user.email !== "undefined")
         email = userData.user.email
 
-
-    console.log("REQUEST ")
-    console.log(res)
-
     let url = req.originalUrl
     let accessInformation = { url: url, email: email, accessDate: Date.now() }
     savedStats.push(accessInformation);
@@ -31,8 +27,7 @@ exports.extractStats = async (req, res, next) => {
     if (Date.now() - lastTimer >= msDifference) {
         // REALIZAR O DUMP DAS STATS
         Stats.insertMany(savedStats)
-        console.log("\n\n\n\n\nA enviar estatisticas para a BD")
-        console.log(savedStats)
+        console.log("A enviar estatisticas para a BD")
         savedStats = []
         lastTimer = Date.now()
     }

@@ -31,6 +31,7 @@ const { extractStats } = require('./utils/registerStats')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
+const cors = require('cors');
 const app = express()
 
 require('dotenv').config()
@@ -50,6 +51,10 @@ mongoose
     })
 
 mongoose.set('useFindAndModify', false)
+
+// CORS
+app.use(cors());
+app.options('*', cors());
 
 /*
  * Inicialização do passport
@@ -89,50 +94,6 @@ app.use(
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-let formatOutput = (req, res, next) => {
-
-    if (!res.locals.dados)
-        next()
-
-    let dados = res.locals.dados
-    let format = req.query.format || req.headers.accept
-
-    switch (format) {
-        case 'application/json':
-        case 'json':
-            res.send(dados)
-            break;
-        case 'application/xml':
-        case 'xml':
-            res.send(JSON2XML(dados, res.locals.xmlContainer))
-            break
-        case 'text/csv':
-        case 'csv':
-            let options = {
-                expandArrayObjects: true,
-                prependHeader: true
-            }
-            jsoncsv.json2csv(dados, (err, csv) => {
-                if (err) return
-                res.send(csv)
-            }, options)
-            break;
-        default:
-            res.send(dados)
-            break;
-    }
-}
-
-
-app.use(extractStats)
-
-app.use('/classes', classesRouter, formatOutput)
-app.use('/entidades', entidadesRouter, formatOutput)
-app.use('/tipologias', tipologiasRouter, formatOutput)
-app.use('/legislacao', legislacaoRouter, formatOutput)
-app.use('/termoindice', termoIndiceRouter, formatOutput)
-app.use('/stats', statsRouter)
-app.use('/', usersRouter)
 
 /*
  *Swagger
@@ -226,6 +187,8 @@ const formatOutput = (req, res, next) => {
     }
 }
 
+
+
 app.use(extractStats)
 
 app.use('/classes', classesRouter, formatOutput)
@@ -233,6 +196,7 @@ app.use('/entidades', entidadesRouter, formatOutput)
 app.use('/tipologias', tipologiasRouter, formatOutput)
 app.use('/legislacao', legislacaoRouter, formatOutput)
 app.use('/termoindice', termoIndiceRouter, formatOutput)
+app.use('/stats', statsRouter)
 app.use('/', usersRouter)
 
 // eslint-disable-next-line no-undef
