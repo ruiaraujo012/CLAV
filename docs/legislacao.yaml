@@ -11,6 +11,41 @@ paths:
       responses:
         200:
           description: Retorna toda a legislação de uma Classe
+          examples:
+            application/json: |
+              [
+                {
+                  "id": "leg_1BoAeCJtOAWHaG0gNdKVa",
+                  "data": "2018/06/07",
+                  "numero": "162/2018",
+                  "tipo": "Portaria",
+                  "sumario": "Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
+                  "entidades": ""
+                },
+                {
+                  "id": "leg_hYcjbo8LuSbgPc_R3VGDv",
+                  "data": "2018/05/15",
+                  "numero": "33/2018",
+                  "tipo": "DL",
+                  "sumario": "Estabelece as normas de execução do Orçamento do Estado para 2018",
+                  "entidades": ""
+                },
+                {
+                  "id": "leg_WWNva4HqmuH6eNA1ndiDZ",
+                  "data": "2018/02/28",
+                  "numero": "14/2018",
+                  "tipo": "DL",
+                  "sumario": "Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637.",
+                  "entidades": ""
+                }
+              ]
+            application/xml: |
+              alterar
+            text/csv: |
+              id,data,numero,tipo,sumario,entidades
+              leg_1BoAeCJtOAWHaG0gNdKVa,2018/06/07,162/2018,Portaria,"Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
+              leg_hYcjbo8LuSbgPc_R3VGDv,2018/05/15,33/2018,DL,Estabelece as normas de execução do Orçamento do Estado para 2018,
+              leg_WWNva4HqmuH6eNA1ndiDZ,2018/02/28,14/2018,DL,"Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637."
         400:
           description: Erro a obter legislações
         401:

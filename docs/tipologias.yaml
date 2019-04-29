@@ -11,6 +11,32 @@ paths:
       responses:
         200:
           description: Retorna todas as tipologias de uma classe
+          examples:
+            application/json: |
+              [
+                {
+                  "id": "tip_AAC",
+                  "sigla": "AAC",
+                  "designacao": "Autoridades Administrativas Civis"
+                },
+                {
+                  "id": "tip_AADR",
+                  "sigla": "AADR",
+                  "designacao": "Assembleias de apuramento distrital de resultados"
+                },
+                {
+                  "id": "tip_AAGR",
+                  "sigla": "AAGR",
+                  "designacao": "Assembleias de apuramento geral dos resultados"
+                }
+              ]
+            application/xml: |
+              alterar
+            text/csv: |
+              id,sigla,designacao
+              tip_AAC,AAC,Autoridades Administrativas Civis
+              tip_AADR,AADR,Assembleias de apuramento distrital de resultados
+              tip_AAGR,AAGR,Assembleias de apuramento geral dos resultados
         400:
           description: Erro a obter tipologias
         401:
@@ -35,6 +61,13 @@ paths:
       responses:
         200:
           description: Retorna toda a informação sobre uma tipologia de uma classe
+          examples:
+            application/json: |
+              alterar
+            application/xml: |
+              alterar
+            text/csv: |
+              alterar
         400:
           description: Erro a obter tipologia
         401:

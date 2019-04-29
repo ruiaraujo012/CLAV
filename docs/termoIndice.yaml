@@ -10,7 +10,39 @@ paths:
         - text/csv
       responses:
         200:
-            description: Retorna todos os termos índice
+          description: Retorna todos os termos índice
+          examples:
+            application/json: |
+              [
+                {
+                  "s": "ti_kJgDVmygPXQGde1y2jyFb",
+                  "Termo": "Ato legislativo, produção e comunicação de",
+                  "id": "c100.10.001",
+                  "Tit": "Produção e comunicação de atos legislativos",
+                  "Classe": "100.10.001"
+                },
+                {
+                  "s": "ti_40u40xiK-LKRTlMzKvyEy",
+                  "Termo": "Comunicação de ato legislativo",
+                  "id": "c100.10.001",
+                  "Tit": "Produção e comunicação de atos legislativos",
+                  "Classe": "100.10.001"
+                },
+                {
+                  "s": "ti_qRXOBZz9oZiTc6Chd4VGi",
+                  "Termo": "Declaração de estado de emergência",
+                  "id": "c100.10.001",
+                  "Tit": "Produção e comunicação de atos legislativos",
+                  "Classe": "100.10.001"
+                }
+              ]
+            application/xml: |
+              alterar
+            text/csv: |
+              s,Termo,id,Tit,Classe
+              ti_kJgDVmygPXQGde1y2jyFb,"Ato legislativo, produção e comunicação de",c100.10.001,Produção e comunicação de atos legislativos,100.10.001
+              ti_40u40xiK-LKRTlMzKvyEy,Comunicação de ato legislativo,c100.10.001,Produção e comunicação de atos legislativos,100.10.001
+              ti_qRXOBZz9oZiTc6Chd4VGi,Declaração de estado de emergência,c100.10.001,Produção e comunicação de atos legislativos,100.10.001
         400:
           description: Erro a obter termos índice
         401:
@@ -35,6 +67,21 @@ paths:
       responses:
         200:
           description: Retorna toda a informação sobre um termo índice de uma classe
+          examples:
+            application/json: |
+              [
+                {
+                  "Termo": "Comunicação de ato legislativo",
+                  "id": "c100.10.001",
+                  "Classe": "100.10.001",
+                  "Tit": "Produção e comunicação de atos legislativos"
+                }
+              ]
+            application/xml: |
+              alterar
+            text/csv: |
+              Termo,id,Classe,Tit
+              Comunicação de ato legislativo,c100.10.001,100.10.001,Produção e comunicação de atos legislativos
         400:
           description: Erro a obter termo índice
         401:
