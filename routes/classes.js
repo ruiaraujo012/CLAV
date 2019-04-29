@@ -1,9 +1,10 @@
 const express = require('express')
+
 const router = express.Router()
+
 const Classes = require('../controllers/classes')
 const ListaConsolidada = require('../controllers/listaConsolidada')
-const authenticate = require('../auth/auth').authenticate
-const Graphdb = require('../controllers/graphdb')
+const { authenticate } = require('../auth/auth')
 
 router.get('/', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listar()
@@ -19,9 +20,9 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 	if (!req.params.id) {
 		next()
 	}
-	let id = req.params.id
+	const { id } = req.params
 
-	let nivelClasse = await Classes.obterNivelDaClasse(id)
+	const nivelClasse = await Classes.obterNivelDaClasse(id)
 	// Alterar
 
 	switch (nivelClasse) {
@@ -83,9 +84,9 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 })
 
 router.get('/:id/donos', authenticate(), async (req, res, next) => {
-	let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	const nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-	if (nivel != 3) next()
+	if (nivel !== 3) next()
 
 	res.locals.dados = await Classes.donos(req.params.id)
 	res.locals.xmlContainer = ['donos', 'dono']
@@ -94,9 +95,9 @@ router.get('/:id/donos', authenticate(), async (req, res, next) => {
 })
 
 router.get('/:id/participantes', authenticate(), async (req, res, next) => {
-	let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	const nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-	if (nivel != 3) next()
+	if (nivel !== 3) next()
 
 	res.locals.dados = await Classes.participantes(req.params.id)
 	res.locals.xmlContainer = ['participantes', 'participante']
@@ -105,9 +106,9 @@ router.get('/:id/participantes', authenticate(), async (req, res, next) => {
 })
 
 router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) => {
-	let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	const nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-	if (nivel != 3) next()
+	if (nivel !== 3) next()
 
 	res.locals.dados = await Classes.processosRelacionados(req.params.id)
 	res.locals.xmlContainer = ['processosRelacionados', 'processoRelacionado']
@@ -116,9 +117,9 @@ router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) 
 })
 
 router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
-	let nivel = await Classes.obterNivelDaClasse(req.params.id)
+	const nivel = await Classes.obterNivelDaClasse(req.params.id)
 
-	if (nivel != 3) next()
+	if (nivel !== 3) next()
 
 	res.locals.dados = await Classes.legislacao(req.params.id)
 	res.locals.xmlContainer = ['legislacoes', 'legislacao']
@@ -128,7 +129,7 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
 	// c150.20.501 tem multiplos criterios de pca para se verificar
-	let pca = await Classes.pca(req.params.id)
+	const pca = await Classes.pca(req.params.id)
 	res.locals.dados = pca
 	next()
 })
@@ -136,7 +137,7 @@ router.get('/:id/pca', authenticate(), async (req, res, next) => {
 router.get('/:id/df', authenticate(), async (req, res, next) => {
 	// c400.10.001 tem multiplos dfs para testar
 
-	let destinoFinal = await Classes.df(req.params.id)
+	const destinoFinal = await Classes.df(req.params.id)
 	res.locals.dados = destinoFinal
 
 	next()

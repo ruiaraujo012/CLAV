@@ -4,25 +4,26 @@ const Stats = module.exports
 
 // Quantidade de acessos por utilizador por dia / mes
 // Quantidade de acessos por url
-//
+// Tempo do pedido
 
 Stats.processFromDb = async () => {
 	// _id, url, email, accessDate
-	let statsFromDb = await this.export()
+	const statsFromDb = await this.export()
 
-	let data = []
-	for (stat in statsFromDb) {
-		let info = this.extractInformationFromUrl(statsFromDb[stat])
+	const data = []
+
+	Object.keys(statsFromDb).forEach((key) => {
+		const info = this.extractInformationFromUrl(statsFromDb[key])
 		data.push(info)
-	}
+	})
 
 	return data
 }
 
 Stats.extractInformationFromUrl = (info) => {
-	let url = info.url
+	const { url } = info
 
-	let urlBlocks = url.split('/')
+	const urlBlocks = url.split('/')
 	urlBlocks.shift()
 
 	let queriesString = []
@@ -31,17 +32,17 @@ Stats.extractInformationFromUrl = (info) => {
 		queriesString.shift()
 	}
 
-	let queryStringValues = []
+	const queryStringValues = []
 	queriesString.map((q) => {
-		let qq = q.split('=')
+		const qq = q.split('=')
 		queryStringValues.push({ [qq[0]]: qq[1] })
 	})
 
-	let blocksLength = urlBlocks.length - 1
+	const blocksLength = urlBlocks.length - 1
 
 	if (blocksLength > 0) {
-		urlBlocks[blocksLength] = urlBlocks[blocksLength].split('?')[0]
-		if (urlBlocks[blocksLength] == '') urlBlocks.pop()
+		const urlSplit = urlBlocks[blocksLength].split('?')[0]
+		if (urlSplit === '') urlBlocks.pop()
 	}
 
 	return {
@@ -55,7 +56,7 @@ Stats.extractInformationFromUrl = (info) => {
 
 Stats.listByUsername = (username) => {
 	return Stat.findOne({
-		username: username
+		username
 	}).exec()
 }
 
