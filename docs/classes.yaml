@@ -11,6 +11,12 @@ paths:
       responses:
         200:
           description: Retorna a lista consolidada que inclui todas as classes
+          400:
+          description: Erro a obter classes
+        401:
+          description: Erro a obter classes
+        404:
+          description: classe não encontrada
   /classes/{classID}:
     get:
       tags:
@@ -29,6 +35,12 @@ paths:
       responses:
         200:
           description: Retorna toda a indormação relativa a uma classe
+        400:
+          description: Erro no ID da classe
+        401:
+          description: Erro no ID da classe
+        404:
+          description: classe não encontrada
   /classes/{classID}/donos:
     get:
       tags:
@@ -47,6 +59,12 @@ paths:
       responses:
         200:
           description: Retorna todos os donos de uma classe
+        400:
+          description: Erro a obter donos
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Donos não encontrado
   /classes/{classID}/participantes:
     get:
       tags:
@@ -65,6 +83,12 @@ paths:
       responses:
         200:
           description: Retorna todos os participantes de uma classe
+        400:
+          description: Erro a obter participantes
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Participantes não encontrados
   /classes/{classID}/processosRelacionados:
     get:
       tags:
@@ -83,6 +107,12 @@ paths:
       responses:
         200:
           description: Retorna todos os processos relacionados de uma classe
+        400:
+          description: Erro a obter processos relacionados
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Processos relacionados não encontrados
   /classes/{classID}/legislacao:
     get:
       tags:
@@ -101,6 +131,12 @@ paths:
       responses:
         200:
           description: Retorna a legislação de uma classe
+        400:
+          description: Erro a obter legislação
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Legislação não encontrada
   /classes/{classID}/pca:
     get:
       tags:
@@ -119,6 +155,12 @@ paths:
       responses:
         200:
           description: Retorna o PCA relativo a uma classe
+        400:
+          description: Erro a obter PCA
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: PCA não encontrado
   /classes/{classID}/df:
     get:
       tags:
@@ -137,3 +179,9 @@ paths:
       responses:
         200:
           description: Retorna o destino final relativo a uma classe
+        400:
+          description: Erro a obter destino final
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Destino final não encontrado

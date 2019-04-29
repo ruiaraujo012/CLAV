@@ -11,6 +11,12 @@ paths:
       responses:
         200:
           description: Retorna todas as entidades existentes
+        400:
+          description: Erro a obter entidades
+        401:
+          description: Erro a obter entidades
+        404:
+          description: Entidades não encontradas
   /entidades/{entidadesID}:
     get:
       tags:
@@ -29,4 +35,10 @@ paths:
       responses:
         200:
           description: Retorna toda a informação relativa a uma entidade
+        400:
+          description: Erro a obter entidade
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Entidade não encontrada
  

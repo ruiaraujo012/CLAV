@@ -11,6 +11,12 @@ paths:
       responses:
         200:
           description: Retorna todas as tipologias de uma classe
+        400:
+          description: Erro a obter tipologias
+        401:
+          description: Erro a obter tipologias
+        404:
+          description: Tipologias não encontradas
   /tipologias/{tipologiasID}:
     get:
       tags:
@@ -29,4 +35,10 @@ paths:
       responses:
         200:
           description: Retorna toda a informação sobre uma tipologia de uma classe
+        400:
+          description: Erro a obter tipologia
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Tipologia não encontrada
  

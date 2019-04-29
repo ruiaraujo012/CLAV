@@ -1,16 +1,22 @@
 paths:
   /termoIndice:
-   get:
-     tags:
-       - Termos Índice
-     description: Retorna todos os termos índice
-     produces:
-       - application/json
-       - application/xml
-       - text/csv
-     responses:
-       200:
-         description: Retorna todos os termos índice
+    get:
+      tags:
+        - Termos Índice
+      description: Retorna todos os termos índice
+      produces:
+        - application/json
+        - application/xml
+        - text/csv
+      responses:
+        200:
+            description: Retorna todos os termos índice
+        400:
+          description: Erro a obter termos índice
+        401:
+          description: Erro a obter termos índice
+        404:
+          description: Termos índices não encontrados
   /termoIndice/{termoIndiceID}:
     get:
       tags:
@@ -29,3 +35,9 @@ paths:
       responses:
         200:
           description: Retorna toda a informação sobre um termo índice de uma classe
+        400:
+          description: Erro a obter termo índice
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Termo índice não encontrado

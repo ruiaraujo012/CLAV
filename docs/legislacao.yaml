@@ -11,6 +11,12 @@ paths:
       responses:
         200:
           description: Retorna toda a legislação de uma Classe
+        400:
+          description: Erro a obter legislações
+        401:
+          description: Erro a obter legislações
+        404:
+          description: Legislações não encontradas
   /legislacao/{legislacaoID}:
     get:
       tags:
@@ -29,3 +35,9 @@ paths:
       responses:
         200:
           description: Retorna toda a informação sobre a legislação de uma classe
+        400:
+          description: Erro a obter legislação
+        401:
+          description: A informação inserida é inválida
+        404:
+          description: Legislação não encontrada
