@@ -8,11 +8,13 @@ const { authenticate } = require('../auth/auth')
 
 router.get('/', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listar()
+	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
 	next()
 })
 
 router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listarComTodosCampos()
+	// res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
 	next()
 })
 
@@ -75,6 +77,26 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 			break
 		case 4:
 			res.locals.dados = await Classes.obtencaoDadosNivel4(id)
+			res.locals.xmlContainer = [
+				'classes',
+				'classe',
+				'notasAplicacao',
+				'notaAplicacao',
+				'exemplosNotasAplicacao',
+				'exemploNotaAplicacao',
+				'notasExclusao',
+				'notaExclusao',
+				'termosIndice',
+				'termoIndice',
+				'prazosConservacaoAdministrativa',
+				'prazoConservacaoAdministrativa',
+				'justificacoes',
+				'justificacao',
+				'destinosFinais',
+				'destinoFinal',
+				'justificacoes',
+				'justificacao'
+			]
 			break
 		default:
 			break
@@ -130,7 +152,10 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 router.get('/:id/pca', authenticate(), async (req, res, next) => {
 	// c150.20.501 tem multiplos criterios de pca para se verificar
 	const pca = await Classes.pca(req.params.id)
+
 	res.locals.dados = pca
+	res.locals.xmlContainer = ['prazosConservacaoAdministrativa', 'prazoConservacaoAdministrativa', 'justificacoes', 'justificacao']
+
 	next()
 })
 
@@ -138,7 +163,9 @@ router.get('/:id/df', authenticate(), async (req, res, next) => {
 	// c400.10.001 tem multiplos dfs para testar
 
 	const destinoFinal = await Classes.df(req.params.id)
+
 	res.locals.dados = destinoFinal
+	res.locals.xmlContainer = ['destinosFinais', 'destinoFinal', 'justificacoes', 'justificacao']
 
 	next()
 })

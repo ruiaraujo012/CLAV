@@ -85,7 +85,7 @@ app.use(
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-const JSON2XML = (jsonData, containers) => {
+const Obj = (jsonData, containers) => {
 	let xml = ''
 
 	const blockContainer = containers[1]
@@ -101,7 +101,7 @@ const JSON2XML = (jsonData, containers) => {
 			jsonData[key].forEach((array) => {
 				let obj = {}
 				obj = array
-				xml += JSON2XML(obj, containers)
+				xml += Obj(obj, containers)
 			})
 
 			xml += `</${containers[0]}>`
@@ -115,7 +115,7 @@ const JSON2XML = (jsonData, containers) => {
 			let obj = {}
 			obj = jsonData[key]
 
-			xml += JSON2XML(obj, containers)
+			xml += Obj(obj, containers)
 
 			xml += `</${insideBlock}>`
 		} else {
@@ -129,6 +129,53 @@ const JSON2XML = (jsonData, containers) => {
 
 	xml += `</${blockContainer}>`
 	return xml
+}
+
+const Arr = (jsonData, containers) => {
+	let xml = ''
+
+	const newContainers = [...containers]
+
+	Object.keys(jsonData).forEach((key) => {
+		if (Array.isArray(jsonData[key])) {
+			const insideBlock = newContainers[0]
+
+			newContainers.splice(0, 1)
+
+			xml += `<${insideBlock}>`
+
+			jsonData[key].forEach((array) => {
+				xml += Arr({ array }, newContainers)
+			})
+
+			xml += `</${insideBlock}>`
+		} else if (typeof jsonData[key] === 'object') {
+			const insideBlock = newContainers[0]
+
+			newContainers.splice(0, 1)
+
+			xml += `<${insideBlock}>`
+
+			xml += Arr(jsonData[key], newContainers)
+
+			xml += `</${insideBlock}>`
+		} else {
+			xml += `<${key}>`
+
+			xml += jsonData[key]
+
+			xml += `</${key}>`
+		}
+	})
+
+	return xml
+}
+
+const JSON2XML = (jsonData, containers) => {
+	let response
+	if (Array.isArray(jsonData)) response = Arr({ jsonData }, containers)
+	else response = Obj(jsonData, containers)
+	return response
 }
 
 const formatOutput = (req, res, next) => {
