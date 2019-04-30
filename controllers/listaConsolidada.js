@@ -15,7 +15,7 @@ const construcaoEstrutura = (nivelAnterior, classesAtuais) => {
 			if (!current.filhos) {
 				current.filhos = []
 			}
-			current.filhos.push(nivelAnterior[codigo])
+			current.filhos.push(...nivelAnterior[codigo])
 		}
 
 		const { pai } = current
@@ -60,7 +60,7 @@ const construcaoEstruturaPrimeiroNivel = (nivelAnterior, classesAtuais) => {
 			if (!current.filhos) {
 				current.filhos = []
 			}
-			current.filhos.push(nivelAnterior[codigo])
+			current.filhos.push(...nivelAnterior[codigo])
 		}
 
 		delete current.pai
