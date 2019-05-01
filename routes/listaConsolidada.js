@@ -8,6 +8,8 @@ router.get('/', authenticate(), async (req, res, next) => {
 	const listaConsolidada = await ListaConsolidada.listar()
 	res.locals.dados = listaConsolidada
 
+	console.log('aqui')
+
 	next()
 })
 

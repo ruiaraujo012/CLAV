@@ -14,7 +14,7 @@ router.get('/', authenticate(), async (req, res, next) => {
 
 router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listarComTodosCampos()
-	// res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
+	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
 	next()
 })
 
