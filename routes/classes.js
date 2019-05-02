@@ -29,11 +29,23 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 
 	switch (nivelClasse) {
 		case 1:
+			res.locals.xmlContainer = [
+				'classes',
+				'classe_N1',
+				'notasAplicacao',
+				'notaAplicacao',
+				'exemplosNotasAplicacao',
+				'exemploNotaAplicacao',
+				'notasExclusao',
+				'notaExclusao',
+				'termosIndice',
+				'termoIndice'
+			]
 		case 2:
 			res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
 			res.locals.xmlContainer = [
 				'classes',
-				'classe',
+				'classe_N2',
 				'notasAplicacao',
 				'notaAplicacao',
 				'exemplosNotasAplicacao',
@@ -48,7 +60,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 			res.locals.dados = await Classes.obtencaoDadosNivel3(id)
 			res.locals.xmlContainer = [
 				'classes',
-				'classe',
+				'classe_N3',
 				'notasAplicacao',
 				'notaAplicacao',
 				'exemplosNotasAplicacao',
@@ -79,7 +91,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 			res.locals.dados = await Classes.obtencaoDadosNivel4(id)
 			res.locals.xmlContainer = [
 				'classes',
-				'classe',
+				'classe_N4',
 				'notasAplicacao',
 				'notaAplicacao',
 				'exemplosNotasAplicacao',

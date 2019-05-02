@@ -227,8 +227,8 @@ app.use('/', usersRouter)
 
 // eslint-disable-next-line no-undef
 testFunction = async () => {
-	const data = await axios.get('http://localhost:8000/')
-	console.log(data.data)
+	const data = await axios.get('http://localhost:8000/classes/c100.10.001')
+	// console.log(data.data)
 }
 
 // eslint-disable-next-line no-undef
@@ -261,6 +261,6 @@ dummyRequests = async () => {
 
 // dummyRequests();
 
-// testFunction()
+testFunction()
 
 module.exports = app
