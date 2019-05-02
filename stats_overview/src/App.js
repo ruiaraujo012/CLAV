@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 
 // Components
+import Navbar from './components/Navbar/Navbar';
 import Overview from './components/Overview/Overview';
 import Dashboard from './components/Dashboard/Dashboard';
 
@@ -12,13 +13,16 @@ function App() {
         <div>
             {/* TODO: Add navbar */}
             <Router>
-                <Switch>
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route exact path="/overview" component={Overview} />
-                    <Route path="/" component={Dashboard} />
-                </Switch>
+                <Navbar />
+                <div className="container mt-4">
+                    <Switch>
+                        <Route exact path="/stats_rotas" component={Dashboard} />
+                        <Route exact path="/stats_utilizadores" component={Overview} />
+                        <Route path="/" component={Dashboard} />
+                    </Switch>
+                </div>
             </Router>
-        </div>
+        </div >
     );
 }
 

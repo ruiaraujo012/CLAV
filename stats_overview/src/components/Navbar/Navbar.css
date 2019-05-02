@@ -1,0 +1,16 @@
+.navbar {
+    background-color: #1771F1;
+    -webkit-box-shadow: -4px 6px 25px -10px rgba(0,0,0,0.75);
+    -moz-box-shadow: -4px 6px 25px -10px rgba(0,0,0,0.75);
+    box-shadow: -4px 6px 25px -10px rgba(0,0,0,0.75);
+}
+
+.navbar-brand  {
+    color: white;
+    font-size: 24pt !important;
+}
+
+.nav-item a{
+    color: white;
+    font-size: 14pt;
+}
