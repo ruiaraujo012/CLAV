@@ -1,0 +1,17 @@
+.spinner {
+    color: white;
+    transform: scale(1.1);
+}
+
+div {
+    animation: fade-out 1s;
+}
+
+.hidden {
+    display:none;
+}
+
+#spinner-message {
+    margin-left: 15px;
+    font-size: 14pt;
+}
