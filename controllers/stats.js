@@ -6,7 +6,27 @@ const Stats = module.exports
 // Quantidade de acessos por url
 // Tempo do pedido
 
-Stats.processFromDb = async () => {
+Stats.quantityOfAcessPerUrl = async (numberOfUrls) => {
+
+	//url: "/classes/c100?format=xml", urlBlocks: Array(2), queriesString: Array(1), email: "", accessDate: "2019-04-27T14:38:51.540Z"
+	let data = await this.fetchDatabaseAndExtract()
+
+	let urls = {}
+	for (let n of data) {
+
+		if (n.url) {
+			if (urls[n.url]) {
+				urls[n.url].quantity += 1
+			} else {
+				urls[n.url] = { quantity: 1 }
+			}
+		}
+	}
+
+	return Object.entries(urls).sort((a, b) => b[1].quantity - a[1].quantity).slice(0, numberOfUrls)
+}
+
+Stats.fetchDatabaseAndExtract = async () => {
 	// _id, url, email, accessDate
 	const statsFromDb = await this.export()
 
