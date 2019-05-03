@@ -6,7 +6,7 @@ const msDifference = 10 * 60 * 1000
 let lastTimer = Date.now()
 let savedStats = []
 
-// TODO : alterar como pretendido
+// TODO: alterar como pretendido
 
 exports.extractStats = async (req, res, next) => {
 	const token = req.headers.authorization || req.query.api_key
