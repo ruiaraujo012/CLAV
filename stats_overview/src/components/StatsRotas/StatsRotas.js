@@ -1,8 +1,10 @@
-import LoadingOverlay from 'react-loading-overlay';
+import React, { Component } from 'react';
 import axios from 'axios';
 import { host } from '../../common/common';
-import React, { Component } from 'react';
 import Loading from '../Loading/Loading';
+import ReactTable from 'react-table';
+import '../../../node_modules/react-table/react-table.css';
+import '../../common/react-table.css';
 
 class StatsRotas extends Component {
     constructor(props) {
@@ -30,16 +32,39 @@ class StatsRotas extends Component {
 
         const { urls, loading } = this.state;
 
+
+        if (loading)
+            return (
+                <Loading loading={this.state.loading} />
+            );
+
         return (
 
             <div>
-                <Loading loading={this.state.loading} />
+                <h4>Quantidade de acessos por rota</h4>
 
-                {this.state.urls.map((u, i) =>
-                    <p key={i}>
-                        Url: {u[0]} - Hits: {u[1].quantity}
-                    </p>
-                )}
+                <ReactTable
+                    noDataText="There is no one on the leaderboard"
+                    data={this.state.urls}
+                    columns={[
+                        {
+                            Header: "Url",
+                            id: "url",
+                            accessor: u => u[0]
+                        },
+                        {
+                            Header: "#Access",
+                            id: "access",
+                            accessor: u => u[1].quantity
+                        }
+                    ]}
+                    defaultPageSize={10}
+                    pageSize={10}
+                    style={{
+                    }}
+                    showPagination={true}
+                    className="-highlight"
+                />
 
             </div>
 

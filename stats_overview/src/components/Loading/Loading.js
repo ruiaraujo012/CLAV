@@ -38,7 +38,6 @@ class Loading extends Component {
 
         return (
             <div>
-                <h1>hi</h1>
                 <div ref={this.modal} className="modal fade modal-backdrop" tabIndex="-1" id="myModal" data-keyboard="false" data-backdrop="static">
                     <div ref={this.modal1} className="modal-dialog modal-dialog-centered justify-content-center" role="document">
                         <div ref={this.modal2} className="spinner d-flex justify-content-center">
