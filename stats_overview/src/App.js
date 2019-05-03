@@ -7,6 +7,7 @@ import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import Overview from './components/Overview/Overview';
 import Dashboard from './components/Dashboard/Dashboard';
+import StatsRotas from './components/StatsRotas/StatsRotas';
 
 function App() {
     return (
@@ -16,7 +17,7 @@ function App() {
                 <Navbar />
                 <div className="container mt-4">
                     <Switch>
-                        <Route exact path="/stats_rotas" component={Dashboard} />
+                        <Route exact path="/stats_rotas" component={StatsRotas} />
                         <Route exact path="/stats_utilizadores" component={Overview} />
                         <Route path="/" component={Dashboard} />
                     </Switch>

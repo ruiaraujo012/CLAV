@@ -17,16 +17,18 @@ class Navbar extends Component {
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active">
                                 <Link to="/stats_rotas">
-                                    <a className="nav-link" href="#">Rotas</a>
+                                    <span className="nav-link" href="#">Rotas</span>
                                 </Link>
                             </li>
                             <li className="nav-item">
                                 <Link to="/stats_utilizadores">
-                                    <a className="nav-link" href="#">Utilizadores</a>
+                                    <span className="nav-link" href="#">Utilizadores</span>
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Stuff</a>
+                                <Link to="/stats_utilizadores">
+                                    <span className="nav-link" href="#">Stuff</span>
+                                </Link>
                             </li>
                         </ul>
 

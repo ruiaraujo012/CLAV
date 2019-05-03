@@ -8,13 +8,14 @@ class Dashboard extends Component {
     }
 
     componentDidMount() {
-        fetchStats();
+        let data = fetchStats();
+        console.log(data)
     }
 
     render() {
         return (
             <div>
-                <h2>ii</h2>
+                <h2>Dashboard</h2>
             </div>
         );
     }
