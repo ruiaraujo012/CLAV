@@ -3,7 +3,7 @@ const Graphdb = require('./graphdb')
 
 // TODO : Alterar query para abranger todos os níveis.
 Classes.listarClasses = () => {
-    const query = `
+	const query = `
         Select ?id                            
         ?codigo 
         ?titulo 
@@ -15,11 +15,11 @@ Classes.listarClasses = () => {
         BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         }  Order by ?id 
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarClassesPorNivel = (nivel) => {
-    const query = `
+	const query = `
         Select ?id                            
         ?codigo 
         ?titulo j
@@ -31,11 +31,11 @@ Classes.listarClassesPorNivel = (nivel) => {
         BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         }  Order by ?id 
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarClassesApenasComIdPorNivel = (nivel) => {
-    const query = `
+	const query = `
     Select ?id                            
         Where {  
             ?idd rdf:type clav:Classe_N${nivel} ;
@@ -44,11 +44,11 @@ Classes.listarClassesApenasComIdPorNivel = (nivel) => {
         }  Order by ?id 
     `
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarClassesPorNivelComPai = (nivel) => {
-    const query = `
+	const query = `
         Select ?id                            
         ?codigo 
         ?titulo 
@@ -63,12 +63,11 @@ Classes.listarClassesPorNivelComPai = (nivel) => {
             BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).  
         }  Order by ?id 
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.obterTipoProcesso = (id) => {
-
-    const query = `
+	const query = `
     Select 
         ?tipoProcesso 
         ?processoTransversal
@@ -79,41 +78,41 @@ Classes.obterTipoProcesso = (id) => {
         } 
     `
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarNotasAplicacao = (id) => {
-    const query = `
+	const query = `
     SELECT ?id ?nota WHERE { 
         clav:${id} clav:temNotaAplicacao ?idNota.
         ?idNota clav:conteudo ?nota .
     BIND (STRAFTER(STR(?idNota), 'clav#') AS ?id).
     }`
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarExemplosNotasAplicacao = (id) => {
-    const query = `
+	const query = `
     SELECT ?exemplo ?conteudo WHERE { 
         clav:${id} clav:exemploNA ?exemploo.
         ?exemploo clav:conteudo ?conteudo .
     BIND (STRAFTER(STR(?exemploo), 'clav#') AS ?exemplo).
     }`
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarNotasExclusao = (id) => {
-    const query = `
+	const query = `
     SELECT ?id ?nota WHERE { 
         clav:${id} clav:temNotaExclusao ?idNota.
         ?idNota clav:conteudo ?nota . 
     BIND (STRAFTER(STR(?idNota), 'clav#') AS ?id).
     }`
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarTermosIndice = (id) => {
-    const query = `
+	const query = `
     SELECT ?id ?termo WHERE { 
         ?idTI a clav:TermoIndice;
             clav:estaAssocClasse clav:${id} ;
@@ -121,11 +120,11 @@ Classes.listarTermosIndice = (id) => {
     BIND (STRAFTER(STR(?idTI), 'clav#') AS ?id).
     }`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.donos = (id) => {
-    const query = `
+	const query = `
         SELECT ?id ?tipo ?sigla ?designacao WHERE { 
             clav:${id} clav:temDono ?idd.
             {
@@ -142,11 +141,11 @@ Classes.donos = (id) => {
         BIND (STRAFTER(STR(?tipoo), 'clav#') AS ?tipo).
         }`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.participantes = (id) => {
-    const query = `
+	const query = `
         select ?id ?sigla ?designacao ?tipoIntervencao  where { 
             clav:${id} clav:temParticipante ?idd ;
                             ?tipoParticipantee ?idd .
@@ -161,11 +160,11 @@ Classes.participantes = (id) => {
         BIND (STRAFTER(STR(?idd), 'clav#') AS ?id).
         BIND (STRAFTER(STR(?tipoParticipantee), 'clav#') AS ?tipoIntervencao).
         }`
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.processosRelacionados = (id) => {
-    const query = `
+	const query = `
         select ?id ?titulo ?tipoRelacao {
             clav:${id} clav:temRelProc ?idd;
                         ?tipoRell ?idd.
@@ -179,11 +178,11 @@ Classes.processosRelacionados = (id) => {
         BIND (STRAFTER(STR(?tipoRell), 'clav#') AS ?tipoRelacao).
         } Order by ?tipoRelacao ?codigo
         `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.legislacao = (id) => {
-    const query = `
+	const query = `
         SELECT ?id ?tipo ?sumario ?numero WHERE { 
             clav:${id} clav:temLegislacao ?idLeg.
             ?idLeg clav:diplomaTipo ?tipo;
@@ -192,11 +191,11 @@ Classes.legislacao = (id) => {
         BIND (STRAFTER(STR(?idLeg), 'clav#') AS ?id).
         }
         `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarPca = (id) => {
-    const query = `
+	const query = `
         SELECT 
             ?id
             ?formaContagem
@@ -223,11 +222,11 @@ Classes.listarPca = (id) => {
         BIND (STRAFTER(STR(?idPCA), 'clav#') AS ?id). 
         }GROUP BY ?id ?formaContagem ?subFormaContagem 
         `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarJustificacao = (id) => {
-    const query = `
+	const query = `
         SELECT
             ?criterio ?tipoLabel ?conteudo
         WHERE {
@@ -237,11 +236,11 @@ Classes.listarJustificacao = (id) => {
             ?tipo rdfs:subClassOf clav:CriterioJustificacao.
             ?tipo rdfs:label ?tipoLabel.
         }`
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.listarDf = (id) => {
-    const query = `
+	const query = `
     SELECT 
     ?id
     (GROUP_CONCAT(DISTINCT ?Valor; SEPARATOR="###") AS ?valor)
@@ -258,13 +257,13 @@ WHERE {
     }
 BIND (STRAFTER(STR(?idDF), 'clav#') AS ?id).     
 } GROUP BY ?id`
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.criteria = (criteria) => {
-    // exemplo de criteria para match do destinoFinal --> clav:crit_just_df_c100.10.001_1
+	// exemplo de criteria para match do destinoFinal --> clav:crit_just_df_c100.10.001_1
 
-    const query = `
+	const query = `
         SELECT
             ?id
             ?Tipo
@@ -293,60 +292,58 @@ Classes.criteria = (criteria) => {
         } GROUP BY ?id ?Tipo ?Conteudo
     `
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.obtencaoDadosNivel1_2 = async (id) => {
-    const classe = await this.blocoDescritivo(id)
-    const notasAplicacao = await this.listarNotasAplicacao(id)
-    const exemploNotasAplicacao = await this.listarExemplosNotasAplicacao(id)
-    const notasExclusao = await this.listarNotasExclusao(id)
-    const termosIndice = await this.listarTermosIndice(id)
+	const classe = await this.blocoDescritivo(id)
+	const notasAplicacao = await this.listarNotasAplicacao(id)
+	const exemploNotasAplicacao = await this.listarExemplosNotasAplicacao(id)
+	const notasExclusao = await this.listarNotasExclusao(id)
+	const termosIndice = await this.listarTermosIndice(id)
 
-    const descritivoDaClasse = {
-        descricao: classe[0].desc,
-        notas_aplicacao: notasAplicacao,
-        exemplos_NA: exemploNotasAplicacao,
-        notas_exclusao: notasExclusao,
-        termos_de_indide: termosIndice
-    }
+	const descritivoDaClasse = {
+		descricao: classe[0].desc,
+		notas_aplicacao: notasAplicacao,
+		exemplos_NA: exemploNotasAplicacao,
+		notas_exclusao: notasExclusao,
+		termos_de_indide: termosIndice
+	}
 
-    let obj = {
-        codigo: classe[0].codigo,
-        titulo: classe[0].titulo,
-        descritivo_da_classe: descritivoDaClasse
-    }
-    console.log(obj)
+	const obj = {
+		codigo: classe[0].codigo,
+		titulo: classe[0].titulo,
+		descritivo_da_classe: descritivoDaClasse
+	}
+	// console.log(obj)
 
-    return obj
+	return obj
 }
 
 Classes.obtencaoDadosNivel3 = async (id) => {
-    const descritivo = await this.obtencaoDadosNivel1_2(id)
-    const blocoContexto = await this.blocoContexto(id)
-    const blocoDecisao = await this.blocoDecisao(id)
+	const descritivo = await this.obtencaoDadosNivel1_2(id)
+	const blocoContexto = await this.blocoContexto(id)
+	const blocoDecisao = await this.blocoDecisao(id)
 
-
-
-    return {
-        ...descritivo,
-        ...blocoContexto,
-        ...blocoDecisao
-    }
+	return {
+		...descritivo,
+		...blocoContexto,
+		...blocoDecisao
+	}
 }
 
 Classes.obtencaoDadosNivel4 = async (id) => {
-    const descritivo = await this.obtencaoDadosNivel1_2(id)
-    const blocoDecisao = await this.blocoDecisao(id)
+	const descritivo = await this.obtencaoDadosNivel1_2(id)
+	const blocoDecisao = await this.blocoDecisao(id)
 
-    return {
-        ...descritivo,
-        ...blocoDecisao
-    }
+	return {
+		...descritivo,
+		...blocoDecisao
+	}
 }
 
 Classes.blocoDescritivo = (id) => {
-    const query = `
+	const query = `
     SELECT ?codigo ?titulo ?status ?desc ?pai ?codigoPai ?tituloPai WHERE { 
         clav:${id} clav:titulo ?titulo;
             clav:codigo ?codigo;
@@ -366,89 +363,89 @@ Classes.blocoDescritivo = (id) => {
         }
     }
     `
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.blocoContexto = async (id) => {
-    const tipoProcesso = await this.obterTipoProcesso(id)
-    const donos = await this.donos(id)
-    const participantes = await this.participantes(id)
-    const processosRelacionados = await this.processosRelacionados(id)
-    const legislacao = await this.legislacao(id)
+	const tipoProcesso = await this.obterTipoProcesso(id)
+	const donos = await this.donos(id)
+	const participantes = await this.participantes(id)
+	const processosRelacionados = await this.processosRelacionados(id)
+	const legislacao = await this.legislacao(id)
 
-    const legislacaoCorrigida = legislacao.map(l => {
-        l.ref_leg = `${l.tipo} ${l.numero}`
-        l.descricao = l.sumario
-        delete l.id
-        delete l.tipo
-        delete l.sumario
-        delete l.numero
-    })
+	const legislacaoCorrigida = legislacao.map((l) => {
+		l.ref_leg = `${l.tipo} ${l.numero}`
+		l.descricao = l.sumario
+		delete l.id
+		delete l.tipo
+		delete l.sumario
+		delete l.numero
+	})
 
-    return {
-        contexto_de_avaliacao: {
-            ...tipoProcesso[0],
-            donos,
-            participantes,
-            processos_relacionados: processosRelacionados,
-            legislacoes: {
-                legislacao
-            }
-        }
-    }
+	return {
+		contexto_de_avaliacao: {
+			...tipoProcesso[0],
+			donos,
+			participantes,
+			processos_relacionados: processosRelacionados,
+			legislacoes: {
+				legislacao
+			}
+		}
+	}
 }
 
 Classes.blocoDecisao = async (id) => {
-    //  const justificacao = await this.listarJustificacao(id)
+	//  const justificacao = await this.listarJustificacao(id)
 
-    const pca = await this.pca(id)
-    const df = await this.df(id)
+	const pca = await this.pca(id)
+	const df = await this.df(id)
 
-    return {
-        decisoes_de_avaliacao: {
-            pca: { ...pca },
-            df: { ...df }
-        }
-    }
+	return {
+		decisoes_de_avaliacao: {
+			pca: { ...pca },
+			df: { ...df }
+		}
+	}
 }
 
 Classes.pca = async (id) => {
-    const pca = await this.listarPca(id)
-    let criteriosPca = {}
-    if (typeof pca[0] !== 'undefined' && 'Criterios' in pca[0]) {
-        let criteriaPca = pca[0].Criterios.split('###')
-        criteriaPca = criteriaPca.map((a) => a.split('#')[1])
-        criteriosPca = await this.criteria(criteriaPca)
+	const pca = await this.listarPca(id)
+	let criteriosPca = {}
+	if (typeof pca[0] !== 'undefined' && 'Criterios' in pca[0]) {
+		let criteriaPca = pca[0].Criterios.split('###')
+		criteriaPca = criteriaPca.map((a) => a.split('#')[1])
+		criteriosPca = await this.criteria(criteriaPca)
 
-        delete pca[0].Criterios
-    }
+		delete pca[0].Criterios
+	}
 
-    return {
-        ...pca[0],
-        justificacao: criteriosPca
-    }
+	return {
+		...pca[0],
+		justificacao: criteriosPca
+	}
 }
 
 Classes.df = async (id) => {
-    const df = await this.listarDf(id)
+	const df = await this.listarDf(id)
 
-    let criteriosDf = {}
-    if (typeof df[0] !== 'undefined' && 'Criterios' in df[0]) {
-        let criteriaDf = df[0].Criterios.split('###')
-        criteriaDf = criteriaDf.map((a) => a.replace('/[^#]+#(.*)/', '$1').split('#')[1])
-        criteriosDf = await this.criteria(criteriaDf)
+	let criteriosDf = {}
+	if (typeof df[0] !== 'undefined' && 'Criterios' in df[0]) {
+		let criteriaDf = df[0].Criterios.split('###')
+		criteriaDf = criteriaDf.map((a) => a.replace('/[^#]+#(.*)/', '$1').split('#')[1])
+		criteriosDf = await this.criteria(criteriaDf)
 
-        delete df[0].Criterios
-    }
+		delete df[0].Criterios
+	}
 
-    return {
-        ...df[0],
-        justificacao: criteriosDf
-    }
+	return {
+		...df[0],
+		justificacao: criteriosDf
+	}
 }
 
 Classes.listaConsolidada = () => {
-    const query = `
+	const query = `
     SELECT DISTINCT
     ?Avo ?AvoCodigo ?AvoTitulo 
     ?Pai ?PaiCodigo ?PaiTitulo 
@@ -501,30 +498,30 @@ WHERE {
 Group By ?PN ?PNCodigo ?PNTitulo ?Pai ?PaiCodigo ?PaiTitulo ?Avo ?AvoCodigo ?AvoTitulo 
 Order By ?PN`
 
-    return Graphdb.fetch(query)
+	return Graphdb.fetch(query)
 }
 
 Classes.obterNivelDaClasse = async (id) => {
-    const formatedId = id.replace('c', '')
+	const formatedId = id.replace('c', '')
 
-    const query = `
+	const query = `
         SELECT ?id ?tipo where {   
             ?id clav:codigo "${formatedId}" ;
             rdf:type ?tipo .
         }
     `
 
-    const result = await Graphdb.fetch(query)
+	const result = await Graphdb.fetch(query)
 
-    const decider = JSON.stringify(result)
+	const decider = JSON.stringify(result)
 
-    const classes = ['Classe_N1', 'Classe_N2', 'Classe_N3', 'Classe_N4']
+	const classes = ['Classe_N1', 'Classe_N2', 'Classe_N3', 'Classe_N4']
 
-    let nivel = 0
+	let nivel = 0
 
-    classes.forEach((key, i) => {
-        if (decider.includes(key)) nivel = i + 1
-    })
+	classes.forEach((key, i) => {
+		if (decider.includes(key)) nivel = i + 1
+	})
 
-    return nivel
+	return nivel
 }

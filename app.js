@@ -20,6 +20,7 @@ const termoIndiceRouter = require('./routes/termoIndice')
 const statsRouter = require('./routes/stats')
 
 const { extractStats } = require('./utils/registerStats')
+const { JSON2XML } = require('./utils/converters')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
@@ -85,99 +86,6 @@ app.use(
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, 'public')))
 
-const Obj = (jsonData, containers) => {
-	let xml = ''
-
-	const blockContainer = containers[1]
-
-	xml += `<${blockContainer}>`
-
-	Object.keys(jsonData).forEach((key) => {
-		if (Array.isArray(jsonData[key])) {
-			containers.splice(0, 2)
-
-			xml += `<${containers[0]}>`
-
-			jsonData[key].forEach((array) => {
-				let obj = {}
-				obj = array
-				xml += Obj(obj, containers)
-			})
-
-			xml += `</${containers[0]}>`
-		} else if (typeof jsonData[key] === 'object') {
-			containers.splice(0, 2)
-
-			const insideBlock = containers[0]
-
-			xml += `<${insideBlock}>`
-
-			let obj = {}
-			obj = jsonData[key]
-
-			xml += Obj(obj, containers)
-
-			xml += `</${insideBlock}>`
-		} else {
-			xml += `<${key}>`
-
-			xml += jsonData[key]
-
-			xml += `</${key}>`
-		}
-	})
-
-	xml += `</${blockContainer}>`
-	return xml
-}
-
-const Arr = (jsonData, containers) => {
-	let xml = ''
-
-	const newContainers = [...containers]
-
-	Object.keys(jsonData).forEach((key) => {
-		if (Array.isArray(jsonData[key])) {
-			const insideBlock = newContainers[0]
-
-			newContainers.splice(0, 1)
-
-			xml += `<${insideBlock}>`
-
-			jsonData[key].forEach((array) => {
-				xml += Arr({ array }, newContainers)
-			})
-
-			xml += `</${insideBlock}>`
-		} else if (typeof jsonData[key] === 'object') {
-			const insideBlock = newContainers[0]
-
-			newContainers.splice(0, 1)
-
-			xml += `<${insideBlock}>`
-
-			xml += Arr(jsonData[key], newContainers)
-
-			xml += `</${insideBlock}>`
-		} else {
-			xml += `<${key}>`
-
-			xml += jsonData[key]
-
-			xml += `</${key}>`
-		}
-	})
-
-	return xml
-}
-
-const JSON2XML = (jsonData, containers) => {
-	let response
-	if (Array.isArray(jsonData)) response = Arr({ jsonData }, containers)
-	else response = Obj(jsonData, containers)
-	return response
-}
-
 const formatOutput = (req, res, next) => {
 	if (!res.locals.dados) next()
 
@@ -226,7 +134,7 @@ app.use('/stats', statsRouter)
 app.use('/', usersRouter)
 
 // eslint-disable-next-line no-undef
-testFunction = async () => {
+const testFunction = async () => {
 	const data = await axios.get('http://localhost:8000/classes/c100.10.001')
 	// console.log(data.data)
 }

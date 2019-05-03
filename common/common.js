@@ -1,4 +1,3 @@
-
-const Common = module.exports;
+const Common = module.exports
 
 Common.host = 'http://localhost:8000'
