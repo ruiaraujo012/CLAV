@@ -2,30 +2,39 @@ exports.obj = (jsonData, containers) => {
 	let xml = ''
 
 	const blockContainer = containers[0]
-
 	xml += `<${blockContainer}>`
 
 	Object.keys(jsonData).forEach((key) => {
 		if (Array.isArray(jsonData[key])) {
 			containers.splice(0, 1)
+			const t = containers[0]
+			xml += `<${t}>`
 
 			if (jsonData[key].length > 0) {
-				const newContainers = [...containers]
 				jsonData[key].forEach((array) => {
-					xml += this.obj({ array }, newContainers)
+					let obj = {}
+					obj = array
+
+					const newContainers = [...containers]
+					xml += this.obj(obj, newContainers)
 				})
+				containers.splice(0, 1)
 			} else {
 				containers.splice(0, 1)
+				xml += `<${containers[0]}/>`
 			}
+
+			xml += `</${t}>`
 		} else if (typeof jsonData[key] === 'object') {
 			containers.splice(0, 1)
 
-			xml += this.obj(jsonData[key], containers)
+			let obj = {}
+			obj = jsonData[key]
+
+			xml += this.obj(obj, containers)
 		} else {
 			xml += `<${key}>`
-
 			xml += jsonData[key]
-
 			xml += `</${key}>`
 		}
 	})

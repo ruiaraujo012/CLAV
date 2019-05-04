@@ -52,22 +52,11 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 		// </classe_N1>
 		case 1:
 			res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-			res.locals.xmlContainer = ['classe_N1', 'descritivo_da_classe', 'notas_aplicação', 'nota_aplicação', 'exemplos_NA', 'exemplo_NA', 'notas_exclusão', 'nota_exclusão']
+			res.locals.xmlContainer = ['classe_N1', 'descritivo_da_classe', 'notas_aplicação', 'nota_aplicação', 'exemplos_NA', 'exemplo_NA', 'notas_exclusão', 'nota_exclusão', 'termos_de_indide', 'termo_de_indide']
 			break
 		case 2:
 			res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-			res.locals.xmlContainer = [
-				'classes',
-				'classe_N2',
-				'notasAplicacao',
-				'notaAplicacao',
-				'exemplosNotasAplicacao',
-				'exemploNotaAplicacao',
-				'notasExclusao',
-				'notaExclusao',
-				'termosIndice',
-				'termoIndice'
-			]
+			res.locals.xmlContainer = ['classes', 'classe_N2', 'notasAplicacao', 'notaAplicacao', 'exemplosNotasAplicacao', 'exemploNotaAplicacao', 'notasExclusao', 'notaExclusao', 'termosIndice', 'termoIndice']
 			break
 		case 3:
 			res.locals.dados = await Classes.obtencaoDadosNivel3(id)
