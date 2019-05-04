@@ -11,6 +11,7 @@ exports.obj = (jsonData, containers) => {
 			xml += `<${t}>`
 
 			if (jsonData[key].length > 0) {
+				containers.splice(0, 1)
 				jsonData[key].forEach((array) => {
 					let obj = {}
 					obj = array
@@ -18,7 +19,6 @@ exports.obj = (jsonData, containers) => {
 					const newContainers = [...containers]
 					xml += this.obj(obj, newContainers)
 				})
-				containers.splice(0, 1)
 			} else {
 				containers.splice(0, 1)
 				xml += `<${containers[0]}/>`
