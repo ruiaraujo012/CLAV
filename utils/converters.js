@@ -86,7 +86,7 @@ exports.arr = (jsonData, containers) => {
 
 exports.JSON2XML = (jsonData, containers) => {
 	let response = '<?xml version="1.0" encoding="UTF-8"?>'
-	if (Array.isArray(jsonData)) response = this.arr({ jsonData }, containers)
+	if (Array.isArray(jsonData)) response += this.arr({ jsonData }, containers)
 	else response += this.obj(jsonData, containers)
 	return response
 }

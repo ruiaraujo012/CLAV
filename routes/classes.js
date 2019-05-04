@@ -125,7 +125,7 @@ router.get('/:id/processosRelacionados', authenticate(), async (req, res, next) 
 	if (nivel !== 3) next()
 
 	res.locals.dados = await Classes.processosRelacionados(req.params.id)
-	res.locals.xmlContainer = ['processosRelacionados', 'processoRelacionado']
+	res.locals.xmlContainer = ['processos_relacionados', 'processo_relacionados']
 
 	next()
 })
@@ -136,7 +136,7 @@ router.get('/:id/legislacao', authenticate(), async (req, res, next) => {
 	if (nivel !== 3) next()
 
 	res.locals.dados = await Classes.legislacao(req.params.id)
-	res.locals.xmlContainer = ['legislacoes', 'legislacao']
+	res.locals.xmlContainer = ['legislações', 'legislação']
 
 	next()
 })
@@ -146,7 +146,7 @@ router.get('/:id/pca', authenticate(), async (req, res, next) => {
 	const pca = await Classes.pca(req.params.id)
 
 	res.locals.dados = pca
-	res.locals.xmlContainer = ['prazosConservacaoAdministrativa', 'prazoConservacaoAdministrativa', 'justificacoes', 'justificacao']
+	res.locals.xmlContainer = ['pca', 'justificações_PCA', 'justificação_PCA']
 
 	next()
 })
@@ -157,7 +157,7 @@ router.get('/:id/df', authenticate(), async (req, res, next) => {
 	const destinoFinal = await Classes.df(req.params.id)
 
 	res.locals.dados = destinoFinal
-	res.locals.xmlContainer = ['destinosFinais', 'destinoFinal', 'justificacoes', 'justificacao']
+	res.locals.xmlContainer = ['destino_final', 'justificações_destinoFinal', 'justificação_destinoFinal']
 
 	next()
 })

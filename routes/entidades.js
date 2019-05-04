@@ -18,7 +18,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 	const intervencaoComoDono = await Entidades.intervencaoComoDono(req.params.id)
 	const intervencaoComoParticipante = await Entidades.intervencaoComoParticipante(req.params.id)
 
-	// NAO FUNCIONA
+	// FIXME: NAO FUNCIONA
 	res.locals.dados = {
 		...entidade[0],
 		tipologias,
@@ -26,7 +26,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 		intervencaoComoParticipante
 	}
 
-	res.locals.xmlContainer = ['entidades', 'entidade', 'tipologias', 'tipologia', 'intervencoesComoDono', 'intervencaoComoDono', 'intervencoesComoParticipante', 'intervencaoComoParticipante']
+	res.locals.xmlContainer = ['entidade', 'tipologias', 'tipologia', 'intervenções_como_dono', 'intervençãos_como_dono', 'intervenções_como_participante', 'intervençãos_como_participante']
 
 	next()
 })

@@ -7,7 +7,7 @@ const { authenticate } = require('../auth/auth')
 router.get('/', authenticate(), async (req, res, next) => {
 	const legislacoes = await Legislacao.listarLegislacao()
 	res.locals.dados = legislacoes
-	res.locals.xmlContainer = ['legislacoes', 'legislacao']
+	res.locals.xmlContainer = ['legislações', 'legislação']
 
 	next()
 })
@@ -21,7 +21,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 		processosDeNegocio
 	}
 
-	res.locals.xmlContainer = ['legislacoes', 'legislacao', 'processosDeNegocio', 'processoDeNegocio']
+	res.locals.xmlContainer = ['legislacao', 'processos_de_negócio', 'processo_de_negócio']
 
 	next()
 })
