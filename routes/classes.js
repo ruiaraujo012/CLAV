@@ -8,11 +8,11 @@ const { authenticate } = require('../auth/auth')
 
 router.get('/', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listar()
-	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
+	res.locals.xmlContainer = ['classes_n1', 'classe_n1', 'filhos_classes_n2', 'filho_classe_n2', 'filhos_classes_n3', 'filho_classe_n3', 'filhos_classes_n4', 'filho_classe_n4']
 	next()
 })
 
-router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
+router.get('/listaConsolidada', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listarComTodosCampos()
 	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
 	next()
