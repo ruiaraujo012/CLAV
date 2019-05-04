@@ -10,12 +10,12 @@ div.rt-td {
 
 .rt-tr {
     margin-top: 10px;
-    box-shadow: 0px 0px 5px 0px #aaa;
-    border-radius: 8px;
+    box-shadow: 0px 0px 3px 0px #aaa;
+    border-radius: 2px;
 }
 
 div.rt-tr-group:nth-child(1) {
-    margin-top: 5px;
+    margin-top: 3px;
 }
 
 .rt-tr-group {
@@ -26,7 +26,7 @@ div.rt-tr-group:nth-child(1) {
 div.rt-tbody>div>div {
     max-height: 50px;
     min-height: 50px;
-    margin: 5px 2px;
+    margin: 3px 2px;
 }
 
 .rt-th:first-child {

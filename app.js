@@ -136,9 +136,8 @@ app.use('/', usersRouter)
 
 // eslint-disable-next-line no-undef
 const testFunction = async () => {
-	// const data = await axios.get('http://localhost:8000/classes/c100.10.001')
-	// console.log(data.data)
-	statsController.dailyAccess(10)
+	const data = await axios.get('http://localhost:8000/classes/c100.10.001?format=xml')
+	// statsController.dailyAccess(10);
 }
 
 // eslint-disable-next-line no-undef

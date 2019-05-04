@@ -8,7 +8,7 @@ const Stats = module.exports
 
 Stats.dailyAccess = async (quantPreviousDates) => {
 
-	// _id, url, email, accessDate
+	// j_id, url, email, accessDate
 	const data = await this.export()
 
 	let dates = {}
@@ -29,6 +29,29 @@ Stats.dailyAccess = async (quantPreviousDates) => {
 			quantity: dates[i].quantity
 		}
 	})
+}
+
+Stats.quantityOfAccessPerUser = async (numberOfUsers) => {
+	// j_id, url, email, accessDate
+	const data = await this.export()
+
+	let users = {}
+	data.forEach(obj => {
+		const currUser = obj.email
+		if (users[currUser]) {
+			users[currUser].quantity += 1
+		} else {
+			users[currUser] = { quantity: 1 }
+		}
+	})
+
+	return Object.keys(users).map(u => {
+		return {
+			user: u,
+			quantity: users[u].quantity
+		}
+	})
+
 }
 
 Stats.quantityOfAcessPerUrl = async (numberOfUrls) => {

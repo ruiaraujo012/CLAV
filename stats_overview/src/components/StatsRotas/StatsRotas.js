@@ -2,11 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { host } from '../../common/common';
 import Loading from '../Loading/Loading';
-import ReactTable from 'react-table';
+import ContentHeader from '../ContentHeader/ContentHeader';
+import Table from '../Table/Table';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
-import '../../../node_modules/react-table/react-table.css';
-import '../../common/react-table.css';
+import { quantityOfAccessPerUrl } from '../../api/api';
+
 
 class StatsRotas extends Component {
     constructor(props) {
@@ -22,9 +23,8 @@ class StatsRotas extends Component {
     async componentDidMount() {
 
         try {
-            let topRotas = await axios.get(`${host}/stats/quantityOfAccessPerUrl/${this.state.quantityOfUrls}`)
-            this.setState({ loading: false, urls: topRotas.data })
-            console.log(topRotas.data)
+            let data = await quantityOfAccessPerUrl(this.state.quantityOfUrls)
+            this.setState({ loading: false, urls: data.data })
         } catch (error) {
             this.setState({ loading: true })
             console.error(error)
@@ -38,37 +38,27 @@ class StatsRotas extends Component {
 
         if (loading)
             return (
-                <Loading loading={this.state.loading} />
+                <Loading loading={loading} />
             );
+
+        const columns = [
+            {
+                Header: "Url",
+                id: "url",
+                accessor: u => u[0]
+            },
+            {
+                Header: "#Acessos",
+                id: "access",
+                accessor: u => u[1].quantity
+            }
+        ]
 
         return (
 
             <div>
-                <h4>Quantidade de acessos por rota</h4>
-
-                <ReactTable
-                    noDataText="There is no one on the leaderboard"
-                    data={this.state.urls}
-                    columns={[
-                        {
-                            Header: "Url",
-                            id: "url",
-                            accessor: u => u[0]
-                        },
-                        {
-                            Header: "#Access",
-                            id: "access",
-                            accessor: u => u[1].quantity
-                        }
-                    ]}
-                    defaultPageSize={10}
-                    pageSize={10}
-                    style={{
-                    }}
-                    showPagination={true}
-                    className="-highlight"
-                />
-
+                <ContentHeader header="Quantidade de acessos por rota" />
+                <Table data={urls} columns={columns} />
             </div>
 
         );

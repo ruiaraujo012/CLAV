@@ -1,14 +1,55 @@
 import React, { Component } from 'react';
+import { quantityOfAccessPerUser } from '../../api/api';
+
+import Loading from '../Loading/Loading';
+import Table from '../Table/Table';
 
 class StatsUsers extends Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            loading: true,
+            quantityOfUsers: 10,
+            users: []
+        }
     }
+
+    async componentDidMount() {
+        try {
+            const data = await quantityOfAccessPerUser(10);
+            this.setState({ loading: false, users: data.data })
+        } catch (error) {
+            // TODO : lidar com o erro somehow
+            this.setState({ loading: true })
+        }
+    }
+
     render() {
+
+        const { users, loading } = this.state;
+
+        if (loading)
+            return (
+                <Loading />
+            );
+
+        const columns = [
+            {
+                Header: "User",
+                id: "user",
+                accessor: u => u.user
+            },
+            {
+                Header: "#Acessos",
+                id: "quantity",
+                accessor: u => u.quantity
+            }
+        ]
+
         return (
             <div>
 
+                <Table data={users} columns={columns} />
             </div>
         );
     }
