@@ -3,6 +3,7 @@ import { quantityOfAccessPerUser } from '../../api/api';
 
 import Loading from '../Loading/Loading';
 import Table from '../Table/Table';
+import ContentHeader from '../ContentHeader/ContentHeader';
 
 class StatsUsers extends Component {
     constructor(props) {
@@ -30,7 +31,7 @@ class StatsUsers extends Component {
 
         if (loading)
             return (
-                <Loading />
+                <Loading loading={true} />
             );
 
         const columns = [
@@ -48,7 +49,7 @@ class StatsUsers extends Component {
 
         return (
             <div>
-
+                <ContentHeader header="Quantidade de acessos por utilizador" />
                 <Table data={users} columns={columns} />
             </div>
         );
