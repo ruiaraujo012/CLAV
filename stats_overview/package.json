@@ -9,7 +9,8 @@
     "react-loading-overlay": "^1.0.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.0",
-    "react-table": "^6.10.0"
+    "react-table": "^6.10.0",
+    "recharts": "^1.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

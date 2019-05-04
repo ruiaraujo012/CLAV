@@ -9,6 +9,11 @@ router.get('/', authenticate(), async (req, res) => {
 	return res.json(data)
 })
 
+router.get('/dailyAccess/:quantity', authenticate(), async (req, res) => {
+	const data = await Stats.dailyAccess(req.params.quantity)
+	return res.json(data)
+})
+
 router.get('/quantityOfAccessPerUrl/:quantity', authenticate(), async (req, res) => {
 	const data = await Stats.quantityOfAcessPerUrl(req.params.quantity)
 	return res.json(data)

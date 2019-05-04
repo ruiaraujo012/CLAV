@@ -18,6 +18,7 @@ const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
 const statsRouter = require('./routes/stats')
+const statsController = require('./controllers/stats')
 
 const { extractStats } = require('./utils/registerStats')
 const { JSON2XML } = require('./utils/converters')
@@ -135,8 +136,9 @@ app.use('/', usersRouter)
 
 // eslint-disable-next-line no-undef
 const testFunction = async () => {
-	const data = await axios.get('http://localhost:8000/classes/c100.10.001')
+	// const data = await axios.get('http://localhost:8000/classes/c100.10.001')
 	// console.log(data.data)
+	statsController.dailyAccess(10);
 }
 
 // eslint-disable-next-line no-undef

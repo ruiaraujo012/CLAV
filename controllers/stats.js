@@ -6,6 +6,31 @@ const Stats = module.exports
 // Quantidade de acessos por url
 // Tempo do pedido
 
+Stats.dailyAccess = async (quantPreviousDates) => {
+
+	// _id, url, email, accessDate
+	const data = await this.export()
+
+	let dates = {}
+	data.forEach(obj => {
+
+		const currDate = new Date(obj.accessDate)
+		dates[currDate.toDateString()]
+		if (dates[currDate.toDateString()]) {
+			dates[currDate.toDateString()].quantity += 1
+		} else {
+			dates[currDate.toDateString()] = { quantity: 1 }
+		}
+	})
+
+	return Object.keys(dates).map(i => {
+		return {
+			date: i,
+			quantity: dates[i].quantity
+		}
+	})
+}
+
 Stats.quantityOfAcessPerUrl = async (numberOfUrls) => {
 
 	//url: "/classes/c100?format=xml", urlBlocks: Array(2), queriesString: Array(1), email: "", accessDate: "2019-04-27T14:38:51.540Z"
@@ -13,12 +38,12 @@ Stats.quantityOfAcessPerUrl = async (numberOfUrls) => {
 
 	let urls = {}
 	for (let n of data) {
-
 		if (n.url) {
 			if (urls[n.url]) {
 				urls[n.url].quantity += 1
+				urls[n.url].accessDates.push(n.accessDate)
 			} else {
-				urls[n.url] = { quantity: 1 }
+				urls[n.url] = { quantity: 1, accessDates: [n.accessDate] }
 			}
 		}
 	}

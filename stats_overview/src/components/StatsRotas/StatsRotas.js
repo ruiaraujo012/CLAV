@@ -3,6 +3,8 @@ import axios from 'axios';
 import { host } from '../../common/common';
 import Loading from '../Loading/Loading';
 import ReactTable from 'react-table';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+
 import '../../../node_modules/react-table/react-table.css';
 import '../../common/react-table.css';
 
@@ -16,6 +18,7 @@ class StatsRotas extends Component {
         }
     }
 
+
     async componentDidMount() {
 
         try {
@@ -26,12 +29,12 @@ class StatsRotas extends Component {
             this.setState({ loading: true })
             console.error(error)
         }
+
     }
 
     render() {
 
         const { urls, loading } = this.state;
-
 
         if (loading)
             return (

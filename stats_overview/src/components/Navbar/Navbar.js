@@ -16,6 +16,11 @@ class Navbar extends Component {
                     <div className="collapse navbar-collapse " id="navbarText">
                         <ul className="navbar-nav ml-auto">
                             <li className="nav-item active">
+                                <Link to="/daily_stats">
+                                    <span className="nav-link" href="#">Acessos Diários</span>
+                                </Link>
+                            </li>
+                            <li className="nav-item active">
                                 <Link to="/stats_rotas">
                                     <span className="nav-link" href="#">Rotas</span>
                                 </Link>

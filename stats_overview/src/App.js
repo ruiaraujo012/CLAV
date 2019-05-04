@@ -8,6 +8,7 @@ import Navbar from './components/Navbar/Navbar';
 import Overview from './components/Overview/Overview';
 import Dashboard from './components/Dashboard/Dashboard';
 import StatsRotas from './components/StatsRotas/StatsRotas';
+import DailyStats from './components/DailyStats/DailyStats';
 
 function App() {
     return (
@@ -17,6 +18,7 @@ function App() {
                 <Navbar />
                 <div className="container mt-4">
                     <Switch>
+                        <Route exact path="/daily_stats" component={DailyStats} />
                         <Route exact path="/stats_rotas" component={StatsRotas} />
                         <Route exact path="/stats_utilizadores" component={Overview} />
                         <Route path="/" component={Dashboard} />
