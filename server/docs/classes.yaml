@@ -943,7 +943,7 @@ paths:
       parameters:
         - name: classID
           in: path
-          description: c150.20.501
+          description: c200.10.100
           type: string
           required: true
       produces:
@@ -955,11 +955,26 @@ paths:
           description: Retorna todos os participantes de uma classe
           examples:
             application/json: |
-              alterar
+              [
+                {
+                  "id": "ent_DGACCP",
+                  "sigla": "DGACCP",
+                  "designacao": "Direção-Geral dos Assuntos Consulares e das Comunidades Portuguesas",
+                  "tipoIntervencao": "temParticipanteApreciador"
+                },
+                {
+                  "id": "tip_AP",
+                  "sigla": "AP",
+                  "designacao": "Administração Pública",
+                  "tipoIntervencao": "temParticipanteApreciador"
+                }
+              ]
             application/xml: |
-              alterar
+              <participantes><participante><id>ent_DGACCP</id><sigla>DGACCP</sigla><designacao>Direção-Geral dos Assuntos Consulares e das Comunidades Portuguesas</designacao><tipoIntervencao>temParticipanteApreciador</tipoIntervencao></participante><participante><id>tip_AP</id><sigla>AP</sigla><designacao>Administração Pública</designacao><tipoIntervencao>temParticipanteApreciador</tipoIntervencao></participante></participantes>
             text/csv: |
-              alterar
+              id,sigla,designacao,tipoIntervencao
+              ent_DGACCP,DGACCP,Direção-Geral dos Assuntos Consulares e das Comunidades Portuguesas,temParticipanteApreciador
+              tip_AP,AP,Administração Pública,temParticipanteApreciador
         400:
           description: Erro a obter participantes
         401:
