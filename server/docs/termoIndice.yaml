@@ -37,7 +37,7 @@ paths:
                 }
               ]
             application/xml: |
-              alterar
+              <termosIndice><termoIndice><s>ti_kJgDVmygPXQGde1y2jyFb</s><Termo>Ato legislativo, produção e comunicação de</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_40u40xiK-LKRTlMzKvyEy</s><Termo>Comunicação de ato legislativo</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_qRXOBZz9oZiTc6Chd4VGi</s><Termo>Declaração de estado de emergência</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_zkUL0VjJyGal83Dfkm41T</s><Termo>Declaração de estado de sítio</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_Lx7VskRGqW1M-1Db4zTp9</s><Termo>Decreto da Assembleia da República</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_wHypqmwh1LZhcYt2uySLJ</s><Termo>Decreto legislativo regional</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_kj5ArhzWU2OUeGKmh3gA3</s><Termo>Decreto-lei</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_N9Qh3uH95lAG4TGC6F4h1</s><Termo>Diploma legislativo, produção e comunicação de</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_wGdCtnkfuKusUpkREs4yt</s><Termo>Diretiva comunitária, transposição de</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice><termoIndice><s>ti_Y0RggFLMn-ZAk_Rp9EgJc</s><Termo>Estatutos, produção e comunicação de atos legislativos a aplicar em</Termo><id>c100.10.001</id><Tit>Produção e comunicação de atos legislativos</Tit><Classe>100.10.001</Classe></termoIndice>
             text/csv: |
               s,Termo,id,Tit,Classe
               ti_kJgDVmygPXQGde1y2jyFb,"Ato legislativo, produção e comunicação de",c100.10.001,Produção e comunicação de atos legislativos,100.10.001
@@ -78,7 +78,7 @@ paths:
                 }
               ]
             application/xml: |
-              alterar
+              <termosIndice><termoIndice><Termo>Comunicação de ato legislativo</Termo><id>c100.10.001</id><Classe>100.10.001</Classe><Tit>Produção e comunicação de atos legislativos</Tit></termoIndice></termosIndice>
             text/csv: |
               Termo,id,Classe,Tit
               Comunicação de ato legislativo,c100.10.001,100.10.001,Produção e comunicação de atos legislativos

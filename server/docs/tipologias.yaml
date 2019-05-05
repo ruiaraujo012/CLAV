@@ -31,7 +31,7 @@ paths:
                 }
               ]
             application/xml: |
-              alterar
+              <tipologias><tipologia><id>tip_AAC</id><sigla>AAC</sigla><designacao>Autoridades Administrativas Civis</designacao></tipologia><tipologia><id>tip_AADR</id><sigla>AADR</sigla><designacao>Assembleias de apuramento distrital de resultados</designacao></tipologia><tipologia><id>tip_AAGR</id><sigla>AAGR</sigla><designacao>Assembleias de apuramento geral dos resultados</designacao></tipologia>
             text/csv: |
               id,sigla,designacao
               tip_AAC,AAC,Autoridades Administrativas Civis
