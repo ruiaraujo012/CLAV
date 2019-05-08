@@ -1,4 +1,3 @@
-/* eslint-disable comma-dangle */
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
@@ -6,7 +5,8 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
-const jsoncsv = require('json-2-csv')
+const csvjson = require('csvjson')
+// const jsoncsv = require('json-2-csv')
 const axios = require('axios')
 const cors = require('cors')
 
@@ -94,7 +94,7 @@ const formatOutput = (req, res, next) => {
 	const format = req.query.format || req.headers.accept
 
 	const options2csv = {
-		expandArrayObjects: true,
+		expandArrayObjects: false,
 		prependHeader: true
 	}
 
@@ -109,14 +109,7 @@ const formatOutput = (req, res, next) => {
 			break
 		case 'text/csv':
 		case 'csv':
-			jsoncsv.json2csv(
-				dados,
-				(err, csv) => {
-					if (err) return
-					res.send(csv)
-				},
-				options2csv
-			)
+			res.send(csvjson.toCSV(dados, { delimiter: ';' }))
 			break
 		default:
 			res.send(dados)
