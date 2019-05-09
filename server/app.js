@@ -6,7 +6,6 @@ const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
 const csvjson = require('csvjson')
-// const jsoncsv = require('json-2-csv')
 const axios = require('axios')
 const cors = require('cors')
 
@@ -18,7 +17,7 @@ const legislacaoRouter = require('./routes/legislacao')
 const termoIndiceRouter = require('./routes/termoIndice')
 
 const statsRouter = require('./routes/stats')
-const statsController = require('./controllers/stats')
+// const statsController = require('./controllers/stats')
 
 const { extractStats } = require('./utils/registerStats')
 const { JSON2XML } = require('./utils/converters')
@@ -92,11 +91,6 @@ const formatOutput = (req, res, next) => {
 
 	const { dados } = res.locals
 	const format = req.query.format || req.headers.accept
-
-	const options2csv = {
-		expandArrayObjects: false,
-		prependHeader: true
-	}
 
 	switch (format) {
 		case 'application/json':
