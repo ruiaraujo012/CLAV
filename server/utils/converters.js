@@ -6,8 +6,6 @@ exports.obj = (jsonData, containers) => {
 	xml += `<${blockContainer}>`
 
 	Object.keys(jsonData).forEach((key) => {
-
-
 		if (Array.isArray(jsonData[key])) {
 			containers.splice(0, 1)
 
