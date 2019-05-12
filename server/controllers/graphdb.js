@@ -2,8 +2,6 @@ const axios = require('axios')
 
 const Graphdb = module.exports
 
-const graphdbAdress = 'http://localhost:7200'
-const graphdbRepository = 'clav'
 
 const prefixes = {
 	rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
@@ -27,24 +25,29 @@ Graphdb.simplificaSPARQLRes = (sparqlRes, campos) => {
 }
 
 Graphdb.fetch = async (query) => {
+
+	// TODO : Rever, tê-los como variável global causa problmas, não se encontram 
+	// carregados antes de serem usados?!
+	const graphdbAddress = process.env.GRAPHDB_URI
+	const graphdbRepository = process.env.GRAPHDB_REPOSITORY
+
 	let prefixConcat = ''
 	Object.keys(prefixes).forEach((key) => {
 		prefixConcat += `PREFIX ${key}: <${prefixes[key]}> `
 	})
 
 	const newQuery = prefixConcat + query
-
 	let dadosNormalizados = {}
 
 	try {
 		const dados = (await axios.get(
-			`${graphdbAdress}/repositories/${graphdbRepository}?query=${encodeURIComponent(newQuery)}`
+			`${graphdbAddress}/repositories/${graphdbRepository}?query=${encodeURIComponent(newQuery)}`
 		)).data
 		const { vars } = dados.head
 		const { bindings } = dados.results
 		dadosNormalizados = this.simplificaSPARQLRes(bindings, vars)
 	} catch (error) {
-		console.log(`[GRAPHD ERROR]: ${error.response.data}`)
+		console.log(`[GRAPH_DB ERROR]`)
 		console.log(`Query: ${newQuery}`)
 	}
 
