@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classe_N2 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/Users/Claudia%20Marques/Desktop/TESE/CLAV.xsd">
+    <código>100.10</código>
+    <título>Elaboração de diplomas jurídico-normativos e de normas técnicas</título>
+    <descritivo_da_classe>
+        <descrição>
+         Compreende os processos de elaboração/alteração de legislação, de regulamentos e de diretivas políticas ou operacionais portuguesas, independentemente da forma, do assunto ou do tipo de participação no processo.Inclui o depósito dos instrumentos de regulação (por exemplo, instrumentos de gestão territorial) nas entidades competentes.Abrange os diplomas jurídico-normativos da competência dos órgãos de soberania (Presidente da República, Assembleia da República, Governo e Tribunais) ou dos órgãos de poder político (regiões autónomas e autarquias), bem como os atos da Administração que têm caráter normativo. Compreende, igualmente, a elaboração ou colaboração na elaboração de normas técnicas nacionais.
+        </descrição>
+        <notas_aplicação>
+            <nota_aplicação>No que respeita à elaboração de diplomas jurídico-normativos, deve ser sempre considerada nesta área a iniciativa (sob a forma de projeto ou de proposta) e os procedimentos orientados à fixação da respetiva redação final e publicitação oficial, no que se inclui, na generalidade, a verificação jurídica, consulta pública e recolha de pareceres a que a lei obrigue, aprovação, ratificação, promulgação e publicação, sem prejuízo de outros procedimentos próprios da produção de cada norma</nota_aplicação>
+            <nota_aplicação>Atos regulamentares, independentemente da forma ou da competência para a sua emissão</nota_aplicação>
+            <nota_aplicação>Atos legislativos</nota_aplicação>
+            <nota_aplicação>Qualquer despacho com diretrizes gerais e abstratas</nota_aplicação>
+            <nota_aplicação>Resoluções do Conselho de Ministros, independentemente de se revestirem de natureza regulamentar ou de natureza política</nota_aplicação>
+            <nota_aplicação>Atos administrativos individuais e abstratos que alterem ou complementem os termos de aplicação de lei ou regulamento vigente</nota_aplicação>
+            <nota_aplicação>Decretos e outras formas de aprovação/ratificação de convenções internacionais</nota_aplicação>
+            <nota_aplicação>Decisões dos Tribunais a que a lei confira força obrigatória geral</nota_aplicação>
+            <nota_aplicação>No que respeita às normas técnicas, deve ser aqui considerada a elaboração de normas formais emitidas pelo organismo nacional de normalização (NP)</nota_aplicação>
+            <nota_aplicação>Normas informais ou recomendações técnicas emitidas organismos de coordenação ou superintendência técnica</nota_aplicação>
+        </notas_aplicação>
+        <exemplos_NA>
+            <exemplo_NA>Diplomas jurídico-administrativos: leis, decretos-lei e decretos legislativos regionais, bem como eventuais declarações de retificação</exemplo_NA>
+            <exemplo_NA>Atos regulamentares: decretos regulamentares, portarias, posturas, despachos normativos</exemplo_NA>
+            <exemplo_NA>Atos legislativos: Decretos regulamentares, portarias, posturas, despachos normativos, qualquer despacho com diretrizes gerais e abstratas</exemplo_NA>
+            <exemplo_NA>Despachos de delegação de competências</exemplo_NA>
+            <exemplo_NA>Aprovação do Regimento do Conselho do Ministros</exemplo_NA>
+            <exemplo_NA>Aprovação de linhas gerais para plano estratégico</exemplo_NA>
+            <exemplo_NA>Recomendação da AR ao Governo</exemplo_NA>
+            <exemplo_NA>Declarações de inconstitucionalidade emitidas pelo Tribunal Constitucional</exemplo_NA>
+            <exemplo_NA>Declarações de ilegalidade emitidas pelos tribunais administrativos</exemplo_NA>
+            <exemplo_NA>NP</exemplo_NA>
+        </exemplos_NA>
+        <notas_exclusão>
+            <nota_exclusão>Devem ser considerados noutras áreas os procedimentos administrativos autonomizáveis do processo legislativo, bem como os trabalhos técnicos, estudos e relatórios preliminares ou acessórios à elaboração ou atualização dos diplomas jurídico-normativos. Por exemplo:- Trabalhos técnicos de comissões ou outras estruturas envolvidas na definição de políticas, planos e programas devem ser considerados em "Planeamento e gestão estratégica/ Definição e avaliação de políticas" (150.10)</nota_exclusão>
+            <nota_exclusão>Trabalhos técnicos preparatórios de planos de classificação e de tabelas de seleção devem ser considerados em "Administração de direitos, bens e serviços/ Identificação e caracterização de bens" (300.30)</nota_exclusão>
+            <nota_exclusão>Estudos e trabalhos técnicos orientados à (re)definição de estruturas e/ou funcionamento dos serviços, ou ainda trabalhos preparatórios para a elaboração do Orçamento de Estado, devem ser considerados em "Planeamento e gestão estratégica/ Planeamento, avaliação e melhoria de serviços" (150.20)</nota_exclusão>
+            <nota_exclusão>Procedimentos administrativos de classificação do património cultural devem ser considerados em "Reconhecimentos e permissões/ Classificação e declaração de interesse ou utilidade pública" (450.20)</nota_exclusão>
+            <nota_exclusão>Considerar em "Execução da política externa/ Definição de políticas conjuntas e dos instrumentos de regulação" (200.10) a participação na elaboração de diretivas e de regulamentos comunitários, bem como a participação na elaboração de tratados ou acordos comunitários ou internacionais e, ainda, a participação na elaboração de normas técnicas europeias e internacionais</nota_exclusão>
+        </notas_exclusão>
+    </descritivo_da_classe>
+</classe_N2>

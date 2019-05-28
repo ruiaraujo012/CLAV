@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classe_N4 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/Users/Claudia%20Marques/Desktop/TESE/CLAV.xsd">
+    <código>150.10.700.02</código>
+    <título>Reunião de órgãos deliberativos: realização</título>
+    <descritivo_da_classe>
+        <descrição>Inicia com a redação da ata e termina com a sua aprovação.Inclui registo dos atos ocorridos em sessão e das propostas apresentadas.</descrição>
+    </descritivo_da_classe>
+    <decisões_de_avaliação>
+        <pca>
+            <valor>10</valor>
+            <forma_de_contagem>Data de conclusão do procedimento</forma_de_contagem>
+            <justificação_PCA>
+                <critério>
+                    <tipo>Critério Legal</tipo>
+                    <descrição>
+                        <ref_leg>[Lei 98/97], art.º 70º, nº 1</ref_leg> - Prazo prescricional da responsabilidade financeira reintegratória.
+                    </descrição>
+                </critério>
+                <critério>
+                    <tipo>Critério Utilidade Administrativa</tipo>
+                    <descrição>
+                        Prazo decorrente da necessidade de consulta deste PN para apuramento de responsabilidade em sede do PN <ref_pn>500.10.001</ref_pn> - Realização de auditorias (no que diz respeito à atuação da Administração).
+                    </descrição>
+                </critério>
+            </justificação_PCA>
+        </pca>
+        <destino_final>
+            <valor>C</valor>
+            <justificação_destinoFinal>
+                <critério>
+                    <tipo>Critério Densidade Informacional</tipo>
+                    <descrição>
+                        Sintetiza a informação das reuniões do órgão deliberativo (PN <ref_pn>150.10.700.01</ref_pn> - Reunião de órgãos deliberativos: preparação
+                    </descrição>
+                </critério>
+            </justificação_destinoFinal>
+        </destino_final>
+    </decisões_de_avaliação>
+</classe_N4>

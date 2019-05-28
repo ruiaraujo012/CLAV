@@ -22,7 +22,7 @@ Classes.listarClassesPorNivel = (nivel) => {
     const query = `
         Select ?id                            
         ?codigo 
-        ?titulo j
+        ?titulo 
         Where {  
             ?idd rdf:type clav:Classe_N${nivel} ;
             clav:classeStatus 'A';  

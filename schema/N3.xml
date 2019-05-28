@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classe_N3 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="file:/C:/Users/Claudia%20Marques/Desktop/TESE/CLAV.xsd">
+    <código>100.10.001</código>
+    <título>Produção e comunicação de atos legislativos</título>
+    <descritivo_da_classe>
+        <descrição>Elaboração ou participação na elaboração de atos legislativos conduzidos por iniciativa das autoridades competentes para a definição do regime jurídico aplicável.Inicia com a apresentação de um projeto acompanhado dos documentos que o fundamentam e justificam à entidade com competência para legislar e termina com a respetiva publicação ou publicitação.Inclui verificação jurídica, apreciação, discussão e votação conducentes à elaboração do texto final, aprovação da iniciativa, ratificação pelas entidades competentes e promulgação.</descrição>
+        <notas_aplicação>
+            <nota_aplicação>Iniciativa legislativa por parte de cidadãos</nota_aplicação>
+            <nota_aplicação>Leis</nota_aplicação>
+            <nota_aplicação>Decretos-Lei</nota_aplicação>
+            <nota_aplicação>Decretos Legislativos regionais</nota_aplicação>
+            <nota_aplicação>Transposição de diretivas da União Europeia</nota_aplicação>
+        </notas_aplicação>
+        <exemplos_NA>
+            <exemplo_NA>Código da Estrada</exemplo_NA>
+            <exemplo_NA>Código Civil</exemplo_NA>
+            <exemplo_NA>Regime de acesso à informação administrativa e ambiental e de reutilização dos documentos administrativos</exemplo_NA>
+        </exemplos_NA>
+        <notas_exclusão>
+            <nota_exclusão>Os procedimentos administrativos, trabalhos preparatórios ou elaboração de estudos preliminares, por exemplo quando a regulamentação seja necessária para dar forma legal a instrumentos de planeamento, devem ser considerados em “Planeamento e gestão estratégica / Definição e avaliação de políticas” (150.10)</nota_exclusão>
+            <nota_exclusão>O impulso legiferante, quando reveste a forma de petição pública sem apresentação de projeto de lei, deve ser considerado em 950.20.001 – Processamento de petições, reclamações e sugestões</nota_exclusão>
+        </notas_exclusão>
+        <termos_de_índice>
+            <termo_de_índice>Ato legislativo, produção e comunicação de</termo_de_índice>
+            <termo_de_índice>Comunicação de ato legislativo</termo_de_índice>
+            <termo_de_índice>Declaração de estado de emergência</termo_de_índice>
+            <termo_de_índice>Declaração de estado de sítio</termo_de_índice>
+            <termo_de_índice>Decreto da Assembleia da República</termo_de_índice>
+            <termo_de_índice>Decreto legislativo regional</termo_de_índice>
+            <termo_de_índice>Decreto-lei</termo_de_índice>
+            <termo_de_índice>Diploma legislativo, produção e comunicação de</termo_de_índice>
+            <termo_de_índice>Diretiva comunitária, transposição de</termo_de_índice>
+            <termo_de_índice>Estatutos, produção e comunicação de atos legislativos a aplicar em</termo_de_índice>
+            <termo_de_índice>Lei constitucional, produção e comunicação de</termo_de_índice>
+            <termo_de_índice>Lei do Orçamento de Estado</termo_de_índice>
+            <termo_de_índice>Lei orgânica, produção e comunicação de</termo_de_índice>
+            <termo_de_índice>Lei, produção e comunicação de</termo_de_índice>
+            <termo_de_índice>Produção de ato legislativo</termo_de_índice>
+            <termo_de_índice>Projeto de lei</termo_de_índice>
+            <termo_de_índice>Promulgação de diploma</termo_de_índice>
+            <termo_de_índice>Proposta de lei</termo_de_índice>
+            <termo_de_índice>Resolução do Conselho de Ministros</termo_de_índice>
+            <termo_de_índice>Transposição de diretiva comunitária</termo_de_índice>
+        </termos_de_índice>
+    </descritivo_da_classe>
+    <contexto_de_avaliação>
+        <tipo_processo>Processo Comum</tipo_processo>
+        <processo_transversal>Sim</processo_transversal>
+        <donos>
+            <dono>AR</dono>
+            <dono>ALRAM</dono>
+            <dono>ALRAA</dono>
+            <dono>Gov</dono>
+        </donos>
+        <participantes>
+            <participante>
+                <tipo_intervenção>Assessorar</tipo_intervenção>
+                <designação>JurisAPP</designação>
+            </participante>
+            <participante>
+                <tipo_intervenção>Assessorar</tipo_intervenção>
+                <designação>SGPCM</designação>
+            </participante>
+            <participante>
+                <tipo_intervenção>Assessorar</tipo_intervenção>
+                <designação>AP</designação>
+            </participante>
+            <participante>
+                <tipo_intervenção>Comunicar</tipo_intervenção>
+                <designação>INCM</designação>
+            </participante>
+            <participante>
+                <tipo_intervenção>Decidir</tipo_intervenção>
+                <designação>PR</designação>
+            </participante>
+        </participantes>
+        <processos_relacionados>
+            <processo_relacionado>
+                <relação>Antecessor de</relação>
+                <designação>150.10.601</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Antecessor de</relação>
+                <designação>150.20.404</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Antecessor de</relação>
+                <designação>150.20.501</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Antecessor de</relação>
+                <designação>200.10.001</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Antecessor de</relação>
+                <designação>900.20.201</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Complementar de</relação>
+                <designação>100.10.200</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Complementar de</relação>
+                <designação>100.10.400</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Complementar de</relação>
+                <designação>100.10.600</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Complementar de</relação>
+                <designação>100.20.001</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Complementar de</relação>
+                <designação>100.20.200</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Cruzado com</relação>
+                <designação>150.10.700</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Sucessor de</relação>
+                <designação>150.10.001</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Sucessor de</relação>
+                <designação>150.10.100</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Sucessor de</relação>
+                <designação>150.20.202</designação>
+            </processo_relacionado>
+            <processo_relacionado>
+                <relação>Sucessor de</relação>
+                <designação>200.10.200</designação>
+            </processo_relacionado>
+        </processos_relacionados>
+        <legislações>
+            <legislação>
+                <designação><ref_leg>Lei 4/98</ref_leg> - Revoga o regime especial de tributação dos pequenos contribuintes do IVA, aprovado e publicado em anexo ao Decreto-Lei n.º 257-A/96, de 31 de Dezembro</designação>
+            </legislação>
+            <legislação>
+                <designação><ref_leg>Lei 43/2014</ref_leg> - Quarta alteração à Lei n.º 74/98, de 11 de novembro, sobre a publicação, a identificação e o formulário dos diplomas</designação>
+            </legislação>
+            <legislação>
+                <designação><ref_leg>Lei Constitucional 1/2005</ref_leg> - Sétima revisão constitucional</designação>
+            </legislação>
+            <legislação>
+                <designação><ref_leg>Resolução do Conselho de Ministros 23/2016</ref_leg> -- Procede à segunda alteração à Resolução do Conselho de Ministros n.º 29/2011, de 11 de julho, que aprovou o Regimento do Conselho de Ministros do XIX Governo Constitucional, no sentido de assegurar a avaliação do impacto das iniciativas legislativas do Governo nas pequenas e médias empresas (Teste PME) e a ponderação das suas especificidades na elaboração das correspondentes propostas</designação>
+            </legislação>
+            <legislação>
+                <designação><ref_leg>Resolução do Conselho de Ministros 51/2013</ref_leg> - Procede à primeira alteração à RCM n.º 29/2011, de 11 de julho, que aprova o Regimento do Conselho de Ministros do XIX Governo Constitucional e república as regras de legística a observar no processo legislativo do Governo</designação>
+            </legislação>
+        </legislações>
+    </contexto_de_avaliação>
+    <decisões_de_avaliação>
+        <pca>
+            <valor>5</valor>
+            <forma_de_contagem>Data de conclusão do procedimento</forma_de_contagem>
+            <justificação_PCA>
+                <critério>
+                    <tipo>Critério Gestionário</tipo>
+                    <descrição> Prazo para imputação de responsabilidade pela gestão estratégica, decorrente de escrutínio público (eleições).Considerou-se para a definição do prazo o tempo do mandato de maior duração: 5 anos (Presidente da República).</descrição>
+                </critério>
+            </justificação_PCA>
+        </pca>
+        <destino_final>
+            <valor>C</valor>
+            <justificação_destinoFinal>
+                <critério>
+                    <tipo>Critério Complementaridade Informacional</tipo>
+                    <descrição>
+                        É complementar dos PN <ref_pn>100.10.200</ref_pn> - Produção e comunicação de atos regulamentares gerais;
+                        PN <ref_pn>100.10.400</ref_pn> - Produção e comunicação de atos regulamentares locais;
+                        PN <ref_pn>100.10.600</ref_pn> - Produção e comunicação de regras institucionais;
+                        PN <ref_pn>100.20.001</ref_pn> - Produção de pareceres técnico-jurídicos de interpretação de diplomas jurídico-normativos;
+                        PN <ref_pn>100.20.200</ref_pn> - Produção e comunicação de instruções para aplicação de diplomas jurídico-normativos. O texto final é publicitado no Diário da República.
+                    </descrição>
+                </critério>
+            </justificação_destinoFinal>
+        </destino_final>
+    </decisões_de_avaliação>
+</classe_N3>

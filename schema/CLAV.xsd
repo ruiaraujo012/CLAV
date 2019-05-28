@@ -1,0 +1,475 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="classe_N1">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="código" type="xs:string"/>
+                <xs:element name="título" type="xs:string"/>
+                <xs:element name="descritivo_da_classe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="descrição" type="xs:string"/>
+                            <xs:element minOccurs="0" name="notas_aplicação">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0"
+                                            name="nota_aplicação" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="exemplos_NA">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0"
+                                            name="exemplo_NA" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="notas_exclusão">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" minOccurs="0"
+                                            name="nota_exclusão" type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="classe_N2">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="código" type="xs:string"/>
+                <xs:element name="título" type="xs:string"/>
+                <xs:element name="descritivo_da_classe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="descrição" type="xs:string"/>
+                            <xs:element minOccurs="0" name="notas_aplicação">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="nota_aplicação"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="exemplos_NA">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="exemplo_NA"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="notas_exclusão">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="nota_exclusão"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="classe_N3">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="código" type="xs:string"/>
+                <xs:element name="título" type="xs:string"/>
+                <xs:element name="descritivo_da_classe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="descrição" type="xs:string"/>
+                            <xs:element minOccurs="0" name="notas_aplicação">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="nota_aplicação"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="exemplos_NA">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="exemplo_NA"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element minOccurs="0" name="notas_exclusão">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="nota_exclusão"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="termos_de_índice">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="termo_de_índice"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="contexto_de_avaliação">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="tipo_processo">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Processo Comum"/>
+                                        <xs:enumeration value="Processo Específico"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="processo_transversal">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="Sim"/>
+                                        <xs:enumeration value="Não"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:element>
+                            <xs:element name="donos">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="dono"
+                                            type="xs:string"> </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="participantes">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="participante">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="tipo_intervenção">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Apreciar"/>
+                                                  <xs:enumeration value="Assessorar"/>
+                                                  <xs:enumeration value="Comunicar"/>
+                                                  <xs:enumeration value="Decidir"/>
+                                                  <xs:enumeration value="Executar"/>
+                                                  <xs:enumeration value="Iniciar"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="designação" type="xs:string"
+                                                  maxOccurs="unbounded"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="processos_relacionados">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded"
+                                            name="processo_relacionado">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="relação">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Antecessor de"/>
+                                                  <xs:enumeration value="Sucessor de"/>
+                                                  <xs:enumeration value="Complementar de"/>
+                                                  <xs:enumeration value="Cruzado com"/>
+                                                  <xs:enumeration value="Sintese de"/>
+                                                  <xs:enumeration value="Sintetizado de"/>
+                                                  <xs:enumeration value="Suplemento de"/>
+                                                  <xs:enumeration value="Suplemento para"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="designação" type="xs:string"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="legislações">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="legislação" maxOccurs="unbounded">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element name="designação">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="ref_leg" type="xs:string"/>
+                                                  <xs:element name="ref_pn" type="xs:string"/>
+                                                  </xs:choice>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="decisões_de_avaliação">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="pca">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="valor" type="xs:int"/>
+                                        <xs:element name="forma_de_contagem">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Conforme disposição legal"/>
+                                                  <xs:enumeration
+                                                  value="Data de cessação da vigência"/>
+                                                  <xs:enumeration
+                                                  value="Data de conclusão do procedimento"/>
+                                                  <xs:enumeration value="Data de emissão do título"/>
+                                                  <xs:enumeration
+                                                  value="Data de extinção da entidade sobre a qual recai o procedimento"/>
+                                                  <xs:enumeration
+                                                  value="Data de extinção do direito"/>
+                                                  <xs:enumeration
+                                                  value="Data de início do procedimento"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="sub_forma_de_contagem" type="xs:string"
+                                            minOccurs="0"/>
+                                        <xs:element name="justificação_PCA">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="critério">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="tipo">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Critério Legal"/>
+                                                  <xs:enumeration value="Critério Gestionário"/>
+                                                  <xs:enumeration
+                                                  value="Critério Utilidade administrativa"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="descrição">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="ref_leg" type="xs:string"/>
+                                                  <xs:element name="ref_pn" type="xs:string"/>
+                                                  </xs:choice>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="destino_final">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="valor">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="C"/>
+                                                  <xs:enumeration value="CP"/>
+                                                  <xs:enumeration value="E"/>
+                                                  <xs:enumeration value="NE"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="justificação_destinoFinal">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="critério">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="tipo">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Critério Legal"/>
+                                                  <xs:enumeration
+                                                  value="Critério Densidade Informacional"/>
+                                                  <xs:enumeration
+                                                  value="Critério Complementaridade Informacional"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="descrição">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="ref_leg" type="xs:string"/>
+                                                  <xs:element name="ref_pn" type="xs:string"/>
+                                                  </xs:choice>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="classe_N4">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="código" type="xs:string"/>
+                <xs:element name="título" type="xs:string"/>
+                <xs:element name="descritivo_da_classe">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="descrição" type="xs:string"/>
+                            <xs:element name="termos_de_índice" minOccurs="0">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element maxOccurs="unbounded" name="termo_de_índice"
+                                            type="xs:string"/>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="decisões_de_avaliação">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="pca">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="valor" type="xs:int"/>
+                                        <xs:element name="forma_de_contagem">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Conforme disposição legal"/>
+                                                  <xs:enumeration
+                                                  value="Data de cessação da vigência"/>
+                                                  <xs:enumeration
+                                                  value="Data de conclusão do procedimento"/>
+                                                  <xs:enumeration value="Data de emissão do título"/>
+                                                  <xs:enumeration
+                                                  value="Data de extinção da entidade sobre a qual recai o procedimento"/>
+                                                  <xs:enumeration
+                                                  value="Data de extinção do direito"/>
+                                                  <xs:enumeration
+                                                  value="Data de início do procedimento"/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="sub_forma_de_contagem" type="xs:string"
+                                            minOccurs="0"/>
+                                        <xs:element name="justificação_PCA">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="critério">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="tipo">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Critério Legal"/>
+                                                  <xs:enumeration value="Critério Gestionário"/>
+                                                  <xs:enumeration
+                                                  value="Critério Utilidade Administrativa"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="descrição">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="ref_leg" type="xs:string"/>
+                                                  <xs:element name="ref_pn" type="xs:string"/>
+                                                  </xs:choice>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                            <xs:element name="destino_final">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="valor">
+                                            <xs:simpleType>
+                                                <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="C"/>
+                                                  <xs:enumeration value="CP "/>
+                                                  <xs:enumeration value="E"/>
+                                                  <xs:enumeration value="NE "/>
+                                                </xs:restriction>
+                                            </xs:simpleType>
+                                        </xs:element>
+                                        <xs:element name="justificação_destinoFinal">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                  <xs:element maxOccurs="unbounded" name="critério">
+                                                  <xs:complexType>
+                                                  <xs:sequence>
+                                                  <xs:element name="tipo">
+                                                  <xs:simpleType>
+                                                  <xs:restriction base="xs:string">
+                                                  <xs:enumeration value="Critério Legal"/>
+                                                  <xs:enumeration
+                                                  value="Critério Densidade Informacional"/>
+                                                  <xs:enumeration
+                                                  value="Critério Complementaridade Informacional"/>
+                                                  </xs:restriction>
+                                                  </xs:simpleType>
+                                                  </xs:element>
+                                                  <xs:element name="descrição">
+                                                  <xs:complexType mixed="true">
+                                                  <xs:choice maxOccurs="unbounded" minOccurs="0">
+                                                  <xs:element name="ref_leg" type="xs:string"/>
+                                                  <xs:element name="ref_pn" type="xs:string"/>
+                                                  </xs:choice>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                  </xs:sequence>
+                                                  </xs:complexType>
+                                                  </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

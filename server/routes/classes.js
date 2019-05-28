@@ -7,6 +7,17 @@ const ListaConsolidada = require('../controllers/listaConsolidada')
 const { authenticate } = require('../auth/auth')
 
 router.get('/', authenticate(), async (req, res, next) => {
+
+	const nivel = req.query.nivel
+	if (nivel) {
+		if (nivel in [1, 2, 3, 4]) {
+			res.locals.dados = await Classes.listarClassesPorNivel(nivel)
+			// TODO: falta XML Container
+			next()
+		}
+	}
+
+
 	res.locals.dados = await ListaConsolidada.listar()
 	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
 	next()
