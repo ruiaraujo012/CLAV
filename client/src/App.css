@@ -1,3 +1,7 @@
+@import url('https://fonts.google.com/specimen/Roboto+Condensed');
+
+@import url('https://fonts.google.com/specimen/Muli');
+
 .App {
   text-align: center;
 }
@@ -32,5 +36,10 @@
   }
 }
 
-.container {
+h1 {
+  font-family: 'Muli';
+}
+
+h2, p, span{
+  font-family: 'Roboto Condensed';
 }

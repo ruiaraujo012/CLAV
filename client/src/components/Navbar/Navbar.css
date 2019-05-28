@@ -7,10 +7,18 @@
 
 .navbar-brand  {
     color: white;
-    font-size: 24pt !important;
+    font-size: 26pt !important;
+}
+
+.nav-item:not(:last-child){
+    margin: 0 10px;
 }
 
 .nav-item a{
     color: white;
-    font-size: 14pt;
+    font-size: 16pt;
+}
+
+.active > span {
+    border-bottom: 0.12rem solid white;
 }

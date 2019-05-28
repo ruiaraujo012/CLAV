@@ -1,4 +1,10 @@
 .contentheader-header {
-    font-size: 16pt;
+    font-size: 18pt;
+    margin-bottom: 5px;
+}
 
+.contentheader-description  {
+    color: gray;
+    font-size: 14pt;
+    margin-bottom: 25px;
 }

@@ -28,7 +28,6 @@ class DailyStats extends Component {
         }
     }
 
-
     async componentDidMount() {
 
         try {
@@ -39,6 +38,10 @@ class DailyStats extends Component {
             console.error(error)
         }
 
+    }
+
+    teste = () => {
+        console.log("TESTE")
     }
 
     render() {
@@ -53,7 +56,9 @@ class DailyStats extends Component {
         return (
 
             <div>
-                <ContentHeader header="Quantidade total de acessos diário" />
+                <ContentHeader header="Quantidade total de acessos diários"
+                    description="Gráfico que reúne a quantidade total de acessos realizados por dia. Clicando num determinado dia
+                    poderá obter um resumo de informação relativamente aos pedidos que dizem respeito a esse dia e por quem foram realizados." />
                 <div className="chart">
                     <ResponsiveContainer width="100%" height={400}>
                         <LineChart
@@ -63,13 +68,15 @@ class DailyStats extends Component {
                             margin={{
                                 top: 5, right: 30, left: 20, bottom: 5,
                             }}
+
+                            
                         >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="date" />
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Line type="monotone" dataKey="quantity" stroke="#8884d8" activeDot={{ r: 6 }} />
+                            <Line type="monotone" dataKey="quantity" stroke="#8884d8" activeDot={{ r: 6 }} onClick={this.teste} />
                             {/* <Line type="monotone" dataKey="uv" stroke="#82ca9d" /> */}
                         </LineChart>
                     </ResponsiveContainer>

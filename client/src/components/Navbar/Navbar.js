@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import './Navbar.css'
 
 class Navbar extends Component {
@@ -15,25 +15,20 @@ class Navbar extends Component {
                     <a className="navbar-brand" href="#">CLAV</a>
                     <div className="collapse navbar-collapse " id="navbarText">
                         <ul className="navbar-nav ml-auto">
-                            <li className="nav-item active">
-                                <Link to="/daily_stats">
-                                    <span className="nav-link" href="#">Acessos Diários</span>
-                                </Link>
-                            </li>
-                            <li className="nav-item active">
-                                <Link to="/stats_rotas">
-                                    <span className="nav-link" href="#">Rotas</span>
-                                </Link>
+                            <li className="nav-item">
+                                <NavLink to="/daily_stats" activeClassName="active">
+                                    <span className="nav-link">Acessos Diários</span>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link to="/stats_utilizadores">
-                                    <span className="nav-link" href="#">Utilizadores</span>
-                                </Link>
+                                <NavLink to="/stats_rotas" activeClassName="active">
+                                    <span className="nav-link">Rotas</span>
+                                </NavLink>
                             </li>
                             <li className="nav-item">
-                                <Link to="/stats_utilizadores">
-                                    <span className="nav-link" href="#">Stuff</span>
-                                </Link>
+                                <NavLink to="/stats_utilizadores" activeClassName="active">
+                                    <span className="nav-link">Utilizadores</span>
+                                </NavLink>
                             </li>
                         </ul>
 
