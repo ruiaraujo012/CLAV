@@ -27,7 +27,7 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 		entidades
 	}
 
-	res.locals.xmlContainer = ['tipologias', 'tipologia', 'donos', 'dono', 'participacoes', 'participacao', 'entidades', 'entidade']
+	res.locals.xmlContainer = ['tipologia', 'donos', 'dono', 'participacoes', 'participacao', 'entidades', 'entidade']
 
 	next()
 })
