@@ -7,8 +7,7 @@ const ListaConsolidada = require('../controllers/listaConsolidada')
 const { authenticate } = require('../auth/auth')
 
 router.get('/', authenticate(), async (req, res, next) => {
-
-	const nivel = req.query.nivel
+	const { nivel } = req.query
 	if (nivel) {
 		if (nivel in [1, 2, 3, 4]) {
 			res.locals.dados = await Classes.listarClassesPorNivel(nivel)
@@ -17,15 +16,14 @@ router.get('/', authenticate(), async (req, res, next) => {
 		}
 	}
 
-
 	res.locals.dados = await ListaConsolidada.listar()
-	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
+	res.locals.xmlContainer = ['classesN1', 'classeN1', 'classesN2', 'classeN2', 'classesN3', 'classeN3', 'classesN4', 'classeN4']
 	next()
 })
 
 router.get('/listaConsolidada/', authenticate(), async (req, res, next) => {
 	res.locals.dados = await ListaConsolidada.listarComTodosCampos()
-	res.locals.xmlContainer = ['classesN1', 'classeN1', 'filhosN2', 'filhoN2', 'filhosN3', 'filhoN3', 'filhosN4', 'filhoN4']
+	res.locals.xmlContainer = ['classesN1', 'classeN1', 'classesN2', 'classeN2', 'classesN3', 'classeN3', 'classesN4', 'classeN4']
 	next()
 })
 
