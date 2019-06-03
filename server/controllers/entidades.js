@@ -16,11 +16,11 @@ Entidades.listarEntidades = () => {
 	return Graphdb.fetch(query)
 }
 
-Entidades.listarEntidadePorId = () => {
+Entidades.listarEntidadePorId = (id) => {
 	const query = `
     SELECT ?sigla ?estado ?internacional ?designacao ?sioe
     WHERE {
-            clav:ent_INEM rdf:type clav:Entidade ;
+            clav:${id} rdf:type clav:Entidade ;
                 clav:entDesignacao ?designacao ;
                 clav:entSigla ?sigla ;
                 clav:entEstado ?estado ;
