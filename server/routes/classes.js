@@ -39,64 +39,63 @@ router.get('/:id', authenticate(), async (req, res, next) => {
 	switch (nivelClasse) {
 		case 1:
 			res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-			res.locals.xmlContainer = ['classe_N1', 'descritivo_da_classe', 'notas_aplicação', 'nota_aplicação', 'exemplos_NA', 'exemplo_NA', 'notas_exclusão', 'nota_exclusão']
+			res.locals.xmlContainer = ['classe_N1', 'descritivo_da_classe', 'notas_aplicação', 'nota_aplicação', 'exemplos_NA', 'exemplo_NA', 'notas_exclusão', 'nota_exclusão', 'termos_de_índice', 'termo_de_índice']
 			break
 		case 2:
 			res.locals.dados = await Classes.obtencaoDadosNivel1_2(id)
-			res.locals.xmlContainer = ['classes', 'classe_N2', 'notasAplicacao', 'notaAplicacao', 'exemplosNotasAplicacao', 'exemploNotaAplicacao', 'notasExclusao', 'notaExclusao', 'termosIndice', 'termoIndice']
+			res.locals.xmlContainer = ['classe_N2', 'descritivo_da_classe', 'notas_aplicação', 'nota_aplicação', 'exemplos_NA', 'exemplo_NA', 'notas_exclusão', 'nota_exclusão', 'termos_de_índice', 'termo_de_índice']
 			break
 		case 3:
 			res.locals.dados = await Classes.obtencaoDadosNivel3(id)
 			res.locals.xmlContainer = [
-				'classes',
 				'classe_N3',
-				'notasAplicacao',
-				'notaAplicacao',
-				'exemplosNotasAplicacao',
-				'exemploNotaAplicacao',
-				'notasExclusao',
-				'notaExclusao',
-				'termosIndice',
-				'termoIndice',
+				'descritivo_da_classe',
+				'notas_aplicação',
+				'nota_aplicação',
+				'exemplos_NA',
+				'exemplo_NA',
+				'notas_exclusão',
+				'nota_exclusão',
+				'termos_de_índice',
+				'termo_de_índice',
+				'contexto_de_avaliação',
 				'donos',
 				'dono',
 				'participantes',
 				'participante',
-				'processosRelacionados',
-				'processoRelacionado',
-				'legislacoes',
-				'legislacao',
-				'prazosConservacaoAdministrativa',
-				'prazoConservacaoAdministrativa',
-				'justificacoes',
-				'justificacao',
-				'destinosFinais',
-				'destinoFinal',
-				'justificacoes',
-				'justificacao'
+				'processos_relacionados',
+				'processo_relacionados',
+				'legislações',
+				'legislação',
+				'decisões_de_avaliação',
+				'pca',
+				'justificação_PCA',
+				'critério',
+				'destino_final',
+				'justificação_destinoFinal',
+				'critério'
 			]
 			break
 		case 4:
 			res.locals.dados = await Classes.obtencaoDadosNivel4(id)
 			res.locals.xmlContainer = [
-				'classes',
 				'classe_N4',
-				'notasAplicacao',
-				'notaAplicacao',
-				'exemplosNotasAplicacao',
-				'exemploNotaAplicacao',
-				'notasExclusao',
-				'notaExclusao',
-				'termosIndice',
-				'termoIndice',
-				'prazosConservacaoAdministrativa',
-				'prazoConservacaoAdministrativa',
-				'justificacoes',
-				'justificacao',
-				'destinosFinais',
-				'destinoFinal',
-				'justificacoes',
-				'justificacao'
+				'descritivo_da_classe',
+				'notas_aplicação',
+				'nota_aplicação',
+				'exemplos_NA',
+				'exemplo_NA',
+				'notas_exclusão',
+				'nota_exclusão',
+				'termos_de_índice',
+				'termo_de_índice',
+				'decisões_de_avaliação',
+				'pca',
+				'justificação_PCA',
+				'critério',
+				'destino_final',
+				'justificação_destinoFinal',
+				'critério'
 			]
 			break
 		default:
