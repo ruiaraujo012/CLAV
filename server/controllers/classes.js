@@ -324,7 +324,7 @@ Classes.obtencaoDadosNivel3 = async (id) => {
 	const descritivo = await this.obtencaoDadosNivel1_2(id)
 	const blocoContexto = await this.blocoContexto(id)
 	const blocoDecisao = await this.blocoDecisao(id)
-	console.log(blocoContexto)
+	//console.log(blocoContexto)
 
 	return {
 		...descritivo,

@@ -5,9 +5,13 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
-const csvjson = require('csvjson')
+const jsonexport = require('jsonexport')
+const csvjson = require('csvjson');
+const { Parser } = require('json2csv');
 const axios = require('axios')
 const cors = require('cors')
+
+const fs = require('fs');
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
@@ -88,7 +92,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 const formatOutput = (req, res, next) => {
 	if (!res.locals.dados) next()
-
 	const { dados } = res.locals
 	const format = req.query.format || req.headers.accept
 
@@ -103,7 +106,51 @@ const formatOutput = (req, res, next) => {
 			break
 		case 'text/csv':
 		case 'csv':
-			res.send(csvjson.toCSV(dados, { delimiter: ';' }))
+			var fullUrl = req.originalUrl;
+			/*
+			var keys = []
+			function process(key,value) {
+				//console.log(key + " : "+value);
+				keys.push(key)
+			}
+
+			function traverse(dados,func) {
+				for (var i in dados) {
+					func.apply(this,[i,dados[i]]);  
+					if (dados[i] !== null && typeof(dados[i])=="object") {
+						traverse(dados[i],func);
+					}
+				}
+			}
+			traverse(dados,process);
+			*/
+
+			if(fullUrl == "/classes?format=csv"){
+				const fields = ["id","codigo","titulo","filhos.id","filhos.codigo","filhos.titulo","filhos.filhos.id","filhos.filhos.codigo","filhos.filhos.titulo","filhos.filhos.filhos.id","filhos.filhos.filhos.codigo","filhos.filhos.filhos.titulo"]
+				const json2csvParser = new Parser({ fields, delimiter: ';', unwind: ['filhos', 'filhos.filhos','filhos.filhos.filhos'], unwindBlank: true } );
+				const csv = json2csvParser.parse(dados);
+				//criarCsv(csv)
+				res.send(csv)
+			}else{
+				var final = csvjson.toCSV(dados, { delimiter: ';', headers: "keys"})
+				//criarCsv(final)
+				res.send(final)
+				/*
+				jsonexport(dados,{rowDelimiter: ';'},function(err, csv){
+					if(err) return console.log(err);
+					criarCsv(csv)
+					res.send(csv)
+				});*/
+			}
+			function criarCsv(ficheiro) {
+				fs.writeFile('output.csv', ficheiro, function (err) {
+					if (err) {
+						console.log('Ocorreu um erro ao guardar o ficheiro');
+					} else{
+						console.log('Ficheiro guardado com sucesso');
+					}
+				});
+			} 
 			break
 		default:
 			res.send(dados)
