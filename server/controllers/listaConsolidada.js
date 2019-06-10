@@ -140,9 +140,5 @@ ListaConsolidada.obterTodasClassesPorId = async (ids, nivel) => {
 		})
 	)
 
-	// const test = await Promise.all(classe)
-
-	// console.log(test)
-
 	return classes
 }
