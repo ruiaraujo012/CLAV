@@ -106,41 +106,45 @@ const formatOutput = (req, res, next) => {
 			break
 		case 'text/csv':
 		case 'csv':
-			var fullUrl = req.originalUrl;
-			/*
-			var keys = []
-			function process(key,value) {
-				//console.log(key + " : "+value);
-				keys.push(key)
+			
+			if (!Array.isArray(dados)){
+				var array = []
+				array.push(dados)
+			}else{
+				array = dados
 			}
-
-			function traverse(dados,func) {
-				for (var i in dados) {
-					func.apply(this,[i,dados[i]]);  
-					if (dados[i] !== null && typeof(dados[i])=="object") {
-						traverse(dados[i],func);
+			
+			jsonexport(array,{rowDelimiter: ';'},function(err, csv){
+				if(err) return console.log(err);
+				var headersList = []
+				var headersListFilhos = []
+				var headersfilhos = []
+				var headers = csv.split("\n")[0].substring(0, csv.split("\n")[0].length - 1);
+				for(i in headers.split(";")){
+					headersList.push(headers.split(";")[i])
+				}
+				for(i in headersList){
+					if(headersList[i].indexOf('.') > -1 == true){
+						headersListFilhos.push(headersList[i])
 					}
 				}
-			}
-			traverse(dados,process);
-			*/
 
-			if(fullUrl == "/classes?format=csv"){
-				const fields = ["id","codigo","titulo","filhos.id","filhos.codigo","filhos.titulo","filhos.filhos.id","filhos.filhos.codigo","filhos.filhos.titulo","filhos.filhos.filhos.id","filhos.filhos.filhos.codigo","filhos.filhos.filhos.titulo"]
-				const json2csvParser = new Parser({ fields, delimiter: ';', unwind: ['filhos', 'filhos.filhos','filhos.filhos.filhos'], unwindBlank: true } );
-				const csv = json2csvParser.parse(dados);
-				//criarCsv(csv)
-				res.send(csv)
-			}else{
-				var final = csvjson.toCSV(dados, { delimiter: ';', headers: "keys"})
-				//criarCsv(final)
-				res.send(final)
-				/*
-				jsonexport(dados,{rowDelimiter: ';'},function(err, csv){
-					if(err) return console.log(err);
-					criarCsv(csv)
-					res.send(csv)
-				});*/
+				for(i in headersListFilhos){
+					headersListFilhos[i] = headersListFilhos[i].replace("." + headersListFilhos[i].split(".").pop(-1), "")
+					if(headersfilhos.includes(headersListFilhos[i]) == false ){
+						headersfilhos.push(headersListFilhos[i])
+					}
+
+				}
+				
+				//criarCsv(csvFinal(headersList,headersfilhos,array))
+				res.send(csvFinal(headersList,headersfilhos,array))
+
+			});
+			function csvFinal(fields,fields2,data){
+				const json2csvParser = new Parser({ fields, delimiter: ';', unwind: fields2, unwindBlank: true } )
+				const csv = json2csvParser.parse(data)
+				return csv
 			}
 			function criarCsv(ficheiro) {
 				fs.writeFile('output.csv', ficheiro, function (err) {
