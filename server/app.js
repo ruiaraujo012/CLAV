@@ -116,10 +116,10 @@ const formatOutput = (req, res, next) => {
 			
 			jsonexport(array,{rowDelimiter: ';'},function(err, csv){
 				if(err) return console.log(err);
-				var headersList = []
-				var headersListFilhos = []
-				var headersfilhos = []
-				var headers = csv.split("\n")[0].substring(0, csv.split("\n")[0].length - 1);
+				const headersList = []
+				const headersListFilhos = []
+				const headersfilhos = []
+				let headers = csv.split("\n")[0].substring(0, csv.split("\n")[0].length - 1);
 				for(i in headers.split(";")){
 					headersList.push(headers.split(";")[i])
 				}
@@ -137,16 +137,19 @@ const formatOutput = (req, res, next) => {
 
 				}
 				
+				const csvFinal = (fields,fields2,data) => {
+					const json2csvParser = new Parser({ fields, delimiter: ';', unwind: fields2, unwindBlank: true } )
+					const csv = json2csvParser.parse(data)
+					return csv
+				}
+
 				//criarCsv(csvFinal(headersList,headersfilhos,array))
 				res.send(csvFinal(headersList,headersfilhos,array))
 
 			});
-			function csvFinal(fields,fields2,data){
-				const json2csvParser = new Parser({ fields, delimiter: ';', unwind: fields2, unwindBlank: true } )
-				const csv = json2csvParser.parse(data)
-				return csv
-			}
-			function criarCsv(ficheiro) {
+			
+			/*
+			const criarCsv = (ficheiro) => {
 				fs.writeFile('output.csv', ficheiro, function (err) {
 					if (err) {
 						console.log('Ocorreu um erro ao guardar o ficheiro');
@@ -154,7 +157,7 @@ const formatOutput = (req, res, next) => {
 						console.log('Ficheiro guardado com sucesso');
 					}
 				});
-			} 
+			}*/
 			break
 		default:
 			res.send(dados)
