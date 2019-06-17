@@ -5,13 +5,8 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
-const jsonexport = require('jsonexport')
-const csvjson = require('csvjson');
-const { Parser } = require('json2csv');
 const axios = require('axios')
 const cors = require('cors')
-
-const fs = require('fs');
 
 const classesRouter = require('./routes/classes')
 const entidadesRouter = require('./routes/entidades')
@@ -25,6 +20,7 @@ const statsRouter = require('./routes/stats')
 
 const { extractStats } = require('./utils/registerStats')
 const { JSON2XML } = require('./utils/converters')
+const { JSON2CSV } = require('./utils/converters')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
@@ -106,58 +102,7 @@ const formatOutput = (req, res, next) => {
 			break
 		case 'text/csv':
 		case 'csv':
-			
-			if (!Array.isArray(dados)){
-				var array = []
-				array.push(dados)
-			}else{
-				array = dados
-			}
-			
-			jsonexport(array,{rowDelimiter: ';'},function(err, csv){
-				if(err) return console.log(err);
-				const headersList = []
-				const headersListFilhos = []
-				const headersfilhos = []
-				let headers = csv.split("\n")[0].substring(0, csv.split("\n")[0].length - 1);
-				for(i in headers.split(";")){
-					headersList.push(headers.split(";")[i])
-				}
-				for(i in headersList){
-					if(headersList[i].indexOf('.') > -1 == true){
-						headersListFilhos.push(headersList[i])
-					}
-				}
-
-				for(i in headersListFilhos){
-					headersListFilhos[i] = headersListFilhos[i].replace("." + headersListFilhos[i].split(".").pop(-1), "")
-					if(headersfilhos.includes(headersListFilhos[i]) == false ){
-						headersfilhos.push(headersListFilhos[i])
-					}
-
-				}
-				
-				const csvFinal = (fields,fields2,data) => {
-					const json2csvParser = new Parser({ fields, delimiter: ';', unwind: fields2, unwindBlank: true } )
-					const csv = json2csvParser.parse(data)
-					return csv
-				}
-
-				//criarCsv(csvFinal(headersList,headersfilhos,array))
-				res.send(csvFinal(headersList,headersfilhos,array))
-
-			});
-			
-			/*
-			const criarCsv = (ficheiro) => {
-				fs.writeFile('output.csv', ficheiro, function (err) {
-					if (err) {
-						console.log('Ocorreu um erro ao guardar o ficheiro');
-					} else{
-						console.log('Ficheiro guardado com sucesso');
-					}
-				});
-			}*/
+			res.send(JSON2CSV(dados))
 			break
 		default:
 			res.send(dados)
