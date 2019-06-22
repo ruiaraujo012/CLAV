@@ -915,3 +915,86 @@ paths:
           description: A informação inserida é inválida
         404:
           description: Destino final não encontrado
+  /classes/listaConsolidada:
+    get:
+      tags:
+        - Classes
+      description: Retorna a lista consolidada completa 
+      produces:
+        - application/json
+        - application/xml
+        - text/csv
+      responses:
+        200:
+          description: Retorna a lista consolidada completa
+          examples:
+            application/json: |
+              [
+                {
+                  "codigo": "100",
+                  "titulo": "ORDENAMENTO JURÍDICO E NORMATIVO",
+                  "descritivo_da_classe": {
+                    "descricao": "Relativo à construção e interpretação das Normas, no sentido lato do termo (com e sem caráter coercivo): elaboração, aprovação e publicitação dos atos de caráter dispositivo e de caráter orientador que regulam as ações e relações entre os diversos atores sociais - da legislação aos regulamentos, regras internas de funcionamento, instruções procedimentais e normas técnicas.Inclui os processos de vinculação do Estado português a convenções internacionais, bem como os avisos relativos à vinculação dos restantes Estados-parte naquelas convenções.",
+                    "notas_aplicacao": [
+                      {
+                        "id": "na_c100_WuMc2kB7V-k5j2Kg5c5dJ",
+                        "nota": "Os atos de caráter dispositivo podem incidir sobre a sociedade portuguesa em geral, sobre determinados setores de atividade, sobre determinadas parcelas do território ou, ainda, sobre organismos ou serviços singulares"
+                      }
+                    ],
+                    "exemplos_NA": [],
+                    "notas_exclusao": [
+                      {
+                        "id": "ne_c100_ndQtHB6k--u7VlTo7r5TC",
+                        "nota": "A negociação de convenções internacionais (tratados, acordos) e a participação na elaboração de normas técnicas internacionais, bem como a participação na elaboração de diretivas e de regulamentos comunitários, devem ser consideradas em \"Execução da política externa/ Definição de políticas conjuntas e dos instrumentos de regulação\" (200.10) - ou seja, na área funcional 100 devem ser considerados apenas os procedimentos de ratificação, transposição e interpretação daquelas disposições comunitárias ou internacionais."
+                      }
+                    ],
+                    "termos_de_indice": []
+                  }
+                },
+                {
+                  "codigo": "250",
+                  "titulo": "ADMINISTRAÇÃO DE RELAÇÕES DE TRABALHO",
+                  "descritivo_da_classe": {
+                    "descricao": "Relativo às atividades de estabelecimento e gestão de relações individuais de trabalho nos órgãos e serviços públicos, de caráter permanente, transitório ou eventual, subordinado ou autónomo, remunerado ou não.Relativo, ainda, às atividades de gestão da relação coletiva de trabalho, no que se inclui a negociação e a contratação coletiva.",
+                    "notas_aplicacao": [
+                      {
+                        "id": "na_c250_QBsU-5YTpXCASHiS8dbgH",
+                        "nota": "As relações individuais de trabalho aqui consideradas abrangem todos aqueles que exercem um mandato, cargo, emprego ou função pública (em sentido lato) por eleição, nomeação, designação, contratação ou qualquer outra forma de investidura, vinculo ou acordo. As relações de trabalho podem, pois, ter configurações diversas"
+                      },
+                      {
+                        "id": "na_c250_pO1yLTyBuT-IiwAgPbd7R",
+                        "nota": "A negociação coletiva respeita às relações de cada entidade com as respetivas comissões de trabalhadores, sindicatos ou outras entidades representativas de trabalhadores"
+                      }
+                    ],
+                    "exemplos_NA": [],
+                    "notas_exclusao": [
+                      {
+                        "id": "ne_c250_Rj_TzmPD0ngnvnfZS2Hrf",
+                        "nota": "Excluídas as relações de trabalho decorrentes de contratos de aquisição de serviços, cujo estabelecimento e gestão deve ser considerado em \"Administração de direitos, bens e serviços / Aquisição, venda, abate ou permuta\" (300.10);A formação de recursos humanos / qualificação do mercado de trabalho deve ser considerada em \"Prestação de serviços de ensino e formação\" (750);O apoio psicossocial orientado à integração social ou profissional do trabalhador deve ser considerado em \"Prestação de serviços de proteção e inclusão social/ Serviços e equipamentos sociais (650.20);As consultas ou outros atos clínicos realizados no quadro da medicina no trabalho devem ser considerados em \"Prestação de cuidados de saúde/ Serviços clínicos\" (700.20)."
+                      }
+                    ],
+                    "termos_de_indice": []
+                  }
+                },
+                {
+                  "codigo": "400",
+                  "titulo": "PRESTAÇÃO DE SERVIÇOS DE IDENTIFICAÇÃO E REGISTO",
+                  "descritivo_da_classe": {
+                    "descricao": "Relativo a atividades tendentes ao registo de entidades ou atos sobre os quais impendam direitos ou obrigações que ao Estado (através de organismos da Administração Central, Regional ou Local) compete salvaguardar ou fazer cumprir. Compreende a recolha, processamento e registo de dados de identificação da condição e/ou situação jurídica, fiscal, económica, física, administrativa ou outra de entidades (pessoas singulares ou coletivas, bens, animais, entre outros). Compreende, igualmente, a formalização notarial de atos jurídicos e respetivo registo.",
+                    "notas_aplicacao": [
+                      {
+                        "id": "na_c400_tFPOjRK9QNpcxaM5euEpL",
+                        "nota": "Serviços de registo orientados à comunidade, de âmbito nacional, regional ou local, cuja constituição está prevista na lei"
+                      }
+                    ],
+                    "exemplos_NA": [],
+                    "notas_exclusao": [
+                    {
+                      "id": "ne_c400_crM25LLOQCxCh7zGafKAo",
+                      "nota": "Os registos que cumprem funções de gestão de âmbito organizacional devem ser considerados no quadro da função que suportam. Exemplos de exclusão:Registo de doentes entrados num hospital deve ser considerado em \"Prestação de cuidados de saúde/ Gestão de utentes\" (700.10);Registo de alunos inscritos num estabelecimento de ensino deve ser considerado em \"Prestação de serviços de ensino e formação/ gestão do aluno/formando\" (750.10);Registo de pessoas no âmbito de operações de prevenção ou investigação criminal deve ser considerado em \"Administração da Justiça/ Prevenção e investigação criminal\" (600.10);Registo de trabalhadores da Administração deve ser considerado em \"Administração de relações de trabalho/ Gestão de relações individuais de trabalho\" (250.20);Registo de 'bens inventariáveis', ou registo de documentos (expediente geral, setorial, ou de matérias classificadas) deve ser considerado em \"Administração de direitos, bens e serviços/ Identificação e caracterização de bens\" (300.30);Registo de dados técnico-científicos deve ser considerado em \"Prestação de serviços técnicos e científicos, investigação e desenvolvimento/ Execução de serviços científicos e técnicos\" (800.10);Registo de contactos institucionais deve ser considerado em \"Dinamização e comunicação institucional/ Execução de atividades de comunicação institucional\" (900.20)."
+                    }
+                  ],
+                  "termos_de_indice": []
+                  }
+                } 
+              ]

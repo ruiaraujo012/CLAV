@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+
+    graphdb:
+        build: ./graphdb
+        volumes: 
+            - ~/.graphdb/data/repositories:/opt/graphdb/home/data/repositories
+        networks:
+            - network_backend
+
+    mongodb:
+        image: mongo:latest
+        ports:
+            - "27017:27017"
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: 'username'
+            MONGO_INITDB_ROOT_PASSWORD: 'password'
+
+    node:
+        build: ./
+        environment:
+            MONGO_URI: 'mongodb://mongodb:27017/clav?retryWrites=true'
+            GRAPHDB_URI: 'http://graphdb:7200'
+            GRAPHDB_REPOSITORY: 'clav'
+            FILE_STORE_SECRET_KEY: 'clav_api'
+            PASSPORT_SECRET_KEY: 'clav_api'
+            JWT_SECRET_KEY: 'clav_api'
+
+        ports:
+            - 8000:8000
+        networks:
+            - network_backend
+        depends_on:
+            - mongodb
+            - graphdb
+
+networks:
+    network_backend:
+        driver: "bridge"

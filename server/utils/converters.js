@@ -1,3 +1,5 @@
+const jsonexport = require('jsonexport')
+const { Parser } = require('json2csv')
 exports.obj = (jsonData, containers) => {
 	let xml = ''
 
@@ -89,4 +91,49 @@ exports.JSON2XML = (jsonData, containers) => {
 	if (Array.isArray(jsonData)) response += this.arr({ jsonData }, containers)
 	else response += this.obj(jsonData, containers)
 	return response
+}
+
+exports.csv = (array) =>{
+	let final = ''
+	jsonexport(array,{rowDelimiter: ';'},function(err, csv){
+		if(err) return console.log(err);
+		const headersList = []
+		const headersListFilhos = []
+		const headersfilhos = []
+		let headers = csv.split("\n")[0].substring(0, csv.split("\n")[0].length - 1);
+		for(i in headers.split(";")){
+			headersList.push(headers.split(";")[i])
+		}
+		for(i in headersList){
+			if(headersList[i].indexOf('.') > -1 == true){
+				headersListFilhos.push(headersList[i])
+			}
+		}
+
+		for(i in headersListFilhos){
+			headersListFilhos[i] = headersListFilhos[i].replace("." + headersListFilhos[i].split(".").pop(-1), "")
+			if(headersfilhos.includes(headersListFilhos[i]) == false ){
+				headersfilhos.push(headersListFilhos[i])
+			}
+
+		}
+		
+		const csvFinal = (fields,fields2,data) => {
+			const json2csvParser = new Parser({ fields, delimiter: ';', unwind: fields2, unwindBlank: true } )
+			const csv = json2csvParser.parse(data)
+			return csv
+		}
+		final = csvFinal(headersList,headersfilhos,array)
+	});	
+	return final
+}
+
+exports.JSON2CSV = (jsonData) => {
+	if (!Array.isArray(jsonData)){
+		var array = []
+		array.push(jsonData)
+	}else{
+		array = jsonData
+	}
+	return this.csv(array)
 }

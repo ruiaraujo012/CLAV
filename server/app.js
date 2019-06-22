@@ -5,7 +5,6 @@ const logger = require('morgan')
 const swaggerJSDoc = require('swagger-jsdoc')
 const passport = require('passport')
 const mongoose = require('mongoose')
-const csvjson = require('csvjson')
 const axios = require('axios')
 const cors = require('cors')
 
@@ -21,6 +20,7 @@ const statsRouter = require('./routes/stats')
 
 const { extractStats } = require('./utils/registerStats')
 const { JSON2XML } = require('./utils/converters')
+const { JSON2CSV } = require('./utils/converters')
 
 const swaggerConfig = require('./configs/swaggerConfig.json')
 
@@ -88,7 +88,6 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 const formatOutput = (req, res, next) => {
 	if (!res.locals.dados) next()
-
 	const { dados } = res.locals
 	const format = req.query.format || req.headers.accept
 
@@ -103,7 +102,7 @@ const formatOutput = (req, res, next) => {
 			break
 		case 'text/csv':
 		case 'csv':
-			res.send(csvjson.toCSV(dados, { delimiter: ';' }))
+			res.send(JSON2CSV(dados))
 			break
 		default:
 			res.send(dados)
