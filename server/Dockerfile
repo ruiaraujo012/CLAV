@@ -3,7 +3,7 @@ FROM node:8
 RUN apt-get update
 WORKDIR /usr/src/app
 
-COPY server/ ./
+COPY package*.json ./
 
 RUN npm install
 

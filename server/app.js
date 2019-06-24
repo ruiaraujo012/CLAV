@@ -32,6 +32,9 @@ require('./auth/auth')
 /*
  * Ligação à base de dados
  */
+
+console.log("Trying to connect [MONGODB] ", process.env.MONGO_URI);
+
 mongoose
 	.connect(process.env.MONGO_URI, {
 		useNewUrlParser: true,

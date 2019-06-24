@@ -16,10 +16,12 @@ RUN mkdir -p ${GRAPHDB_PARENT_DIR} && \
     mv graphdb-free-${version} dist && \
     mkdir -p ${GRAPHDB_HOME}
 
+COPY clav /opt/graphdb/home/data/repositories/clav
+
 ENV PATH=${GRAPHDB_INSTALL_DIR}/bin:$PATH
 
-CMD ["-Dgraphdb.home=/opt/graphdb/home"]
+CMD ["/opt/graphdb/dist/bin/graphdb", "-Dgraphdb.home=/opt/graphdb/home"]
 
-ENTRYPOINT ["/opt/graphdb/dist/bin/graphdb"]
+#ENTRYPOINT ["/opt/graphdb/dist/bin/graphdb"]
 
 EXPOSE 7200
