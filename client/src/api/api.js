@@ -1,16 +1,13 @@
 import axios from 'axios';
 //import { host } from '../common/common';
-
-const host = process.env.BACKEND;
+const host = 'http://localhost:8000';
 
 const fetchStats = async () => {
-    console.log(host)
     const data = await axios.get(`${host}/stats`)
     console.log(data.data)
 }
 
 const quantityOfAccessPerUrl = async (quantity) => {
-    console.log(host)
     try {
         const data = await axios.get(`${host}/stats/quantityOfAccessPerUrl/${quantity}`)
         return data
@@ -20,7 +17,6 @@ const quantityOfAccessPerUrl = async (quantity) => {
 }
 
 const quantityOfAccessPerUser = async (quantity) => {
-    console.log(host)
     try {
         const data = await axios.get(`${host}/stats/quantityOfAccessPerUser/${quantity}`)
         return data
@@ -30,7 +26,6 @@ const quantityOfAccessPerUser = async (quantity) => {
 }
 
 const dailyAccess = async (quantity) => {
-    console.log(host)
     try {
         const data = await axios.get(`${host}/stats/dailyAccess/${quantity}`)
         return data

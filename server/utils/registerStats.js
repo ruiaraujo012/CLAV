@@ -2,11 +2,10 @@ const jwt = require('jsonwebtoken')
 
 const Stats = require('../controllers/stats')
 
-const msDifference = 10 * 60 * 1000
+// Ajustar de acordo com o tempo pretendido
+const msDifference = 5 * 1000
 let lastTimer = Date.now()
 let savedStats = []
-
-// TODO: alterar como pretendido
 
 exports.extractStats = async (req, res, next) => {
 	const token = req.headers.authorization || req.query.api_key
@@ -16,11 +15,11 @@ exports.extractStats = async (req, res, next) => {
 
 	const url = req.originalUrl
 
-	console.log(req)
-
 	if (url.match(/\/stats/g))
 		return;
-
+    
+        console.log("A extrair stats do url ", url)
+    
 
 	if (typeof userData.user !== 'undefined' && typeof userData.user.email !== 'undefined') {
 		const { email } = userData.user

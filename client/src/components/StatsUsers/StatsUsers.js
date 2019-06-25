@@ -36,7 +36,8 @@ class StatsUsers extends Component {
 
         console.log("Users", users)
 
-        users.map(u => u.user === "undefined" ? u.user = 'Não autenticado' : u.user)
+        if(users)
+            users.map(u => u.user === "undefined" ? u.user = 'Não autenticado' : u.user)
 
         const columns = [
             {

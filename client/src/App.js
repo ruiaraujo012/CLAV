@@ -12,6 +12,7 @@ import StatsUsers from './components/StatsUsers/StatsUsers';
 import DailyStats from './components/DailyStats/DailyStats';
 
 function App() {
+
     return (
         <div>
             {/* TODO: Add navbar */}

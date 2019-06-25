@@ -42,8 +42,8 @@ services:
         build: ./client
         ports:
             - 3001:3000
-        environment: 
-            BACKEND: 'http://node:8000'
+        environment:
+            - BACKEND='http://node:8000'
         volumes:
             - /usr/src/app/node_modules
         networks:
