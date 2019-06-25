@@ -1,3 +1,3 @@
 const Common = module.exports;
 
-Common.host = 'http://localhost:8000'
+Common.host = process.env.BACKEND || 'http://localhost:8000'
