@@ -11,7 +11,11 @@ import StatsRotas from './components/StatsRotas/StatsRotas';
 import StatsUsers from './components/StatsUsers/StatsUsers';
 import DailyStats from './components/DailyStats/DailyStats';
 
+require('dotenv').config();
+
 function App() {
+
+    console.log("Printing env", process.env);
 
     return (
         <div>

@@ -1,8 +1,9 @@
 import axios from 'axios';
 //import { host } from '../common/common';
-const host = 'http://localhost:8000';
+const host = 'http://localhost:8001';
 
 const fetchStats = async () => {
+    console.log("HOST", host)
     const data = await axios.get(`${host}/stats`)
     console.log(data.data)
 }

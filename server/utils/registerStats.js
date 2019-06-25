@@ -14,11 +14,11 @@ exports.extractStats = async (req, res, next) => {
 	if (token) userData = jwt.decode(token) // id, email, fullName, role
 
 	const url = req.originalUrl
+        console.log("A extrair stats do url ", url)
 
 	if (url.match(/\/stats/g))
-		return;
+	    next();
     
-        console.log("A extrair stats do url ", url)
     
 
 	if (typeof userData.user !== 'undefined' && typeof userData.user.email !== 'undefined') {
