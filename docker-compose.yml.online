@@ -3,7 +3,10 @@ version: '3.3'
 services:
 
     graphdb:
-        build: ./graphdb
+        #build: ./graphdb
+        image: miguelfbrito/clav_graphdb
+        volumes: 
+            - ~/.graphdb/data/repositories:/opt/graphdb/home/data/repositories
         networks:
             - network_backend
 
@@ -11,16 +14,15 @@ services:
         image: mongo:latest
         ports:
             - "27017:27017"
-        networks:
-            - network_backend
-#        environment:
-#            MONGO_INITDB_ROOT_USERNAME: 'username'
-#            MONGO_INITDB_ROOT_PASSWORD: 'password'
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: 'username'
+            MONGO_INITDB_ROOT_PASSWORD: 'password'
 
     node:
-        build: ./server
+        #build: ./
+        image: miguelfbrito/clav_node
         environment:
-            MONGO_URI: 'mongodb://mongodb:27017/clav'
+            MONGO_URI: 'mongodb://username:password@mongodb:27017/clav?retryWrites=true'
             GRAPHDB_URI: 'http://graphdb:7200'
             GRAPHDB_REPOSITORY: 'clav'
             FILE_STORE_SECRET_KEY: 'clav_api'
@@ -34,7 +36,6 @@ services:
         depends_on:
             - mongodb
             - graphdb
-        command: ["./wait-for-it.sh", "mongodb:27017", "--", "npm", "start"]
 
 networks:
     network_backend:

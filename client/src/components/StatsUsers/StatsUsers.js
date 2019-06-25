@@ -27,12 +27,16 @@ class StatsUsers extends Component {
 
     render() {
 
-        const { users, loading } = this.state;
+        let { users, loading } = this.state;
 
         if (loading)
             return (
                 <Loading loading={true} />
             );
+
+        console.log("Users", users)
+
+        users.map(u => u.user === "undefined" ? u.user = 'Não autenticado' : u.user)
 
         const columns = [
             {
