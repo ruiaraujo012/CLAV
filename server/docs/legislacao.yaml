@@ -1,100 +1,104 @@
 paths:
-  /legislacao:
-    get:
-      tags:
-        - Legislação
-      description: Retorna toda a legislação de uma Classe
-      produces:
-        - application/json
-        - application/xml
-        - text/csv
-      responses:
-        200:
-          description: Retorna toda a legislação de uma Classe
-          examples:
-            application/json: |
-              [
-                {
-                  "id": "leg_1BoAeCJtOAWHaG0gNdKVa",
-                  "data": "2018/06/07",
-                  "numero": "162/2018",
-                  "tipo": "Portaria",
-                  "sumario": "Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
-                  "entidades": ""
-                },
-                {
-                  "id": "leg_hYcjbo8LuSbgPc_R3VGDv",
-                  "data": "2018/05/15",
-                  "numero": "33/2018",
-                  "tipo": "DL",
-                  "sumario": "Estabelece as normas de execução do Orçamento do Estado para 2018",
-                  "entidades": ""
-                },
-                {
-                  "id": "leg_WWNva4HqmuH6eNA1ndiDZ",
-                  "data": "2018/02/28",
-                  "numero": "14/2018",
-                  "tipo": "DL",
-                  "sumario": "Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637.",
-                  "entidades": ""
-                }
-              ]
-            application/xml: |
-              <legislacoes><legislacao><id>leg_1BoAeCJtOAWHaG0gNdKVa</id><data>2018/06/07</data><numero>162/2018</numero><tipo>Portaria</tipo><sumario>Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro</sumario><entidades></entidades></legislacao><legislacao><id>leg_hYcjbo8LuSbgPc_R3VGDv</id><data>2018/05/15</data><numero>33/2018</numero><tipo>DL</tipo><sumario>Estabelece as normas de execução do Orçamento do Estado para 2018</sumario><entidades></entidades></legislacao><legislacao><id>leg_WWNva4HqmuH6eNA1ndiDZ</id><data>2018/02/28</data><numero>14/2018</numero><tipo>DL</tipo><sumario>Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637.</sumario><entidades></entidades></legislacao>
-            text/csv: |
-              id,data,numero,tipo,sumario,entidades
-              leg_1BoAeCJtOAWHaG0gNdKVa,2018/06/07,162/2018,Portaria,"Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
-              leg_hYcjbo8LuSbgPc_R3VGDv,2018/05/15,33/2018,DL,Estabelece as normas de execução do Orçamento do Estado para 2018,
-              leg_WWNva4HqmuH6eNA1ndiDZ,2018/02/28,14/2018,DL,"Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637."
-        400:
-          description: Erro a obter legislações
-        401:
-          description: Erro a obter legislações
-        404:
-          description: Legislações não encontradas
-  /legislacao/{legislacaoID}:
-    get:
-      tags:
-        - Legislação
-      description: Retorna toda a informação sobre a legislação de uma classe
-      parameters:
-        - name: legislacaoID
-          in: path
-          description: leg_1BoAeCJtOAWHaG0gNdKVa
-          type: string
-          required: true
-      produces:
-        - application/json
-        - application/xml
-        - text/csv
-      responses:
-        200:
-          description: Retorna toda a informação sobre a legislação de uma classe
-          examples:
-            application/json: |
-              {
-                "tipo": "Portaria",
-                "data": "2018/06/07",
-                "numero": "162/2018",
-                "sumario": "Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
-                "link": "https://dre.pt/application/file/a/115463946",
-                "entidades": "",
-                "processosDeNegocio": [
-                  {
-                    "id": "c650.10.214",
-                    "codigo": "650.10.214",
-                    "titulo": "Concessão de prestação social para a inclusão"
-                  }
-                ]
-              }
-            application/xml: |
-              <?xml version="1.0" encoding="UTF-8"?><legislacoes><tipo>Portaria</tipo><data>2018/06/07</data><numero>162/2018</numero><sumario>Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro</sumario><link>https://dre.pt/application/file/a/115463946</link><entidades></entidades><legislacao><processosDeNegocio><id>c650.10.214</id><codigo>650.10.214</codigo><titulo>Concessão de prestação social para a inclusão</titulo></processosDeNegocio></legislacao></legislacoes>
-            text/csv: |
-              tipo,data,numero,sumario,link,entidades,processosDeNegocio.id,processosDeNegocio.codigo,processosDeNegocio.titulo
-              Portaria,2018/06/07,162/2018,"Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",https://dre.pt/application/file/a/115463946,,c650.10.214,650.10.214,Concessão de prestação social para a inclusão
-        400:
-          description: Erro a obter legislação
-        401:
-          description: A informação inserida é inválida
-        404:
-          description: Legislação não encontrada
+    /legislacao:
+        get:
+            security:
+                - Bearer: []
+        tags:
+            - Legislação
+        description: Retorna toda a legislação de uma Classe
+        produces:
+            - application/json
+            - application/xml
+            - text/csv
+        responses:
+            200:
+                description: Retorna toda a legislação de uma Classe
+                examples:
+                    application/json: |
+                        [
+                          {
+                            "id": "leg_1BoAeCJtOAWHaG0gNdKVa",
+                            "data": "2018/06/07",
+                            "numero": "162/2018",
+                            "tipo": "Portaria",
+                            "sumario": "Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
+                            "entidades": ""
+                          },
+                          {
+                            "id": "leg_hYcjbo8LuSbgPc_R3VGDv",
+                            "data": "2018/05/15",
+                            "numero": "33/2018",
+                            "tipo": "DL",
+                            "sumario": "Estabelece as normas de execução do Orçamento do Estado para 2018",
+                            "entidades": ""
+                          },
+                          {
+                            "id": "leg_WWNva4HqmuH6eNA1ndiDZ",
+                            "data": "2018/02/28",
+                            "numero": "14/2018",
+                            "tipo": "DL",
+                            "sumario": "Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637.",
+                            "entidades": ""
+                          }
+                        ]
+                    application/xml: |
+                        <legislacoes><legislacao><id>leg_1BoAeCJtOAWHaG0gNdKVa</id><data>2018/06/07</data><numero>162/2018</numero><tipo>Portaria</tipo><sumario>Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro</sumario><entidades></entidades></legislacao><legislacao><id>leg_hYcjbo8LuSbgPc_R3VGDv</id><data>2018/05/15</data><numero>33/2018</numero><tipo>DL</tipo><sumario>Estabelece as normas de execução do Orçamento do Estado para 2018</sumario><entidades></entidades></legislacao><legislacao><id>leg_WWNva4HqmuH6eNA1ndiDZ</id><data>2018/02/28</data><numero>14/2018</numero><tipo>DL</tipo><sumario>Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637.</sumario><entidades></entidades></legislacao>
+                    text/csv: |
+                        id,data,numero,tipo,sumario,entidades
+                        leg_1BoAeCJtOAWHaG0gNdKVa,2018/06/07,162/2018,Portaria,"Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
+                        leg_hYcjbo8LuSbgPc_R3VGDv,2018/05/15,33/2018,DL,Estabelece as normas de execução do Orçamento do Estado para 2018,
+                        leg_WWNva4HqmuH6eNA1ndiDZ,2018/02/28,14/2018,DL,"Altera o Regulamento Consular, transpondo a Diretiva (UE) 2015/637."
+            400:
+                description: Erro a obter legislações
+            401:
+                description: Erro a obter legislações
+            404:
+                description: Legislações não encontradas
+    /legislacao/{legislacaoID}:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - Legislação
+            description: Retorna toda a informação sobre a legislação de uma classe
+            parameters:
+                - name: legislacaoID
+                  in: path
+                  description: leg_1BoAeCJtOAWHaG0gNdKVa
+                  type: string
+                  required: true
+            produces:
+                - application/json
+                - application/xml
+                - text/csv
+            responses:
+                200:
+                    description: Retorna toda a informação sobre a legislação de uma classe
+                    examples:
+                        application/json: |
+                            {
+                              "tipo": "Portaria",
+                              "data": "2018/06/07",
+                              "numero": "162/2018",
+                              "sumario": "Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",
+                              "link": "https://dre.pt/application/file/a/115463946",
+                              "entidades": "",
+                              "processosDeNegocio": [
+                                {
+                                  "id": "c650.10.214",
+                                  "codigo": "650.10.214",
+                                  "titulo": "Concessão de prestação social para a inclusão"
+                                }
+                              ]
+                            }
+                        application/xml: |
+                            <?xml version="1.0" encoding="UTF-8"?><legislacoes><tipo>Portaria</tipo><data>2018/06/07</data><numero>162/2018</numero><sumario>Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro</sumario><link>https://dre.pt/application/file/a/115463946</link><entidades></entidades><legislacao><processosDeNegocio><id>c650.10.214</id><codigo>650.10.214</codigo><titulo>Concessão de prestação social para a inclusão</titulo></processosDeNegocio></legislacao></legislacoes>
+                        text/csv: |
+                            tipo,data,numero,sumario,link,entidades,processosDeNegocio.id,processosDeNegocio.codigo,processosDeNegocio.titulo
+                            Portaria,2018/06/07,162/2018,"Estabelece normas de execução do Decreto-Lei n.º 126-A/2017, de 6 de outubro, que institui a prestação social para a inclusão, com as alterações introduzidas pela Lei n.º 114/2017, de 29 de dezembro",https://dre.pt/application/file/a/115463946,,c650.10.214,650.10.214,Concessão de prestação social para a inclusão
+                400:
+                    description: Erro a obter legislação
+                401:
+                    description: A informação inserida é inválida
+                404:
+                    description: Legislação não encontrada

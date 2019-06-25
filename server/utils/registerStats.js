@@ -11,15 +11,12 @@ exports.extractStats = async (req, res, next) => {
 	const token = req.headers.authorization || req.query.api_key
 	let userData = {}
 
-	if (token) userData = jwt.decode(token) // id, email, fullName, role
+	if (token) userData = jwt.decode(token.split(' ')[1]) // id, email, fullName, role
 
 	const url = req.originalUrl
-        console.log("A extrair stats do url ", url)
+	console.log('A extrair stats do url ', url)
 
-	if (url.match(/\/stats/g))
-	    next();
-    
-    
+	if (url.match(/\/stats/g)) next()
 
 	if (typeof userData.user !== 'undefined' && typeof userData.user.email !== 'undefined') {
 		const { email } = userData.user

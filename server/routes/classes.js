@@ -11,7 +11,7 @@ router.get('/', authenticate(), async (req, res, next) => {
 	if (nivel) {
 		if (nivel in [1, 2, 3, 4]) {
 			res.locals.dados = await Classes.listarClassesPorNivel(nivel)
-			// TODO: falta XML Container
+			res.locals.xmlContainer = ['Classes', 'Classe']
 			next()
 		}
 	}

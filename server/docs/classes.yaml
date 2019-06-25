@@ -1,6 +1,8 @@
 paths:
   /classes:
-    get:
+    get:      
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna a lista consolidada que inclui todas as classes
@@ -583,6 +585,8 @@ paths:
           description: classe não encontrada
   /classes/{classID}:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna toda a indormação relativa a uma classe
@@ -624,6 +628,8 @@ paths:
               }
   /classes/{classID}/donos:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna todos os donos de uma classe
@@ -684,6 +690,8 @@ paths:
           description: Donos não encontrado
   /classes/{classID}/participantes:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna todos os participantes de uma classe
@@ -730,6 +738,8 @@ paths:
           description: Participantes não encontrados
   /classes/{classID}/processosRelacionados:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna todos os processos relacionados de uma classe
@@ -783,6 +793,8 @@ paths:
           description: Processos relacionados não encontrados
   /classes/{classID}/legislacao:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna a legislação de uma classe
@@ -822,6 +834,8 @@ paths:
           description: Legislação não encontrada
   /classes/{classID}/pca:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna o PCA relativo a uma classe
@@ -873,6 +887,8 @@ paths:
           description: PCA não encontrado
   /classes/{classID}/df:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna o destino final relativo a uma classe
@@ -917,6 +933,8 @@ paths:
           description: Destino final não encontrado
   /classes/listaConsolidada:
     get:
+      security:
+        - Bearer: []
       tags:
         - Classes
       description: Retorna a lista consolidada completa 

@@ -10,5 +10,12 @@
 	},
 	"host": "localhost:8000",
 	"basePath": "/",
-	"schemes": ["http"]
+	"schemes": ["http"],
+	"securityDefinitions": {
+		"Bearer": {
+			"type": "apiKey",
+			"name": "Authorization",
+			"in": "header"
+		}
+	}
 }

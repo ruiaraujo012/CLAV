@@ -1,173 +1,176 @@
 paths:
-  /entidades:
-    get:
-      tags:
-        - Entidades
-      description: Retorna todas as entidades existentes
-      produces:
-        - application/json
-        - application/xml
-        - text/csv
-      responses:
-        200:
-          description: Retorna todas as entidades existentes
-          examples:
-            application/json: |
-              [
-                {
-                  "id": "ent_ACSS",
-                  "sigla": "ACSS",
-                  "designacao": "Administração Central do Sistema de Saúde, IP",
-                  "internacional": "Não",
-                  "sioe": "149110000"
-                },
-                {
-                  "id": "ent_ARS-LVT",
-                  "sigla": "ARS-LVT",
-                  "designacao": "Administração Regional de Saúde de Lisboa e Vale do Tejo",
-                  "internacional": "Não",
-                  "sioe": "146000000"
-                },
-                {
-                  "id": "ent_ARS-Aln",
-                  "sigla": "ARS-Aln",
-                  "designacao": "Administração Regional de Saúde do Alentejo",
-                  "internacional": "Não",
-                  "sioe": "147000000"
-                }
-              ]
-            application/xml: |
-              <entidades><entidade><id>ent_ACSS</id><sigla>ACSS</sigla><designacao>Administração Central do Sistema de Saúde, IP</designacao><internacional>Não</internacional><sioe>149110000</sioe></entidade><entidade><id>ent_ARS-LVT</id><sigla>ARS-LVT</sigla><designacao>Administração Regional de Saúde de Lisboa e Vale do Tejo</designacao><internacional>Não</internacional><sioe>146000000</sioe></entidade><entidade><id>ent_ARS-Aln</id><sigla>ARS-Aln</sigla><designacao>Administração Regional de Saúde do Alentejo</designacao><internacional>Não</internacional><sioe>147000000</sioe></entidade>
-            text/csv: |
-              id,sigla,designacao,internacional,sioe
-              ent_ACSS,ACSS,"Administração Central do Sistema de Saúde, IP",Não,149110000
-              ent_ARS-LVT,ARS-LVT,Administração Regional de Saúde de Lisboa e Vale do Tejo,Não,146000000
-              ent_ARS-Aln,ARS-Aln,Administração Regional de Saúde do Alentejo,Não,147000000
-        400:
-          description: Erro a obter entidades
-        401:
-          description: Erro a obter entidades
-        404:
-          description: Entidades não encontradas
-  /entidades/{entidadesID}:
-    get:
-      tags:
-        - Entidades
-      description: Retorna toda a informação relativa a uma entidade
-      parameters:
-        - name: entidadesID
-          in: path
-          description: ent_ACSS
-          type: string
-          required: true
-      produces:
-        - application/json
-        - application/xml
-        - text/csv
-      responses:
-        200:
-          description: Retorna toda a informação relativa a uma entidade
-          examples:
-            application/json: |
-              [
-                {
-                  "sigla": "INEM",
-                  "estado": "Ativa",
-                  "internacional": "Não",
-                  "designacao": "Instituto Nacional de Emergência Médica, IP",
-                  "sioe": "142300000",
-                  "tipologias": [
-                    {
-                      "id": "tip_AP",
-                      "sigla": "AP",
-                      "designacao": "Administração Pública"
-                    },
-                    {
-                      "id": "tip_IP",
-                      "sigla": "IP",
-                      "designacao": "Institutos Públicos"
-                    }
-                  ],
-                  "intervencaoComoDono": [
-                    {
-                      "id": "c300.10.008",
-                      "codigo": "300.10.008",
-                      "titulo": "Estabelecimento de convenções com operadores privados"
-                    },
-                    {
-                      "id": "c400.10.040",
-                      "codigo": "400.10.040",
-                      "titulo": "Registo nacional de utentes"
-                    },
-                    {
-                      "id": "c400.10.051",
-                      "codigo": "400.10.051",
-                      "titulo": "Registo nacional de profissionais"
-                    },
-                    {
-                      "id": "c450.10.444",
-                      "codigo": "450.10.444",
-                      "titulo": "Reconhecimento de requisitos e competência técnica a entidades"
-                    }
-                  ],
-                  "intervencaoComoParticipante": [
-                    {
-                      "id": "c400.10.054",
-                      "codigo": "400.10.054",
-                      "titulo": "Registo português de transplantação"
-                    },
-                    {
-                      "id": "c650.10.104",
-                      "codigo": "650.10.104",
-                      "titulo": "Atribuição de produtos de apoio"
-                    },
-                    {
-                      "id": "c700.10.001",
-                      "codigo": "700.10.001",
-                      "titulo": "Referenciação de utentes para consultas"
-                    },
-                    {
-                      "id": "c700.10.003",
-                      "codigo": "700.10.003",
-                      "titulo": "Referenciação de utentes para cirurgias"
-                    },
-                    {
-                      "id": "c700.20.405",
-                      "codigo": "700.20.405",
-                      "titulo": "Prestação de assistência médica no estrangeiro"
-                    },
-                    {
-                      "id": "c700.20.406",
-                      "codigo": "700.20.406",
-                      "titulo": "Apoio ao diagnóstico e terapêutica"
-                    },
-                    {
-                      "id": "c700.20.407",
-                      "codigo": "700.20.407",
-                      "titulo": "Prestação de cuidados de convalescença"
-                    },
-                    {
-                      "id": "c700.20.500",
-                      "codigo": "700.20.500",
-                      "titulo": "Prestação de cuidados de reabilitação"
-                    },
-                    {
-                      "id": "c700.20.600",
-                      "codigo": "700.20.600",
-                      "titulo": "Prestação de cuidados paliativos"
-                    }
-                  ]
-                }
-              ]
-            application/xml: |
-              <?xml version="1.0" encoding="UTF-8"?><entidades><sigla>INEM</sigla><estado>Ativa</estado><internacional>Não</internacional><designacao>Instituto Nacional de Emergência Médica, IP</designacao><sioe>142300000</sioe><entidade><tipologias><id>tip_AP</id><sigla>AP</sigla><designacao>Administração Pública</designacao></tipologias></entidade><tipologias><tipologia><id>tip_IP</id><sigla>IP</sigla><designacao>Institutos Públicos</designacao></tipologia></tipologias><tipologias><tipologia><id>c300.10.008</id><codigo>300.10.008</codigo><titulo>Estabelecimento de convenções com operadores privados</titulo></tipologia></tipologias><tipologia><intervencoesComoDono><id>c400.10.040</id><codigo>400.10.040</codigo><titulo>Registo nacional de utentes</titulo></intervencoesComoDono></tipologia><intervencoesComoDono><intervencaoComoDono><id>c400.10.051</id><codigo>400.10.051</codigo><titulo>Registo nacional de profissionais</titulo></intervencaoComoDono></intervencoesComoDono><intervencaoComoDono><intervencoesComoParticipante><id>c450.10.444</id><codigo>450.10.444</codigo><titulo>Reconhecimento de requisitos e competência técnica a entidades</titulo></intervencoesComoParticipante></intervencaoComoDono><tipologia><intervencoesComoDono><id>c400.10.054</id><codigo>400.10.054</codigo><titulo>Registo português de transplantação</titulo></intervencoesComoDono></tipologia><intervencoesComoDono><intervencaoComoDono><id>c650.10.104</id><codigo>650.10.104</codigo><titulo>Atribuição de produtos de apoio</titulo></intervencaoComoDono></intervencoesComoDono><intervencaoComoDono><intervencoesComoParticipante><id>c700.10.001</id><codigo>700.10.001</codigo><titulo>Referenciação de utentes para consultas</titulo></intervencoesComoParticipante></intervencaoComoDono><intervencoesComoParticipante><intervencaoComoParticipante><id>c700.10.003</id><codigo>700.10.003</codigo><titulo>Referenciação de utentes para cirurgias</titulo></intervencaoComoParticipante></intervencoesComoParticipante><intervencaoComoParticipante><undefined><id>c700.20.405</id><codigo>700.20.405</codigo><titulo>Prestação de assistência médica no estrangeiro</titulo></undefined></intervencaoComoParticipante><undefined><undefined><id>c700.20.406</id><codigo>700.20.406</codigo><titulo>Apoio ao diagnóstico e terapêutica</titulo></undefined></undefined><undefined><undefined><id>c700.20.407</id><codigo>700.20.407</codigo><titulo>Prestação de cuidados de convalescença</titulo></undefined></undefined><undefined><undefined><id>c700.20.500</id><codigo>700.20.500</codigo><titulo>Prestação de cuidados de reabilitação</titulo></undefined></undefined><undefined><undefined><id>c700.20.600</id><codigo>700.20.600</codigo><titulo>Prestação de cuidados paliativos</titulo></undefined></undefined></entidades>
-            text/csv: |
-              sigla,estado,internacional,designacao,sioe,tipologias.id,tipologias.sigla,tipologias.designacao,intervencaoComoDono.id,intervencaoComoDono.codigo,intervencaoComoDono.titulo,intervencaoComoParticipante.id,intervencaoComoParticipante.codigo,intervencaoComoParticipante.titulo
-              INEM,Ativa,Não,"Instituto Nacional de Emergência Médica, IP",142300000,"[""tip_AP"",""tip_IP""]","[""AP"",""IP""]","[""Administração Pública"",""Institutos Públicos""]","[""c300.10.008"",""c400.10.040"",""c400.10.051"",""c450.10.444""]","[""300.10.008"",""400.10.040"",""400.10.051"",""450.10.444""]","[""Estabelecimento de convenções com operadores privados"",""Registo nacional de utentes"",""Registo nacional de profissionais"",""Reconhecimento de requisitos e competência técnica a entidades""]","[""c400.10.054"",""c650.10.104"",""c700.10.001"",""c700.10.003"",""c700.20.405"",""c700.20.406"",""c700.20.407"",""c700.20.500"",""c700.20.600""]","[""400.10.054"",""650.10.104"",""700.10.001"",""700.10.003"",""700.20.405"",""700.20.406"",""700.20.407"",""700.20.500"",""700.20.600""]","[""Registo português de transplantação"",""Atribuição de produtos de apoio"",""Referenciação de utentes para consultas"",""Referenciação de utentes para cirurgias"",""Prestação de assistência médica no estrangeiro"",""Apoio ao diagnóstico e terapêutica"",""Prestação de cuidados de convalescença"",""Prestação de cuidados de reabilitação"",""Prestação de cuidados paliativos""]"
-        400:
-          description: Erro a obter entidade
-        401:
-          description: A informação inserida é inválida
-        404:
-          description: Entidade não encontrada
- 
+    /entidades:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - Entidades
+            description: Retorna todas as entidades existentes
+            produces:
+                - application/json
+                - application/xml
+                - text/csv
+            responses:
+                200:
+                    description: Retorna todas as entidades existentes
+                    examples:
+                        application/json: |
+                            [
+                              {
+                                "id": "ent_ACSS",
+                                "sigla": "ACSS",
+                                "designacao": "Administração Central do Sistema de Saúde, IP",
+                                "internacional": "Não",
+                                "sioe": "149110000"
+                              },
+                              {
+                                "id": "ent_ARS-LVT",
+                                "sigla": "ARS-LVT",
+                                "designacao": "Administração Regional de Saúde de Lisboa e Vale do Tejo",
+                                "internacional": "Não",
+                                "sioe": "146000000"
+                              },
+                              {
+                                "id": "ent_ARS-Aln",
+                                "sigla": "ARS-Aln",
+                                "designacao": "Administração Regional de Saúde do Alentejo",
+                                "internacional": "Não",
+                                "sioe": "147000000"
+                              }
+                            ]
+                        application/xml: |
+                            <entidades><entidade><id>ent_ACSS</id><sigla>ACSS</sigla><designacao>Administração Central do Sistema de Saúde, IP</designacao><internacional>Não</internacional><sioe>149110000</sioe></entidade><entidade><id>ent_ARS-LVT</id><sigla>ARS-LVT</sigla><designacao>Administração Regional de Saúde de Lisboa e Vale do Tejo</designacao><internacional>Não</internacional><sioe>146000000</sioe></entidade><entidade><id>ent_ARS-Aln</id><sigla>ARS-Aln</sigla><designacao>Administração Regional de Saúde do Alentejo</designacao><internacional>Não</internacional><sioe>147000000</sioe></entidade>
+                        text/csv: |
+                            id,sigla,designacao,internacional,sioe
+                            ent_ACSS,ACSS,"Administração Central do Sistema de Saúde, IP",Não,149110000
+                            ent_ARS-LVT,ARS-LVT,Administração Regional de Saúde de Lisboa e Vale do Tejo,Não,146000000
+                            ent_ARS-Aln,ARS-Aln,Administração Regional de Saúde do Alentejo,Não,147000000
+                400:
+                    description: Erro a obter entidades
+                401:
+                    description: Erro a obter entidades
+                404:
+                    description: Entidades não encontradas
+    /entidades/{entidadesID}:
+        get:
+            security:
+                - Bearer: []
+            tags:
+                - Entidades
+            description: Retorna toda a informação relativa a uma entidade
+            parameters:
+                - name: entidadesID
+                  in: path
+                  description: ent_ACSS
+                  type: string
+                  required: true
+            produces:
+                - application/json
+                - application/xml
+                - text/csv
+            responses:
+                200:
+                    description: Retorna toda a informação relativa a uma entidade
+                    examples:
+                        application/json: |
+                            [
+                              {
+                                "sigla": "INEM",
+                                "estado": "Ativa",
+                                "internacional": "Não",
+                                "designacao": "Instituto Nacional de Emergência Médica, IP",
+                                "sioe": "142300000",
+                                "tipologias": [
+                                  {
+                                    "id": "tip_AP",
+                                    "sigla": "AP",
+                                    "designacao": "Administração Pública"
+                                  },
+                                  {
+                                    "id": "tip_IP",
+                                    "sigla": "IP",
+                                    "designacao": "Institutos Públicos"
+                                  }
+                                ],
+                                "intervencaoComoDono": [
+                                  {
+                                    "id": "c300.10.008",
+                                    "codigo": "300.10.008",
+                                    "titulo": "Estabelecimento de convenções com operadores privados"
+                                  },
+                                  {
+                                    "id": "c400.10.040",
+                                    "codigo": "400.10.040",
+                                    "titulo": "Registo nacional de utentes"
+                                  },
+                                  {
+                                    "id": "c400.10.051",
+                                    "codigo": "400.10.051",
+                                    "titulo": "Registo nacional de profissionais"
+                                  },
+                                  {
+                                    "id": "c450.10.444",
+                                    "codigo": "450.10.444",
+                                    "titulo": "Reconhecimento de requisitos e competência técnica a entidades"
+                                  }
+                                ],
+                                "intervencaoComoParticipante": [
+                                  {
+                                    "id": "c400.10.054",
+                                    "codigo": "400.10.054",
+                                    "titulo": "Registo português de transplantação"
+                                  },
+                                  {
+                                    "id": "c650.10.104",
+                                    "codigo": "650.10.104",
+                                    "titulo": "Atribuição de produtos de apoio"
+                                  },
+                                  {
+                                    "id": "c700.10.001",
+                                    "codigo": "700.10.001",
+                                    "titulo": "Referenciação de utentes para consultas"
+                                  },
+                                  {
+                                    "id": "c700.10.003",
+                                    "codigo": "700.10.003",
+                                    "titulo": "Referenciação de utentes para cirurgias"
+                                  },
+                                  {
+                                    "id": "c700.20.405",
+                                    "codigo": "700.20.405",
+                                    "titulo": "Prestação de assistência médica no estrangeiro"
+                                  },
+                                  {
+                                    "id": "c700.20.406",
+                                    "codigo": "700.20.406",
+                                    "titulo": "Apoio ao diagnóstico e terapêutica"
+                                  },
+                                  {
+                                    "id": "c700.20.407",
+                                    "codigo": "700.20.407",
+                                    "titulo": "Prestação de cuidados de convalescença"
+                                  },
+                                  {
+                                    "id": "c700.20.500",
+                                    "codigo": "700.20.500",
+                                    "titulo": "Prestação de cuidados de reabilitação"
+                                  },
+                                  {
+                                    "id": "c700.20.600",
+                                    "codigo": "700.20.600",
+                                    "titulo": "Prestação de cuidados paliativos"
+                                  }
+                                ]
+                              }
+                            ]
+                        application/xml: |
+                            <?xml version="1.0" encoding="UTF-8"?><entidades><sigla>INEM</sigla><estado>Ativa</estado><internacional>Não</internacional><designacao>Instituto Nacional de Emergência Médica, IP</designacao><sioe>142300000</sioe><entidade><tipologias><id>tip_AP</id><sigla>AP</sigla><designacao>Administração Pública</designacao></tipologias></entidade><tipologias><tipologia><id>tip_IP</id><sigla>IP</sigla><designacao>Institutos Públicos</designacao></tipologia></tipologias><tipologias><tipologia><id>c300.10.008</id><codigo>300.10.008</codigo><titulo>Estabelecimento de convenções com operadores privados</titulo></tipologia></tipologias><tipologia><intervencoesComoDono><id>c400.10.040</id><codigo>400.10.040</codigo><titulo>Registo nacional de utentes</titulo></intervencoesComoDono></tipologia><intervencoesComoDono><intervencaoComoDono><id>c400.10.051</id><codigo>400.10.051</codigo><titulo>Registo nacional de profissionais</titulo></intervencaoComoDono></intervencoesComoDono><intervencaoComoDono><intervencoesComoParticipante><id>c450.10.444</id><codigo>450.10.444</codigo><titulo>Reconhecimento de requisitos e competência técnica a entidades</titulo></intervencoesComoParticipante></intervencaoComoDono><tipologia><intervencoesComoDono><id>c400.10.054</id><codigo>400.10.054</codigo><titulo>Registo português de transplantação</titulo></intervencoesComoDono></tipologia><intervencoesComoDono><intervencaoComoDono><id>c650.10.104</id><codigo>650.10.104</codigo><titulo>Atribuição de produtos de apoio</titulo></intervencaoComoDono></intervencoesComoDono><intervencaoComoDono><intervencoesComoParticipante><id>c700.10.001</id><codigo>700.10.001</codigo><titulo>Referenciação de utentes para consultas</titulo></intervencoesComoParticipante></intervencaoComoDono><intervencoesComoParticipante><intervencaoComoParticipante><id>c700.10.003</id><codigo>700.10.003</codigo><titulo>Referenciação de utentes para cirurgias</titulo></intervencaoComoParticipante></intervencoesComoParticipante><intervencaoComoParticipante><undefined><id>c700.20.405</id><codigo>700.20.405</codigo><titulo>Prestação de assistência médica no estrangeiro</titulo></undefined></intervencaoComoParticipante><undefined><undefined><id>c700.20.406</id><codigo>700.20.406</codigo><titulo>Apoio ao diagnóstico e terapêutica</titulo></undefined></undefined><undefined><undefined><id>c700.20.407</id><codigo>700.20.407</codigo><titulo>Prestação de cuidados de convalescença</titulo></undefined></undefined><undefined><undefined><id>c700.20.500</id><codigo>700.20.500</codigo><titulo>Prestação de cuidados de reabilitação</titulo></undefined></undefined><undefined><undefined><id>c700.20.600</id><codigo>700.20.600</codigo><titulo>Prestação de cuidados paliativos</titulo></undefined></undefined></entidades>
+                        text/csv: |
+                            sigla,estado,internacional,designacao,sioe,tipologias.id,tipologias.sigla,tipologias.designacao,intervencaoComoDono.id,intervencaoComoDono.codigo,intervencaoComoDono.titulo,intervencaoComoParticipante.id,intervencaoComoParticipante.codigo,intervencaoComoParticipante.titulo
+                            INEM,Ativa,Não,"Instituto Nacional de Emergência Médica, IP",142300000,"[""tip_AP"",""tip_IP""]","[""AP"",""IP""]","[""Administração Pública"",""Institutos Públicos""]","[""c300.10.008"",""c400.10.040"",""c400.10.051"",""c450.10.444""]","[""300.10.008"",""400.10.040"",""400.10.051"",""450.10.444""]","[""Estabelecimento de convenções com operadores privados"",""Registo nacional de utentes"",""Registo nacional de profissionais"",""Reconhecimento de requisitos e competência técnica a entidades""]","[""c400.10.054"",""c650.10.104"",""c700.10.001"",""c700.10.003"",""c700.20.405"",""c700.20.406"",""c700.20.407"",""c700.20.500"",""c700.20.600""]","[""400.10.054"",""650.10.104"",""700.10.001"",""700.10.003"",""700.20.405"",""700.20.406"",""700.20.407"",""700.20.500"",""700.20.600""]","[""Registo português de transplantação"",""Atribuição de produtos de apoio"",""Referenciação de utentes para consultas"",""Referenciação de utentes para cirurgias"",""Prestação de assistência médica no estrangeiro"",""Apoio ao diagnóstico e terapêutica"",""Prestação de cuidados de convalescença"",""Prestação de cuidados de reabilitação"",""Prestação de cuidados paliativos""]"
+                400:
+                    description: Erro a obter entidade
+                401:
+                    description: A informação inserida é inválida
+                404:
+                    description: Entidade não encontrada
