@@ -159,6 +159,6 @@ dummyRequests = async () => {
 
 // dummyRequests();
 
-testFunction()
+//testFunction()
 
 module.exports = app

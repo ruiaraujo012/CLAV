@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { host } from '../../common/common';
 import Loading from '../Loading/Loading';
 import ContentHeader from '../ContentHeader/ContentHeader';
 

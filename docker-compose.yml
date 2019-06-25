@@ -16,7 +16,8 @@ services:
 #        environment:
 #            MONGO_INITDB_ROOT_USERNAME: 'username'
 #            MONGO_INITDB_ROOT_PASSWORD: 'password'
-
+        networks:
+            - network_backend
     node:
         build: ./server
         environment:
@@ -31,11 +32,27 @@ services:
             - 8000:8000
         networks:
             - network_backend
+            - network_frontend
         depends_on:
             - mongodb
             - graphdb
         command: ["./wait-for-it.sh", "mongodb:27017", "--", "npm", "start"]
 
+    client:
+        build: ./client
+        ports:
+            - 3001:3000
+        environment: 
+            BACKEND: 'http://node:8000'
+        volumes:
+            - /usr/src/app/node_modules
+        networks:
+            - network_frontend
+        depends_on:
+            - node
+
 networks:
     network_backend:
+        driver: "bridge"
+    network_frontend:
         driver: "bridge"
