@@ -1,0 +1,51 @@
+paths:
+  /signup:
+    post:
+      tags:
+      - "Users"
+      description: "Cria um Utilizador."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Cria um Utilizador"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            password:
+              type: "string"
+            email:
+              type: "string"
+      responses:
+        200:
+          description: "Utilizador Criado com sucesso!"
+        404:
+          description: "Erro ao criar Utilizador"
+  /login:
+    post:
+      tags:
+      - "Users"
+      description: "Login de um utilizador."
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Login de um utilizador"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            username:
+              type: "string"
+            password:
+              type: "string"
+      responses:
+        200:
+          description: "Login efetuado com sucesso!"
+        404:
+          description: "Erro ao efetuar login"
