@@ -16,34 +16,33 @@ exports.extractStats = async (req, res, next) => {
 	const url = req.originalUrl
 	console.log('A extrair stats do url ', url)
 
-	if (url.match(/\/stats/g)) next()
+	if (!url.match(/\/stats/g)) {
+		if (typeof userData.user !== 'undefined' && typeof userData.user.email !== 'undefined') {
+			const { email } = userData.user
 
-	if (typeof userData.user !== 'undefined' && typeof userData.user.email !== 'undefined') {
-		const { email } = userData.user
+			const accessInformation = {
+				url,
+				email,
+				accessDate: Date.now()
+			}
 
-		const accessInformation = {
-			url,
-			email,
-			accessDate: Date.now()
+			savedStats.push(accessInformation)
+		} else {
+			const accessInformation = {
+				url,
+				accessDate: Date.now()
+			}
+
+			savedStats.push(accessInformation)
 		}
 
-		savedStats.push(accessInformation)
-	} else {
-		const accessInformation = {
-			url,
-			accessDate: Date.now()
+		if (Date.now() - lastTimer >= msDifference) {
+			// REALIZAR O DUMP DAS STATS
+			Stats.insertMany(savedStats)
+			console.log('A enviar estatisticas para a BD')
+			savedStats = []
+			lastTimer = Date.now()
 		}
-
-		savedStats.push(accessInformation)
 	}
-
-	if (Date.now() - lastTimer >= msDifference) {
-		// REALIZAR O DUMP DAS STATS
-		Stats.insertMany(savedStats)
-		console.log('A enviar estatisticas para a BD')
-		savedStats = []
-		lastTimer = Date.now()
-	}
-
 	next()
 }
