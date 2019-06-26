@@ -3,6 +3,7 @@ version: '3.3'
 services:
 
     graphdb:
+        image: miguelfbrito/clav_graphdb
         build: ./graphdb
         networks:
             - network_backend
@@ -19,7 +20,8 @@ services:
         networks:
             - network_backend
     node:
-        build: ./server
+        #build: ./server
+        image: miguelfbrito/clav_node
         environment:
             MONGO_URI: 'mongodb://mongodb:27017/clav'
             GRAPHDB_URI: 'http://graphdb:7200'
@@ -42,7 +44,8 @@ services:
         command: ["./wait-for-it.sh", "mongodb:27017", "--", "npm", "start"]
 
     client:
-        build: ./client
+        image: miguelfbrito/clav_client
+        #build: ./client
         ports:
             - 3000:3000
         environment:

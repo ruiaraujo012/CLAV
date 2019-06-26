@@ -3,15 +3,14 @@ version: '3.3'
 services:
 
     graphdb:
-#        build: ./graphdb
-        image: miguelfbrito/clav_graphdb
+        build: ./graphdb
         networks:
             - network_backend
 
     mongodb:
         image: mongo:latest
         ports:
-            - "27017:27017"
+            - 27017:27017
         networks:
             - network_backend
 #        environment:
@@ -20,8 +19,7 @@ services:
         networks:
             - network_backend
     node:
-        #build: ./server
-        image: miguelfbrito/clav_node
+        build: ./server
         environment:
             MONGO_URI: 'mongodb://mongodb:27017/clav'
             GRAPHDB_URI: 'http://graphdb:7200'
@@ -32,21 +30,24 @@ services:
 
         ports:
             - 8000:8000
+        expose:
+            - 8000
         networks:
             - network_backend
             - network_frontend
         depends_on:
             - mongodb
             - graphdb
+
         command: ["./wait-for-it.sh", "mongodb:27017", "--", "npm", "start"]
 
     client:
-        image: miguelfbrito/clav_client
-        #build: ./client
+        build: ./client
         ports:
-            - 3001:3000
+            - 3000:3000
         environment:
-            - BACKEND='http://node:8000'
+            env_file: .env
+            BACKEND: 'http://node:8000'
         volumes:
             - /usr/src/app/node_modules
         networks:
