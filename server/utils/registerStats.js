@@ -16,6 +16,10 @@ exports.extractStats = async (req, res, next) => {
 	const url = req.originalUrl
 	console.log('A extrair stats do url ', url)
 
+        if(!userData){
+            return next();
+        }
+
 	if (!url.match(/\/stats/g)) {
 		if (typeof userData.user !== 'undefined' && typeof userData.user.email !== 'undefined') {
 			const { email } = userData.user

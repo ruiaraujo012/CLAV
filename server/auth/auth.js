@@ -20,13 +20,16 @@ passport.use(
 	new localStrategy(
 		{
 			passReqToCallback: true,
-			usernameField: 'username',
+			usernameField: 'email',
 			passwordField: 'password'
 		},
-		async (req, email, password, done) => {
+		async (req, username, password, done) => {
+
+                        const email = req.body.email;
+
 			try {
 				const userExist = await User.findOne({
-					email: email
+                                    username: username
 				})
 
 				if (userExist) {
@@ -45,9 +48,13 @@ passport.use(
 					message: 'Utilizador criado com sucesso'
 				})
 			} catch (err) {
-				const userExist = await User.findOne({
-					email: email
-				})
+
+                                let userExist = false;
+                                if(email){
+                                    userExist = await User.findOne({
+                                            email: email
+                                    })
+                                }
 
 				if (userExist) {
 					return done(null, false, {
@@ -90,16 +97,12 @@ passport.use(
 				return done(null, user, {
 					message: 'Login realizado com sucesso.'
 				})
-			} catch (err) {
-				const user = await User.findOne({
-					email: email
-				})
 
-				if (!user) {
-					return done(null, false, {
-						message: 'Utilizador ou password inválido!'
-					})
-				}
+			} catch (err) {
+                                    
+                                return done(null, false, {
+                                        message: 'Utilizador ou password inválido!'
+                                })
 
 				return done(err)
 			}
